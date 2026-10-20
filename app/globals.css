@@ -49,3 +49,49 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #857542;
 }
+
+/* Premium Glassmorphism UI/UX Design System */
+.glass-header {
+  background: rgba(17, 17, 17, 0.88);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.28);
+}
+
+.glass-header-scrolled {
+  background: rgba(14, 14, 16, 0.94);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  backdrop-filter: blur(24px) saturate(190%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.55);
+}
+
+.glass-card {
+  background: rgba(22, 22, 26, 0.94);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-pill:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.glass-pill-active {
+  background: rgba(235, 103, 83, 0.18);
+  border: 1px solid rgba(235, 103, 83, 0.5);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(235, 103, 83, 0.22);
+}

@@ -44,7 +44,7 @@ export default function Footer() {
                   </span>
                 </div>
                 <span className="block text-xs text-stone-400 font-medium mt-1">
-                  {businessInfo.legalDeveloper} • Pride, Quality, Service.
+                  {businessInfo.legalDeveloper} • Price, Quality, Service.
                 </span>
               </div>
             </Link>
