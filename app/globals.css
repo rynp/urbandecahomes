@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-gold: #e8cf7b;
+  --dark-gold: #857542;
+  --charcoal: #1b1b1b;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  color: #1b1b1b;
+  background-color: #fafaf9;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Luxury gold accents */
+.gold-gradient {
+  background: linear-gradient(135deg, #f6ecc7 0%, #e8cf7b 50%, #857542 100%);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #857542 0%, #b5933c 50%, #5c4c23 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom scrollbar for modern browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4b455;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #857542;
+}
