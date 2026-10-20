@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Building2,
   Phone,
@@ -23,16 +24,27 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-charcoal-800">
           {/* Brand & Developer Bio */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-charcoal-900 shadow">
-                <Building2 className="w-6 h-6 text-charcoal-900" />
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-white p-0.5 shadow border border-white/20 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                <Image
+                  src="/logo.jpg"
+                  alt="Urban Deca Homes Official Logo"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-cover rounded-full"
+                />
               </div>
               <div>
-                <span className="block font-serif text-xl font-bold tracking-wider text-white uppercase">
-                  Urban Deca Homes
-                </span>
-                <span className="block text-xs text-gold-400 font-medium">
-                  {businessInfo.legalDeveloper}
+                <div className="flex items-baseline space-x-1">
+                  <span className="font-sans text-xl font-bold tracking-tight text-white uppercase leading-none">
+                    Urban Deca
+                  </span>
+                  <span className="font-sans text-xl font-bold tracking-tight text-[#eb6753] uppercase leading-none">
+                    Homes
+                  </span>
+                </div>
+                <span className="block text-xs text-stone-400 font-medium mt-1">
+                  {businessInfo.legalDeveloper} • Pride, Quality, Service.
                 </span>
               </div>
             </Link>
