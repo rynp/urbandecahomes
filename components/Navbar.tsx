@@ -58,7 +58,6 @@ export default function Navbar() {
         href: `/${p.slug}`,
       })),
     },
-    { name: 'About Us', href: '/about-us', hasDropdown: false },
     { name: 'Financing', href: '/details', hasDropdown: false },
     { name: '4PH Housing', href: '/4ph', hasDropdown: false },
     {
@@ -68,13 +67,14 @@ export default function Navbar() {
       isOpen: resourcesDropdownOpen,
       setIsOpen: setResourcesDropdownOpen,
       subItems: [
-        { name: 'About Us & 8990 History', href: '/about-us' },
         { name: 'News & Promos', href: '/news-and-promo' },
         { name: 'Careers & Sales Recruitment', href: '/jobs' },
+        { name: 'About Us & 8990 History', href: '/about-us' },
         { name: 'Contact & Office Hours', href: '/contact-us' },
       ],
     },
-    { name: 'Contact', href: '/contact-us', hasDropdown: false },
+    { name: 'About Us', href: '/about-us', hasDropdown: false },
+    { name: 'Contact US', href: '/contact-us', hasDropdown: false },
   ];
 
   return (
@@ -132,8 +132,8 @@ export default function Navbar() {
                       type="button"
                       onClick={() => link.setIsOpen?.(!link.isOpen)}
                       className={`group flex items-center space-x-1.5 px-3.5 py-2 text-sm rounded-full transition-all duration-200 ${link.isOpen
-                          ? 'glass-pill-active font-semibold'
-                          : 'glass-pill font-medium text-stone-200 hover:text-white'
+                        ? 'glass-pill-active font-semibold'
+                        : 'glass-pill font-medium text-stone-200 hover:text-white'
                         }`}
                       aria-expanded={link.isOpen}
                       aria-haspopup="true"
@@ -148,8 +148,8 @@ export default function Navbar() {
                     {/* Wide Dropdown Menu in Premium Glass Card */}
                     <div
                       className={`absolute left-0 top-full pt-2.5 w-[420px] max-w-[90vw] transition-all duration-300 ease-out transform ${link.isOpen
-                          ? 'opacity-100 translate-y-0 visible pointer-events-auto'
-                          : 'opacity-0 translate-y-2 invisible pointer-events-none'
+                        ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+                        : 'opacity-0 translate-y-2 invisible pointer-events-none'
                         }`}
                     >
                       <div className="glass-card rounded-2xl p-4 overflow-hidden">
@@ -219,8 +219,8 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={`flex items-center space-x-1.5 px-4 py-2 text-sm rounded-full transition-all duration-200 ${isActive
-                      ? 'glass-pill-active font-semibold'
-                      : 'glass-pill font-medium text-stone-200 hover:text-white'
+                    ? 'glass-pill-active font-semibold'
+                    : 'glass-pill font-medium text-stone-200 hover:text-white'
                     }`}
                 >
                   <span>{link.name}</span>
@@ -254,8 +254,8 @@ export default function Navbar() {
             {/* Desktop Quick Dropdown Menu in Glass Card */}
             <div
               className={`hidden lg:block absolute right-0 top-full pt-2.5 w-[380px] max-w-[90vw] transition-all duration-300 ease-out transform ${quickMenuOpen
-                  ? 'opacity-100 translate-y-0 visible pointer-events-auto'
-                  : 'opacity-0 translate-y-2 invisible pointer-events-none'
+                ? 'opacity-100 translate-y-0 visible pointer-events-auto'
+                : 'opacity-0 translate-y-2 invisible pointer-events-none'
                 }`}
             >
               <div className="glass-card rounded-2xl p-4">
