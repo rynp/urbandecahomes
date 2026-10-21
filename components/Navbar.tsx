@@ -59,7 +59,6 @@ export default function Navbar() {
       })),
     },
     { name: 'Financing', href: '/details', hasDropdown: false },
-    { name: '4PH Housing', href: '/4ph', hasDropdown: false },
     {
       name: 'Blog',
       href: '/news-and-promo',
@@ -68,9 +67,8 @@ export default function Navbar() {
       setIsOpen: setResourcesDropdownOpen,
       subItems: [
         { name: 'News & Promos', href: '/news-and-promo' },
+        { name: '4PH Housing', href: '/4ph' },
         { name: 'Careers & Sales Recruitment', href: '/jobs' },
-        { name: 'About Us & 8990 History', href: '/about-us' },
-        { name: 'Contact & Office Hours', href: '/contact-us' },
       ],
     },
     { name: 'About Us', href: '/about-us', hasDropdown: false },
