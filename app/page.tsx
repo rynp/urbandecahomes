@@ -20,6 +20,7 @@ import ProjectCard from '@/components/ProjectCard';
 import UnitComparison from '@/components/UnitComparison';
 import FinancingCalculator from '@/components/FinancingCalculator';
 import InquiryForm from '@/components/InquiryForm';
+import TestimonialsSection from '@/components/TestimonialsSection';
 import JsonLd from '@/components/JsonLd';
 import { projects } from '@/data/projects';
 import { globalFaqs } from '@/data/faqs';
@@ -45,39 +46,41 @@ export default function HomePage() {
       <HeroVideo />
 
       {/* Trust & Accreditations Banner */}
-      <section className="bg-charcoal-900 text-stone-300 py-6 border-y border-charcoal-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-charcoal-950 text-stone-300 py-8 border-y border-white/10 relative overflow-hidden cyber-grid">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#eb6753]/5 to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="flex flex-col items-center">
-              <span className="font-serif text-2xl lg:text-3xl font-bold text-gold-400">
+            <div className="flex flex-col items-center group">
+              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-gold-400 group-hover:scale-105 transition-transform duration-300">
                 8990
               </span>
-              <span className="text-xs text-stone-400 mt-0.5">
+              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
                 Holdings, Inc. Developer
               </span>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="font-serif text-2xl lg:text-3xl font-bold text-gold-400">
+            <div className="flex flex-col items-center group">
+              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-[#eb6753] group-hover:scale-105 transition-transform duration-300">
                 ₱10,000
               </span>
-              <span className="text-xs text-stone-400 mt-0.5">
+              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
                 Low Reservation Fee
               </span>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="font-serif text-2xl lg:text-3xl font-bold text-gold-400">
+            <div className="flex flex-col items-center group">
+              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-gold-400 group-hover:scale-105 transition-transform duration-300">
                 Up to 30 Yrs
               </span>
-              <span className="text-xs text-stone-400 mt-0.5">
+              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
                 Pag-IBIG Loan Tenure
               </span>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="font-serif text-2xl lg:text-3xl font-bold text-gold-400">
-                100% RFO
+            <div className="flex flex-col items-center group">
+              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-emerald-400 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>100% RFO</span>
               </span>
-              <span className="text-xs text-stone-400 mt-0.5">
-                Ready for Occupancy Options
+              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
+                Ready for Occupancy Units
               </span>
             </div>
           </div>
@@ -85,16 +88,16 @@ export default function HomePage() {
       </section>
 
       {/* Featured Condominium Developments */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full mb-3">
-            <Building2 className="w-3.5 h-3.5 text-gold-600" />
-            <span>Active Communities</span>
+          <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-[#eb6753] bg-[#eb6753]/10 border border-[#eb6753]/20 px-3.5 py-1.5 rounded-full mb-3">
+            <Building2 className="w-3.5 h-3.5 text-[#eb6753]" />
+            <span>Active Metro Manila Communities</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 tracking-tight">
             Featured Metro Manila Condominium Projects
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base mt-3 leading-relaxed">
+          <p className="text-stone-600 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
             Strategically located near major transit routes, business districts, and retail centers. Each community offers fully finished units ready for your family.
           </p>
         </div>
@@ -108,28 +111,28 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Urban Deca Homes (Pillars) */}
-      <section className="bg-stone-100/70 py-20 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-stone-100/70 py-24 border-y border-stone-200/80 relative cyber-grid-light">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-white px-3 py-1 rounded-full border border-stone-200">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#eb6753] bg-white px-3.5 py-1.5 rounded-full border border-stone-200 shadow-2xs">
               Price • Quality • Service
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 mt-3">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 mt-4 tracking-tight">
               Why Everyday Filipinos Choose Urban Deca Homes
             </h2>
-            <p className="text-stone-600 text-sm mt-3">
+            <p className="text-stone-600 text-sm mt-3 leading-relaxed">
               Designed specifically to make quality condominium homeownership within reach of working families, BPO professionals, and OFWs.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-stone-200 relative">
-              <div className="w-12 h-12 rounded-xl gold-gradient text-charcoal-900 flex items-center justify-center mb-6 shadow">
-                <Percent className="w-6 h-6" />
+            <div className="futuristic-card cyber-corner bg-white rounded-2xl p-8 shadow-sm border border-stone-200/90 relative group">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eb6753] to-[#d85542] text-white flex items-center justify-center mb-6 shadow-lg shadow-[#eb6753]/25 group-hover:scale-110 transition-transform duration-300">
+                <Percent className="w-7 h-7" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">
-                Unmatched Affordability & Low Cash-Out
+              <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-3 group-hover:text-[#eb6753] transition-colors">
+                Unmatched Affordability &amp; Low Cash-Out
               </h3>
               <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
                 Unit reservations start from only ₱10,000, with monthly amortizations starting around ₱12,500/month via Pag-IBIG Fund. Low equity promotions allow buyers to allocate savings toward furnishings instead of prohibitive downpayments.
@@ -137,11 +140,11 @@ export default function HomePage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-stone-200 relative">
-              <div className="w-12 h-12 rounded-xl gold-gradient text-charcoal-900 flex items-center justify-center mb-6 shadow">
-                <ShoppingBag className="w-6 h-6" />
+            <div className="futuristic-card cyber-corner bg-white rounded-2xl p-8 shadow-sm border border-stone-200/90 relative group">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold-500 to-gold-700 text-charcoal-950 flex items-center justify-center mb-6 shadow-lg shadow-gold-500/20 group-hover:scale-110 transition-transform duration-300">
+                <ShoppingBag className="w-7 h-7 text-charcoal-950" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">
+              <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-3 group-hover:text-gold-700 transition-colors">
                 Integrated Commercial Centers (DECA Mall)
               </h3>
               <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
@@ -150,11 +153,11 @@ export default function HomePage() {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-stone-200 relative">
-              <div className="w-12 h-12 rounded-xl gold-gradient text-charcoal-900 flex items-center justify-center mb-6 shadow">
-                <ShieldCheck className="w-6 h-6" />
+            <div className="futuristic-card cyber-corner bg-white rounded-2xl p-8 shadow-sm border border-stone-200/90 relative group">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-charcoal-800 to-charcoal-950 text-white flex items-center justify-center mb-6 shadow-lg shadow-black/25 group-hover:scale-110 transition-transform duration-300">
+                <ShieldCheck className="w-7 h-7 text-gold-400" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-2">
+              <h3 className="font-serif text-xl font-bold text-charcoal-900 mb-3 group-hover:text-charcoal-950 transition-colors">
                 Accredited Pag-IBIG Documentation Team
               </h3>
               <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
@@ -200,54 +203,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Buyer Testimonials & Real Stories */}
-      <section className="bg-stone-100/60 py-20 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-white px-3 py-1 rounded-full border border-stone-200">
-              Verified Homeowner Stories
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 mt-3">
-              Hear From Our Community Residents
-            </h2>
-            <p className="text-stone-600 text-sm mt-3">
-              Real stories from everyday Filipino homeowners who turned their dreams of city condo living into reality.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
-              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed italic mb-6">
-                &ldquo;Dati nangungupahan lang kami sa Sampaloc na walang sariling paradahan at laging nag-aalala sa baha. Sa Urban Deca Homes Manila, nakakuha kami ng 2-bedroom unit sa Pag-IBIG na kasing presyo lang halos ng inuupahan namin noon. May mall pa sa baba!&rdquo;
-              </p>
-              <div>
-                <span className="block text-sm font-bold text-charcoal-900">Eduardo & Marissa Ramos</span>
-                <span className="block text-xs text-gold-700">Unit Owners • Urban Deca Homes Manila</span>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
-              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed italic mb-6">
-                &ldquo;Working in Ortigas CBD, I used to endure 2 to 3 hours of traffic everyday from Taytay. Having my own unit at Urban Deca Homes Ortigas along Ortigas Ave. Ext. gives me my weekends back. The 1.3-hectare park is peaceful and relaxing.&rdquo;
-              </p>
-              <div>
-                <span className="block text-sm font-bold text-charcoal-900">Camille Anne Santos</span>
-                <span className="block text-xs text-gold-700">BPO Team Leader • Urban Deca Homes Ortigas</span>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
-              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed italic mb-6">
-                &ldquo;As an OFW in Dubai, I wanted an investment along EDSA with guaranteed rental demand. Urban Deca Towers Cubao was affordable and the documentation through SPA was straightforward with the sales team.&rdquo;
-              </p>
-              <div>
-                <span className="block text-sm font-bold text-charcoal-900">Rolando Dela Cruz</span>
-                <span className="block text-xs text-gold-700">OFW Investor • Urban Deca Towers Cubao</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Buyer Testimonials & Real Stories Component */}
+      <TestimonialsSection />
 
       {/* Main Conversion Inquiry Form Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">

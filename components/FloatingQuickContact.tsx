@@ -86,15 +86,19 @@ export default function FloatingQuickContact() {
       )}
 
       {/* Primary Floating Toggle Button */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full gold-gradient text-charcoal-900 shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform focus:outline-none focus:ring-4 focus:ring-gold-300"
-        aria-label="Open Quick Contact Assistant"
-        title="Contact Sales Specialist"
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
-      </button>
+      <div className="relative">
+        {/* Radar Pulse Effect */}
+        <span className="absolute inset-0 rounded-full bg-[#eb6753] animate-ping opacity-30 pointer-events-none" />
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative w-14 h-14 rounded-full bg-gradient-to-tr from-[#eb6753] to-[#ff7a66] text-white shadow-2xl shadow-[#eb6753]/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none border-2 border-white/20"
+          aria-label="Open Quick Contact Assistant"
+          title="Contact Sales Specialist"
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6 animate-pulse" />}
+        </button>
+      </div>
     </div>
   );
 }

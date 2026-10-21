@@ -26,10 +26,10 @@ export default function AboutTimeline() {
       : companyTimeline.filter((m) => m.category === selectedCategory);
 
   return (
-    <section className="py-20 bg-charcoal-950 text-white relative overflow-hidden" id="timeline">
+    <section className="py-24 bg-charcoal-950 text-white relative overflow-hidden cyber-grid" id="timeline">
       {/* Subtle Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#eb6753]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-gold-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#eb6753]/15 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-gold-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -96,7 +96,7 @@ export default function AboutTimeline() {
                     }`}
                   >
                     <div
-                      className={`group p-6 rounded-2xl bg-charcoal-900/90 border transition-all duration-300 transform hover:-translate-y-1 shadow-xl hover:shadow-2xl hover:shadow-[#eb6753]/10 backdrop-blur-md ${
+                      className={`futuristic-card cyber-corner group p-6 sm:p-7 rounded-2xl bg-charcoal-900/90 border transition-all duration-300 transform hover:-translate-y-1.5 shadow-xl hover:shadow-2xl hover:shadow-[#eb6753]/15 backdrop-blur-md ${
                         activeYear === milestone.year
                           ? 'border-[#eb6753]/60 ring-1 ring-[#eb6753]/40'
                           : 'border-white/10 hover:border-white/20'

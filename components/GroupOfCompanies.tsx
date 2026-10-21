@@ -37,7 +37,7 @@ export default function GroupOfCompanies() {
           {groupOfCompanies.map((company) => (
             <div
               key={company.id}
-              className="group bg-white rounded-3xl p-8 border border-stone-200/90 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between"
+              className="futuristic-card cyber-corner group bg-white rounded-3xl p-8 border border-stone-200/90 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col justify-between"
             >
               <div>
                 {/* Logo Banner & Badges */}

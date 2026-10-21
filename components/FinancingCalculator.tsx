@@ -40,35 +40,39 @@ export default function FinancingCalculator({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden">
+    <div className="futuristic-card cyber-corner bg-white rounded-3xl shadow-2xl border border-stone-200/90 overflow-hidden">
       {/* Header */}
-      <div className="bg-charcoal-900 text-white p-6 sm:p-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="relative bg-charcoal-950 text-white p-6 sm:p-8 overflow-hidden cyber-grid">
+        {/* Ambient Glow Orbs */}
+        <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#eb6753]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 left-1/3 w-64 h-64 bg-[#e8cf7b]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center text-xs font-semibold text-gold-400 mb-2 uppercase tracking-wider">
-              <Calculator className="w-4 h-4 mr-1.5" />
-              <span>Mortgage Estimator</span>
+            <div className="inline-flex items-center space-x-2 text-xs font-bold text-[#eb6753] mb-2 uppercase tracking-widest bg-charcoal-900/80 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md">
+              <Calculator className="w-3.5 h-3.5 text-[#eb6753] animate-pulse" />
+              <span>Real-Time Mortgage Estimator</span>
             </div>
             <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Pag-IBIG & Bank Monthly Calculator
+              Pag-IBIG &amp; Bank Monthly Amortization Calculator
             </h3>
-            <p className="text-sm text-stone-300 mt-1 max-w-xl">
-              Estimate your monthly amortization and required gross household income to own a unit at Urban Deca Homes.
+            <p className="text-xs sm:text-sm text-stone-300 mt-1.5 max-w-xl leading-relaxed">
+              Estimate your monthly amortization and required gross household income to own a unit across Urban Deca developments with instant computation algorithms.
             </p>
           </div>
 
           {/* Loan Scheme Selector */}
-          <div className="flex rounded-lg bg-charcoal-800 p-1 border border-charcoal-700 self-start sm:self-auto">
+          <div className="flex rounded-xl bg-charcoal-900/90 p-1.5 border border-white/10 backdrop-blur-md self-start lg:self-auto shadow-inner">
             <button
               type="button"
               onClick={() => {
                 setLoanType('pag-ibig');
                 if (termYears > 30) setTermYears(30);
               }}
-              className={`px-4 py-2 text-xs font-bold uppercase rounded-md transition-all ${
+              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
                 loanType === 'pag-ibig'
-                  ? 'gold-gradient text-charcoal-900 shadow'
-                  : 'text-stone-300 hover:text-white'
+                  ? 'bg-[#eb6753] text-white shadow-lg shadow-[#eb6753]/30'
+                  : 'text-stone-400 hover:text-white'
               }`}
             >
               Pag-IBIG Fund (6.25%)
@@ -79,10 +83,10 @@ export default function FinancingCalculator({
                 setLoanType('bank');
                 if (termYears > 20) setTermYears(20);
               }}
-              className={`px-4 py-2 text-xs font-bold uppercase rounded-md transition-all ${
+              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
                 loanType === 'bank'
-                  ? 'gold-gradient text-charcoal-900 shadow'
-                  : 'text-stone-300 hover:text-white'
+                  ? 'bg-[#eb6753] text-white shadow-lg shadow-[#eb6753]/30'
+                  : 'text-stone-400 hover:text-white'
               }`}
             >
               Bank Loan (7.00%)
@@ -251,67 +255,77 @@ export default function FinancingCalculator({
         </div>
 
         {/* Results Card Column (5 Cols) */}
-        <div className="lg:col-span-5 bg-stone-50 rounded-xl p-6 border border-stone-200 flex flex-col justify-between">
-          <div className="space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-stone-500 block">
-              Estimated Monthly Breakdown
-            </span>
+        <div className="lg:col-span-5 bg-gradient-to-br from-charcoal-950 via-charcoal-900 to-charcoal-950 text-white rounded-2xl p-6 sm:p-7 border border-white/10 shadow-xl flex flex-col justify-between relative overflow-hidden cyber-grid">
+          {/* Ambient Glow */}
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[#eb6753]/15 rounded-full blur-2xl pointer-events-none" />
 
-            {/* Big Amortization Number */}
-            <div className="bg-white p-5 rounded-lg border border-gold-200 shadow-sm text-center">
-              <span className="text-xs uppercase tracking-wider text-stone-500 font-semibold block">
+          <div className="space-y-5 relative z-10">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#eb6753] flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#eb6753] animate-ping" />
+                <span>Computed Monthly Overview</span>
+              </span>
+              <span className="text-[10px] text-stone-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                Pag-IBIG Benchmark
+              </span>
+            </div>
+
+            {/* Big Amortization Number in Glass HUD */}
+            <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-inner text-center relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#eb6753]/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <span className="text-xs uppercase tracking-wider text-stone-400 font-semibold block">
                 Total Estimated Monthly
               </span>
-              <span className="text-3xl sm:text-4xl font-extrabold text-gold-700 font-serif block mt-1">
+              <span className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-[#eb6753] font-serif block mt-1 tracking-tight">
                 {formatPhp(result.totalMonthlyPayment)}
               </span>
-              <span className="text-[11px] text-stone-500 mt-1 block">
-                Includes estimated MRI & Fire Insurance reserve
+              <span className="text-[11px] text-stone-400 mt-1 block">
+                Includes estimated MRI &amp; Fire Insurance reserve
               </span>
             </div>
 
             {/* Line Item Breakdown */}
-            <div className="space-y-2 text-xs text-stone-600 pt-2 border-t border-stone-200">
-              <div className="flex justify-between">
-                <span>Principal & Interest Amortization:</span>
-                <span className="font-semibold text-charcoal-900">
+            <div className="space-y-2.5 text-xs text-stone-300 pt-3 border-t border-white/10">
+              <div className="flex justify-between items-center">
+                <span className="text-stone-400">Principal &amp; Interest Amortization:</span>
+                <span className="font-semibold text-white">
                   {formatPhp(result.monthlyAmortization)}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span>Est. MRI & Fire Insurance:</span>
-                <span className="font-semibold text-charcoal-900">
+              <div className="flex justify-between items-center">
+                <span className="text-stone-400">Est. MRI &amp; Fire Insurance:</span>
+                <span className="font-semibold text-white">
                   ~{formatPhp(result.estMriAndFireInsurance)}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span>Net Loanable Balance:</span>
-                <span className="font-semibold text-charcoal-900">
+              <div className="flex justify-between items-center">
+                <span className="text-stone-400">Net Loanable Balance:</span>
+                <span className="font-semibold text-gold-300">
                   {formatPhp(result.loanableAmount)}
                 </span>
               </div>
             </div>
 
             {/* Income Qualification Box */}
-            <div className="bg-gold-50/70 p-4 rounded-lg border border-gold-200/80">
-              <div className="flex items-center space-x-1.5 text-xs font-bold text-gold-900 mb-1">
-                <ShieldCheck className="w-4 h-4 text-gold-700" />
+            <div className="bg-charcoal-900/90 p-4 rounded-xl border border-gold-500/30 backdrop-blur-md">
+              <div className="flex items-center space-x-1.5 text-xs font-bold text-gold-400 mb-1">
+                <ShieldCheck className="w-4 h-4 text-gold-400 flex-shrink-0" />
                 <span>Required Gross Monthly Income</span>
               </div>
-              <span className="text-lg font-bold text-charcoal-900 block">
+              <span className="text-lg font-bold text-white block">
                 {formatPhp(result.requiredGrossMonthlyIncome)} / month
               </span>
-              <p className="text-[11px] text-stone-600 mt-1 leading-normal">
+              <p className="text-[11px] text-stone-400 mt-1 leading-normal">
                 Based on Pag-IBIG&apos;s 35% debt-to-income benchmark. Income can be combined with a spouse or immediate family co-borrower.
               </p>
             </div>
           </div>
 
           {/* Action CTA */}
-          <div className="pt-6 mt-4 border-t border-stone-200">
+          <div className="pt-6 mt-5 border-t border-white/10 relative z-10">
             <Link
               href={`/inquire-now?project=${initialProject}&price=${tcp}`}
-              className="w-full inline-flex items-center justify-center px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-charcoal-900 gold-gradient hover:opacity-95 rounded-lg shadow transition-all"
+              className="w-full btn-futuristic inline-flex items-center justify-center px-6 py-4 text-xs font-bold uppercase tracking-wider text-white bg-[#eb6753] hover:bg-[#d85542] rounded-xl shadow-lg shadow-[#eb6753]/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>Get Formal Computation Sheet</span>
               <ArrowRight className="w-4 h-4 ml-1.5" />
