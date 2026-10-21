@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, CheckCircle2, User, Phone, Mail, Users } from 'lucide-react';
+import Captcha from '@/components/Captcha';
 import { projects } from '@/data/projects';
 import { businessInfo } from '@/data/business';
 import { trackEvent } from '@/lib/analytics';
@@ -14,6 +15,7 @@ export default function ViewingScheduler() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,6 +26,11 @@ export default function ViewingScheduler() {
     e.preventDefault();
     if (!name || !phone || !selectedDate) {
       setErrorMessage('Please provide your name, phone number, and preferred date.');
+      return;
+    }
+
+    if (!isCaptchaVerified) {
+      setErrorMessage('Please complete the human verification check before booking.');
       return;
     }
 
@@ -67,7 +74,14 @@ export default function ViewingScheduler() {
         </div>
         <button
           type="button"
-          onClick={() => setIsBooked(false)}
+          onClick={() => {
+            setIsBooked(false);
+            setName('');
+            setPhone('');
+            setEmail('');
+            setSelectedDate('');
+            setIsCaptchaVerified(false);
+          }}
           className="text-xs text-stone-400 hover:text-stone-600 underline"
         >
           Book another schedule
@@ -208,6 +222,20 @@ export default function ViewingScheduler() {
               className="w-full px-3 py-2 text-xs bg-white border border-stone-300 rounded-md focus:ring-2 focus:ring-gold-500"
             />
           </div>
+        </div>
+
+        {/* Human Verification Captcha */}
+        <div className="pt-1">
+          <Captcha
+            compact
+            onVerify={(verified) => {
+              setIsCaptchaVerified(verified);
+              if (verified && errorMessage.includes('human verification')) {
+                setErrorMessage('');
+              }
+            }}
+            error={errorMessage.includes('human verification') ? errorMessage : undefined}
+          />
         </div>
 
         {/* Submit */}

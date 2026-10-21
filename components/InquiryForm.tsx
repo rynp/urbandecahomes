@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Send, CheckCircle2, AlertCircle, Phone, MessageCircle, Clock, ShieldCheck } from 'lucide-react';
+import Captcha from '@/components/Captcha';
 import { projects } from '@/data/projects';
 import { businessInfo } from '@/data/business';
 import { trackEvent } from '@/lib/analytics';
@@ -30,6 +31,7 @@ export default function InquiryForm({
   const [notes, setNotes] = useState('');
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
   const [honeypot, setHoneypot] = useState('');
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,6 +64,9 @@ export default function InquiryForm({
     }
     if (!privacyAgreed) {
       newErrors.privacy = 'Please accept the privacy policy to submit your inquiry.';
+    }
+    if (!isCaptchaVerified) {
+      newErrors.captcha = 'Please solve the human verification check before submitting.';
     }
     if (honeypot) {
       newErrors.spam = 'Spam detected.';
@@ -164,6 +169,7 @@ export default function InquiryForm({
             setMobileNumber('');
             setNotes('');
             setPrivacyAgreed(false);
+            setIsCaptchaVerified(false);
           }}
           className="mt-6 text-xs text-stone-400 hover:text-stone-600 underline block mx-auto"
         >
@@ -405,8 +411,25 @@ export default function InquiryForm({
           )}
         </div>
 
+        {/* Human Verification Captcha */}
+        <div className="pt-2">
+          <Captcha
+            onVerify={(verified) => {
+              setIsCaptchaVerified(verified);
+              if (verified) {
+                setErrors((prev) => {
+                  const copy = { ...prev };
+                  delete copy.captcha;
+                  return copy;
+                });
+              }
+            }}
+            error={errors.captcha}
+          />
+        </div>
+
         {/* Submit Button */}
-        <div className="pt-3">
+        <div className="pt-2">
           <button
             type="submit"
             disabled={isSubmitting}

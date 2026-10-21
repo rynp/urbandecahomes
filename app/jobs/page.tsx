@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import JsonLd from '@/components/JsonLd';
+import Captcha from '@/components/Captcha';
 import { jobPostings } from '@/data/jobs';
 import { businessInfo } from '@/data/business';
 import { getJobPostingSchema } from '@/lib/schema';
@@ -25,6 +26,8 @@ export default function JobsPage() {
   const [applicantPhone, setApplicantPhone] = useState('');
   const [resumeFileName, setResumeFileName] = useState('');
   const [experienceSummary, setExperienceSummary] = useState('');
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -36,8 +39,17 @@ export default function JobsPage() {
 
   const handleApplicationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!applicantName || !applicantEmail || !applicantPhone) return;
+    if (!applicantName || !applicantEmail || !applicantPhone) {
+      setErrorMessage('Please complete all required fields (Name, Email, Phone Number).');
+      return;
+    }
 
+    if (!isCaptchaVerified) {
+      setErrorMessage('Please solve the human verification check before submitting.');
+      return;
+    }
+
+    setErrorMessage('');
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 700));
     setIsSubmitting(false);
@@ -310,6 +322,26 @@ export default function JobsPage() {
                     className="w-full px-3 py-2 text-xs bg-stone-50 border border-stone-300 rounded-md focus:ring-2 focus:ring-gold-500"
                   />
                 </div>
+
+                {/* Human Verification Captcha */}
+                <div className="pt-1">
+                  <Captcha
+                    compact
+                    onVerify={(verified) => {
+                      setIsCaptchaVerified(verified);
+                      if (verified && errorMessage.includes('human verification')) {
+                        setErrorMessage('');
+                      }
+                    }}
+                    error={errorMessage.includes('human verification') ? errorMessage : undefined}
+                  />
+                </div>
+
+                {errorMessage && !errorMessage.includes('human verification') && (
+                  <div className="p-2.5 bg-red-50 text-red-700 text-xs rounded-lg border border-red-200">
+                    {errorMessage}
+                  </div>
+                )}
 
                 <div className="pt-2">
                   <button
