@@ -20,6 +20,18 @@ import JsonLd from '@/components/JsonLd';
 import { getProjectBySlug } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
 import { getProjectApartmentComplexSchema } from '@/lib/schema';
+import CubaoGoogleMap from '@/components/cubao/CubaoGoogleMap';
+import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
+import ManilaListingCards from '@/components/manila/ManilaListingCards';
+import CubaoInteractivePlans from '@/components/cubao/CubaoInteractivePlans';
+import {
+  cubaoNeighborhoodItems,
+  cubaoSchoolItems,
+  cubaoHospitalItems,
+  cubaoProjectFeatureItems,
+  cubaoUnitSpecificationItems,
+  cubaoFacilityItems,
+} from '@/data/cubaoSectionsData';
 
 const project = getProjectBySlug('cubao')!;
 
@@ -325,6 +337,44 @@ export default function CubaoProjectPage() {
         </div>
       </section>
 
+      {/* PROJECT FEATURES SECTION */}
+      <ManilaListingCards
+        id="project-features"
+        tag="46-Storey Skyscraper Amenities"
+        title="Project Features"
+        subtitle="Designed for dynamic urban life with high-density vertical engineering, commercial retail podiums, and robust community security."
+        items={cubaoProjectFeatureItems}
+        referenceGraphicUrl="/images/cubao/site-development-plan.png"
+        referenceGraphicTitle="Cubao Tower Development Plan"
+      />
+
+      {/* UNIT SPECIFICATIONS SECTION */}
+      <section className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaListingCards
+          id="unit-specifications"
+          tag="Turnkey Micro-Living Inclusions"
+          title="Unit Specifications"
+          subtitle="Every studio and 1-bedroom unit at Urban Deca Towers Cubao is delivered turnkey finished with vitrified tiles, granite kitchen counters, tiled bathrooms, and smoke sensors."
+          items={cubaoUnitSpecificationItems}
+          referenceGraphicUrl="/images/cubao/building-floor-plan.png"
+          referenceGraphicTitle="Typical Floor Layout Schematic"
+        />
+      </section>
+
+      {/* FACILITIES AND SERVICES SECTION */}
+      <ManilaListingCards
+        id="facilities-and-services"
+        tag="Building Infrastructure & Systems"
+        title="Facilities and Services"
+        subtitle="Engineered with 12 high-speed passenger elevators, 100% emergency backup power (covering refrigerator and lighting per unit), 24/7 CCTV, and commercial laundry services."
+        items={cubaoFacilityItems}
+        referenceGraphicUrl="/images/cubao/facilities-overview.png"
+        referenceGraphicTitle="Tower Facilities & Elevator Bank Schematic"
+      />
+
+      {/* SITE DEVELOPMENT PLAN, TYPICAL FLOOR PLAN, UNIT LAYOUT WITH ZOOM MODAL */}
+      <CubaoInteractivePlans />
+
       {/* Transit & Landmarks */}
       <section className="bg-stone-100/60 py-20 border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -362,6 +412,49 @@ export default function CubaoProjectPage() {
           </div>
         </div>
       </section>
+
+      {/* LOCATION GOOGLE MAP SECTION */}
+      <CubaoGoogleMap />
+
+      {/* NEIGHBORHOOD SLIDESHOW SECTION */}
+      <div className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaSlideshow
+          id="neighborhood"
+          tag="EDSA & Araneta City Commercial Hub"
+          title="Neighborhood"
+          subtitle="Explore prime retail centers, entertainment arenas, dining capitals, and corporate BPO hubs within minutes of Urban Deca Towers Cubao."
+          items={cubaoNeighborhoodItems}
+          officialGraphicUrl="/images/cubao/neighborhood-map.png"
+          officialGraphicTitle="Araneta City Vicinity Map"
+          themeIcon="neighborhood"
+        />
+      </div>
+
+      {/* SCHOOLS NEARBY SLIDESHOW SECTION */}
+      <ManilaSlideshow
+        id="schools-nearby"
+        tag="Academic Centers & Universities"
+        title="Schools Nearby"
+        subtitle="Convenient access to top Quezon City and U-Belt colleges, preparatory schools, technological institutes, and transit-connected universities."
+        items={cubaoSchoolItems}
+        officialGraphicUrl="/images/cubao/schools-map.png"
+        officialGraphicTitle="Academic Institutions Map"
+        themeIcon="schools"
+      />
+
+      {/* HOSPITALS NEARBY SLIDESHOW SECTION */}
+      <div className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaSlideshow
+          id="hospitals-nearby"
+          tag="Healthcare & Medical Centers"
+          title="Hospitals Nearby"
+          subtitle="Immediate proximity to world-class tertiary hospitals, specialty diagnostic centers, and healthcare complexes along EDSA and E. Rodriguez Ave."
+          items={cubaoHospitalItems}
+          officialGraphicUrl="/images/cubao/hospitals-map.png"
+          officialGraphicTitle="Hospitals & Medical Centers Map"
+          themeIcon="hospitals"
+        />
+      </div>
 
       {/* Calculator Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

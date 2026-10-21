@@ -23,6 +23,18 @@ import JsonLd from '@/components/JsonLd';
 import { getProjectBySlug } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
 import { getProjectApartmentComplexSchema } from '@/lib/schema';
+import ManilaGoogleMap from '@/components/manila/ManilaGoogleMap';
+import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
+import ManilaListingCards from '@/components/manila/ManilaListingCards';
+import ManilaInteractivePlans from '@/components/manila/ManilaInteractivePlans';
+import {
+  neighborhoodItems,
+  schoolItems,
+  hospitalItems,
+  projectFeatureItems,
+  unitSpecificationItems,
+  facilityItems,
+} from '@/data/manilaSectionsData';
 
 const project = getProjectBySlug('manila')!;
 
@@ -351,6 +363,46 @@ export default function ManilaProjectPage() {
         </div>
       </section>
 
+      {/* PROJECT FEATURES SECTION */}
+      <ManilaListingCards
+        id="project-features"
+        tag="Community Amenities & Inclusions"
+        title="Project Features"
+        subtitle="Enjoy secure, modern mid-rise condominium living with comprehensive sports facilities, lush pocket parks, and on-site mall conveniences."
+        items={projectFeatureItems}
+        referenceGraphicUrl="/images/manila/project-features-pks.png"
+        referenceGraphicTitle="Project Features Masterplan"
+      />
+
+      {/* UNIT SPECIFICATIONS SECTION */}
+      <section className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaListingCards
+          id="unit-specifications"
+          tag="Turnkey Move-In Deliverables"
+          title="Unit Specifications"
+          subtitle="Every home at Urban Deca Homes Manila is turned over completely finished, tiled, and move-in ready with granite counters, blinds, and utility provisions."
+          items={unitSpecificationItems}
+          referenceGraphicUrl="/images/manila/unit-specs.png"
+          referenceGraphicTitle="Turnkey Deliverables Schematic"
+        />
+      </section>
+
+      {/* FACILITIES AND SERVICES SECTION */}
+      <ManilaListingCards
+        id="facilities-and-services"
+        tag="Engineering Systems & Life Safety"
+        title="Facilities and Services"
+        subtitle="Built to stringent engineering standards with high-speed elevators, automatic fire suppression, sewage treatment, and standby emergency power."
+        items={facilityItems}
+        referenceGraphicUrl="/images/manila/facilities.png"
+        referenceGraphicTitle="Facilities Master Schematic"
+        secondaryGraphicUrl="/images/manila/facilities-details.png"
+        secondaryGraphicTitle="Utilities Blueprint"
+      />
+
+      {/* SITE DEVELOPMENT PLAN, TYPICAL FLOOR PLAN, UNIT LAYOUT WITH ZOOM MODAL */}
+      <ManilaInteractivePlans />
+
       {/* Location Proximity & Map Guide */}
       <section className="bg-stone-100/60 py-20 border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -388,6 +440,49 @@ export default function ManilaProjectPage() {
           </div>
         </div>
       </section>
+
+      {/* LOCATION GOOGLE MAP SECTION */}
+      <ManilaGoogleMap />
+
+      {/* NEIGHBORHOOD SLIDESHOW SECTION */}
+      <div className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaSlideshow
+          id="neighborhood"
+          tag="Manila Vicinity & Commercial Hubs"
+          title="Neighborhood"
+          subtitle="Explore the bustling retail destinations, historic cultural attractions, wholesale trading centers, and rapid transit lines within easy reach of your residence."
+          items={neighborhoodItems}
+          officialGraphicUrl="/images/manila/establishment.png"
+          officialGraphicTitle="Neighborhood Establishments Map"
+          themeIcon="neighborhood"
+        />
+      </div>
+
+      {/* SCHOOLS NEARBY SLIDESHOW SECTION */}
+      <ManilaSlideshow
+        id="schools-nearby"
+        tag="Academic Centers & Academies"
+        title="Schools Nearby"
+        subtitle="Convenient access to established primary schools, premier high schools, Christian academies, and the historic University Belt."
+        items={schoolItems}
+        officialGraphicUrl="/images/manila/schools.png"
+        officialGraphicTitle="Schools Vicinity Map"
+        themeIcon="schools"
+      />
+
+      {/* HOSPITALS NEARBY SLIDESHOW SECTION */}
+      <div className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaSlideshow
+          id="hospitals-nearby"
+          tag="Healthcare & Medical Centers"
+          title="Hospitals Nearby"
+          subtitle="Immediate peace of mind with 14 trusted public tertiary hospitals, specialized maternal centers, university clinics, and emergency health centers nearby."
+          items={hospitalItems}
+          officialGraphicUrl="/images/manila/hospitals.png"
+          officialGraphicTitle="Hospitals Vicinity Map"
+          themeIcon="hospitals"
+        />
+      </div>
 
       {/* Calculator Component */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

@@ -21,6 +21,18 @@ import JsonLd from '@/components/JsonLd';
 import { getProjectBySlug } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
 import { getProjectApartmentComplexSchema } from '@/lib/schema';
+import OrtigasGoogleMap from '@/components/ortigas/OrtigasGoogleMap';
+import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
+import ManilaListingCards from '@/components/manila/ManilaListingCards';
+import OrtigasInteractivePlans from '@/components/ortigas/OrtigasInteractivePlans';
+import {
+  ortigasNeighborhoodItems,
+  ortigasSchoolItems,
+  ortigasHospitalItems,
+  ortigasProjectFeatureItems,
+  ortigasUnitSpecificationItems,
+  ortigasFacilityItems,
+} from '@/data/ortigasSectionsData';
 
 const project = getProjectBySlug('ortigas')!;
 
@@ -344,6 +356,44 @@ export default function OrtigasProjectPage() {
         </div>
       </section>
 
+      {/* PROJECT FEATURES SECTION */}
+      <ManilaListingCards
+        id="project-features"
+        tag="13-Hectare Enclave Amenities"
+        title="Project Features"
+        subtitle="Experience integrated resort-style living with an on-site Deca Community Mall, 1.3-hectare central Lagoon Park, and multi-purpose sports arenas."
+        items={ortigasProjectFeatureItems}
+        referenceGraphicUrl="/images/ortigas/site-development-plan.png"
+        referenceGraphicTitle="Project Features Masterplan"
+      />
+
+      {/* UNIT SPECIFICATIONS SECTION */}
+      <section className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaListingCards
+          id="unit-specifications"
+          tag="Turnkey Move-In Deliverables"
+          title="Unit Specifications"
+          subtitle="Every home at Urban Deca Homes Ortigas is delivered 100% turnkey finished with full ceramic flooring, granite countertops, balconies, and life safety provisions."
+          items={ortigasUnitSpecificationItems}
+          referenceGraphicUrl="/images/ortigas/typical-floor-plan.png"
+          referenceGraphicTitle="Turnkey Inclusions Schematic"
+        />
+      </section>
+
+      {/* FACILITIES AND SERVICES SECTION */}
+      <ManilaListingCards
+        id="facilities-and-services"
+        tag="Building Systems & Utilities"
+        title="Facilities and Services"
+        subtitle="Built to high-density modern standards featuring 4 high-speed elevators per tower, complete fire suppression networks, biological sewage treatment, and emergency power."
+        items={ortigasFacilityItems}
+        referenceGraphicUrl="/images/ortigas/building-phases.png"
+        referenceGraphicTitle="Tower Phases & Systems Schematic"
+      />
+
+      {/* SITE DEVELOPMENT PLAN, TYPICAL FLOOR PLAN, UNIT LAYOUT WITH ZOOM MODAL */}
+      <OrtigasInteractivePlans />
+
       {/* Location Proximity & Map */}
       <section className="bg-stone-100/60 py-20 border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -381,6 +431,49 @@ export default function OrtigasProjectPage() {
           </div>
         </div>
       </section>
+
+      {/* LOCATION GOOGLE MAP SECTION */}
+      <OrtigasGoogleMap />
+
+      {/* NEIGHBORHOOD SLIDESHOW SECTION */}
+      <div className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaSlideshow
+          id="neighborhood"
+          tag="Pasig & Ortigas Commercial Corridor"
+          title="Neighborhood"
+          subtitle="Discover premier retail centers, major CBD employment hubs, scenic riverfront developments, and transit terminals surrounding Urban Deca Homes Ortigas."
+          items={ortigasNeighborhoodItems}
+          officialGraphicUrl="/images/ortigas/vicinity-map.png"
+          officialGraphicTitle="Ortigas Corridor Vicinity Map"
+          themeIcon="neighborhood"
+        />
+      </div>
+
+      {/* SCHOOLS NEARBY SLIDESHOW SECTION */}
+      <ManilaSlideshow
+        id="schools-nearby"
+        tag="Academic Centers & Universities"
+        title="Schools Nearby"
+        subtitle="Unmatched proximity to reputable Catholic colleges, prestigious international institutions, science high schools, and respected universities in Pasig."
+        items={ortigasSchoolItems}
+        officialGraphicUrl="/images/ortigas/location-map.png"
+        officialGraphicTitle="Schools Location Map"
+        themeIcon="schools"
+      />
+
+      {/* HOSPITALS NEARBY SLIDESHOW SECTION */}
+      <div className="bg-stone-100/60 border-y border-stone-200">
+        <ManilaSlideshow
+          id="hospitals-nearby"
+          tag="Healthcare & Medical Centers"
+          title="Hospitals Nearby"
+          subtitle="Direct access to 14 distinguished medical institutions, including JCI-accredited tertiary hospitals, specialized maternal clinics, and general health centers."
+          items={ortigasHospitalItems}
+          officialGraphicUrl="/images/ortigas/access-routes.png"
+          officialGraphicTitle="Hospitals & Arterial Routes Map"
+          themeIcon="hospitals"
+        />
+      </div>
 
       {/* Calculator Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

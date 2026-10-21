@@ -1,4 +1,4 @@
-﻿# dependencies
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
@@ -46,3 +46,7 @@ hostinger.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scraper temporary files
+scripts/*.html
+

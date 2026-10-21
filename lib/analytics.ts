@@ -8,7 +8,8 @@ type AnalyticsEvent =
   | { name: 'inquiry_submit_success'; params: { project: string; financing_preference: string } }
   | { name: 'inquiry_submit_error'; params: { error_field?: string } }
   | { name: 'calculator_use'; params: { tcp: number; term_years: number } }
-  | { name: 'unit_comparison_filter'; params: { category: string } };
+  | { name: 'unit_comparison_filter'; params: { category: string } }
+  | { name: 'hero_property_search'; params: { location: string; type: string; budget: string } };
 
 export function trackEvent(event: AnalyticsEvent): void {
   if (typeof window === 'undefined') return;
