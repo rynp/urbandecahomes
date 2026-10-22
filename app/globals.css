@@ -168,6 +168,63 @@ body {
   animation: radarPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Badge Sequential Single-Logo Zoom Animation (8s total cycle, random order: BDO -> Security Bank -> Pag-IBIG -> BPI) */
+@keyframes zoomSeqBDO {
+  0%, 25%, 100% {
+    transform: scale(1);
+  }
+  12.5% {
+    transform: scale(0.82);
+  }
+}
+
+@keyframes zoomSeqSecurity {
+  0%, 25%, 50%, 100% {
+    transform: scale(1);
+  }
+  37.5% {
+    transform: scale(0.82);
+  }
+}
+
+@keyframes zoomSeqPagIbig {
+  0%, 50%, 75%, 100% {
+    transform: scale(1);
+  }
+  62.5% {
+    transform: scale(0.82);
+  }
+}
+
+@keyframes zoomSeqBPI {
+  0%, 75%, 100% {
+    transform: scale(1);
+  }
+  87.5% {
+    transform: scale(0.82);
+  }
+}
+
+.badge-seq-sec {
+  animation: zoomSeqSecurity 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.badge-seq-bpi {
+  animation: zoomSeqBPI 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.badge-seq-bdo {
+  animation: zoomSeqBDO 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.badge-seq-pag {
+  animation: zoomSeqPagIbig 8s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Glow Pulse Animation for Hero Action Buttons */
 @keyframes glowPulseButton {
   0%, 100% {

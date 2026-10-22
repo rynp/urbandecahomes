@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <!-- Clean rounded badge container -->
+  <rect width="200" height="200" rx="28" fill="#ffffff" stroke="#e2e8f0" stroke-width="3"/>
+  
+  <!-- Zoomed Pag-IBIG Emblem -->
+  <g transform="translate(100, 104) scale(1.22)">
+    <!-- Pag-IBIG Navy House Silhouette -->
+    <path d="M 0,-76 L -64,-34 C -68,-31 -70,-26 -70,-20 L -70,52 C -70,62 -62,70 -52,70 L 52,70 C 62,70 70,62 70,52 L 70,-20 C 70,-26 68,-31 64,-34 Z" fill="#0c184c"/>
+
+    <!-- Cyan Supporting Hands Silhouette -->
+    <!-- Left Hand -->
+    <path d="M -54,-10 C -54,32 -32,56 -4,56 C -4,44 -26,44 -36,20 L -36,-4 C -36,-8 -42,-11 -46,-8 C -50,-6 -54,-10 -54,-10 Z" fill="#3ac5f4"/>
+    <!-- Right Hand -->
+    <path d="M 54,-10 C 54,32 32,56 4,56 C 4,44 26,44 36,20 L 36,-4 C 36,-8 42,-11 46,-8 C 50,-6 54,-10 54,-10 Z" fill="#3ac5f4"/>
+
+    <!-- Central Golden Yellow Circle (Sun) -->
+    <circle cx="0" cy="0" r="34" fill="#fed000"/>
+
+    <!-- Cyan Head / Dot (Mother & Child) -->
+    <circle cx="22" cy="-28" r="9" fill="#3ac5f4"/>
+    <!-- Navy arc connector -->
+    <path d="M 9,-23 C 14,-16 20,-17 25,-21" stroke="#0c184c" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+
+    <!-- Pag-IBIG FUND Text -->
+    <!-- Pag- -->
+    <text x="0" y="-7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="900" fill="#c4161c" text-anchor="middle" letter-spacing="0.2">Pag-</text>
+    <!-- IBIG -->
+    <text x="0" y="10" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="900" fill="#c4161c" text-anchor="middle" letter-spacing="1">IBIG</text>
+    <!-- FUND -->
+    <text x="0" y="25" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="900" fill="#0c184c" text-anchor="middle" letter-spacing="1.5">FUND</text>
+  </g>
+</svg>

@@ -48,21 +48,21 @@ export default function HomePage() {
 
       {/* Featured Condominium Developments */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-left max-w-3xl mb-12 sm:mb-16">
           <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-[#eb6753] bg-[#eb6753]/10 border border-[#eb6753]/20 px-3.5 py-1.5 rounded-full mb-3">
             <Building2 className="w-3.5 h-3.5 text-[#eb6753]" />
             <span>Active Metro Manila Communities</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 tracking-tight">
-            Featured Metro Manila Condominium Projects
+            Featured Projects in Metro Manila
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
-            Strategically located near major transit routes, business districts, and retail centers. Each community offers fully finished units ready for your family.
+          <p className="text-stone-500 text-xs sm:text-sm mt-2 sm:mt-3 whitespace-nowrap truncate sm:whitespace-normal">
+            Fully finished, move-in ready condos across Metro Manila.
           </p>
         </div>
 
         {/* 3 Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
