@@ -45,47 +45,6 @@ export default function HomePage() {
       {/* Hero Section */}
       <HeroVideo />
 
-      {/* Trust & Accreditations Banner */}
-      <section className="bg-charcoal-950 text-stone-300 py-8 border-y border-white/10 relative overflow-hidden cyber-grid">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#eb6753]/5 to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="flex flex-col items-center group">
-              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-gold-400 group-hover:scale-105 transition-transform duration-300">
-                8990
-              </span>
-              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
-                Holdings, Inc. Developer
-              </span>
-            </div>
-            <div className="flex flex-col items-center group">
-              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-[#eb6753] group-hover:scale-105 transition-transform duration-300">
-                ₱10,000
-              </span>
-              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
-                Low Reservation Fee
-              </span>
-            </div>
-            <div className="flex flex-col items-center group">
-              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-gold-400 group-hover:scale-105 transition-transform duration-300">
-                Up to 30 Yrs
-              </span>
-              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
-                Pag-IBIG Loan Tenure
-              </span>
-            </div>
-            <div className="flex flex-col items-center group">
-              <span className="font-serif text-2xl lg:text-3xl font-extrabold text-emerald-400 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center space-x-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>100% RFO</span>
-              </span>
-              <span className="text-xs text-stone-400 mt-1 font-medium tracking-wide">
-                Ready for Occupancy Units
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Featured Condominium Developments */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

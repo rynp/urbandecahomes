@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
-  ChevronDown,
   ArrowUpRight,
   Phone,
   Send,
@@ -22,8 +21,6 @@ import { trackEvent } from '@/lib/analytics';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [propertiesDropdownOpen, setPropertiesDropdownOpen] = useState(false);
-  const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
   const [quickMenuOpen, setQuickMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -46,33 +43,20 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/', hasDropdown: false },
-    {
-      name: 'Listings',
-      href: '#',
-      hasDropdown: true,
-      isOpen: propertiesDropdownOpen,
-      setIsOpen: setPropertiesDropdownOpen,
-      subItems: projects.map((p) => ({
-        name: p.name,
-        href: `/${p.slug}`,
-      })),
-    },
-    { name: 'Financing', href: '/details', hasDropdown: false },
-    {
-      name: 'Blog',
-      href: '/news-and-promo',
-      hasDropdown: true,
-      isOpen: resourcesDropdownOpen,
-      setIsOpen: setResourcesDropdownOpen,
-      subItems: [
-        { name: 'News & Promos', href: '/news-and-promo' },
-        { name: '4PH Housing', href: '/4ph' },
-        { name: 'Careers & Sales Recruitment', href: '/jobs' },
-      ],
-    },
-    { name: 'About Us', href: '/about-us', hasDropdown: false },
-    { name: 'Contact US', href: '/contact-us', hasDropdown: false },
+    { name: 'Home', shortName: 'Home', href: '/' },
+    ...projects.map((p) => ({
+      name: p.name,
+      shortName: p.slug === 'manila' ? 'Manila' : p.slug === 'ortigas' ? 'Ortigas' : 'Cubao',
+      href: `/${p.slug}`,
+    })),
+  ];
+
+  const quickNavLinks = [
+    { name: 'Financing', href: '/details', desc: 'Calculator & Buyer Guides' },
+    { name: 'Blog', href: '/news-and-promo', desc: 'News, Promos & Updates' },
+    { name: '4PH Housing', href: '/4ph', desc: 'Government Subsidy Program' },
+    { name: 'About Us', href: '/about-us', desc: 'Developer History & Vision' },
+    { name: 'Contact Us', href: '/contact-us', desc: 'Sales Offices & Schedules' },
   ];
 
   return (
@@ -117,111 +101,17 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center space-x-1.5 xl:space-x-2" aria-label="Main Navigation">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
-
-              if (link.hasDropdown) {
-                return (
-                  <div
-                    key={link.name}
-                    className="relative"
-                    onMouseEnter={() => link.setIsOpen?.(true)}
-                    onMouseLeave={() => link.setIsOpen?.(false)}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => link.setIsOpen?.(!link.isOpen)}
-                      className={`group flex items-center space-x-1.5 px-3.5 py-2 text-sm rounded-full transition-all duration-200 ${link.isOpen
-                        ? 'glass-pill-active font-semibold'
-                        : 'glass-pill font-medium text-stone-200 hover:text-white'
-                        }`}
-                      aria-expanded={link.isOpen}
-                      aria-haspopup="true"
-                    >
-                      <span>{link.name}</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-300 ${link.isOpen ? 'rotate-180 text-white' : 'text-stone-300 group-hover:text-white'
-                          }`}
-                      />
-                    </button>
-
-                    {/* Wide Dropdown Menu in Premium Glass Card */}
-                    <div
-                      className={`absolute left-0 top-full pt-2.5 w-[420px] max-w-[90vw] transition-all duration-300 ease-out transform ${link.isOpen
-                        ? 'opacity-100 translate-y-0 visible pointer-events-auto'
-                        : 'opacity-0 translate-y-2 invisible pointer-events-none'
-                        }`}
-                    >
-                      <div className="glass-card rounded-2xl p-4 overflow-hidden">
-                        {/* Dropdown Header */}
-                        <div className="px-3 py-2 text-xs font-bold text-stone-400 uppercase tracking-wider border-b border-white/10 flex items-center justify-between">
-                          <span>{link.name === 'Listings' ? 'Active Communities' : 'Resources & Guides'}</span>
-                          <span className="text-[#eb6753] text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#eb6753]/15 border border-[#eb6753]/30">
-                            Metro Manila
-                          </span>
-                        </div>
-
-                        {/* Dropdown Items with Redirection Icon */}
-                        <div className="mt-2 space-y-1">
-                          {link.subItems?.map((sub) => (
-                            <Link
-                              key={sub.name}
-                              href={sub.href}
-                              onClick={() => link.setIsOpen?.(false)}
-                              className="group flex items-center justify-between px-3.5 py-3 rounded-xl hover:bg-white/10 transition-all duration-200 border border-transparent hover:border-white/10"
-                            >
-                              <span className="text-sm font-semibold text-white group-hover:text-[#eb6753] transition-colors whitespace-nowrap drop-shadow-sm">
-                                {sub.name}
-                              </span>
-                              <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#eb6753] group-hover:border-[#eb6753] flex items-center justify-center transition-all duration-200 flex-shrink-0 ml-4">
-                                <ArrowUpRight className="w-4 h-4 text-stone-300 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-
-                        {/* Inquire Now & Call Us Action Buttons */}
-                        <div className="mt-4 pt-3.5 border-t border-white/10 grid grid-cols-2 gap-3">
-                          <Link
-                            href="/inquire-now"
-                            onClick={() => {
-                              link.setIsOpen?.(false);
-                              trackEvent({
-                                name: 'inquiry_cta_click',
-                                params: { location_source: 'navbar_dropdown' },
-                              });
-                            }}
-                            className="flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#eb6753] hover:bg-[#f05a3e] rounded-xl shadow-lg shadow-[#eb6753]/30 transition-all transform hover:-translate-y-0.5"
-                          >
-                            <Send className="w-3.5 h-3.5 mr-1.5" />
-                            <span>Inquire Now</span>
-                          </Link>
-                          <a
-                            href={`tel:${businessInfo.phones[0].value}`}
-                            onClick={() => {
-                              link.setIsOpen?.(false);
-                              handlePhoneClick(businessInfo.phones[0].value);
-                            }}
-                            className="flex items-center justify-center px-4 py-2.5 text-xs font-semibold text-stone-200 hover:text-white glass-pill rounded-xl transition-all"
-                          >
-                            <Phone className="w-3.5 h-3.5 mr-1.5 text-[#eb6753]" />
-                            <span>Call Us</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`flex items-center space-x-1.5 px-4 py-2 text-sm rounded-full transition-all duration-200 ${isActive
+                  className={`flex items-center space-x-1.5 px-3.5 xl:px-4 py-2 text-sm rounded-full transition-all duration-200 whitespace-nowrap ${isActive
                     ? 'glass-pill-active font-semibold'
                     : 'glass-pill font-medium text-stone-200 hover:text-white'
                     }`}
                 >
-                  <span>{link.name}</span>
+                  <span className="hidden xl:inline">{link.name}</span>
+                  <span className="xl:hidden">{link.shortName || link.name}</span>
                 </Link>
               );
             })}
@@ -318,6 +208,36 @@ export default function Navbar() {
                     <MessageCircle className="w-4 h-4 mr-2 text-emerald-400" />
                     <span>Chat on WhatsApp</span>
                   </a>
+                </div>
+
+                {/* Navigation Menu Options Under WhatsApp Button */}
+                <div className="mt-3.5 pt-3 border-t border-white/10">
+                  <div className="px-2 pb-1.5 text-[11px] font-bold text-stone-400 uppercase tracking-wider flex items-center justify-between">
+                    <span>Navigation Menu</span>
+                    <span className="text-[#eb6753] text-[10px] font-semibold">Deca Guides</span>
+                  </div>
+                  <div className="space-y-1">
+                    {quickNavLinks.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setQuickMenuOpen(false)}
+                        className="group flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 border border-transparent hover:border-white/10"
+                      >
+                        <div>
+                          <span className="block text-sm font-semibold text-white group-hover:text-[#eb6753] transition-colors">
+                            {item.name}
+                          </span>
+                          <span className="block text-[11px] text-stone-400 group-hover:text-stone-300 transition-colors">
+                            {item.desc}
+                          </span>
+                        </div>
+                        <div className="w-7 h-7 rounded-full bg-white/5 border border-white/10 group-hover:bg-[#eb6753] group-hover:border-[#eb6753] flex items-center justify-center transition-all duration-200 flex-shrink-0 ml-2">
+                          <ArrowUpRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-3.5 pt-3 border-t border-white/10 text-[11px] text-stone-300 space-y-1.5">
