@@ -35,12 +35,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Property Visual Header */}
       <div className="relative h-64 w-full overflow-hidden bg-charcoal-900">
         <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.12] contrast-[1.02]"
           style={{ backgroundImage: `url(${project.heroImage})` }}
         />
         {/* Futuristic Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-charcoal-950/40 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950/30 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-charcoal-950/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal-950/20 to-transparent pointer-events-none" />
 
         {/* Top Badges (Preserved for later use) */}
         {/*
@@ -66,9 +66,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Card Body */}
-      <div className="p-6 flex-1 flex flex-col justify-between space-y-5 bg-gradient-to-b from-white to-stone-50/60">
+      <div className="p-5 lg:p-4.5 xl:p-6 flex-1 flex flex-col justify-between space-y-4 lg:space-y-3.5 xl:space-y-5 bg-gradient-to-b from-white to-stone-50/60">
         {/* Pricing Highlights in Futuristic Glass Box */}
-        <div className="p-3.5 rounded-xl bg-stone-100/70 border border-stone-200/80 backdrop-blur-sm space-y-2">
+        <div className="p-3.5 lg:p-3 xl:p-3.5 rounded-xl bg-stone-100/70 border border-stone-200/80 backdrop-blur-sm space-y-2">
           {/* Contract Price Block */}
           <div>
             {/* Header Line: Label on Left, Financing Logos on Right */}
@@ -115,36 +115,36 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </div>
 
             {/* Price Value: Proportional top and bottom spacing */}
-            <span className="text-base sm:text-lg font-extrabold text-charcoal-900 block leading-tight mt-2.5 sm:mt-3 mb-0.5 whitespace-nowrap">
+            <span className="text-base lg:text-[15px] xl:text-lg font-extrabold text-charcoal-900 block leading-tight mt-2.5 sm:mt-3 mb-0.5 whitespace-nowrap">
               {project.priceRangeFormatted}
             </span>
           </div>
 
           {/* Bottom Row: Monthly Amortization Full Width on One Line */}
-          <div className="pt-2 border-t border-stone-200/60 flex items-center space-x-1.5 whitespace-nowrap">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500 whitespace-nowrap">
+          <div className="pt-2 border-t border-stone-200/60 flex items-center justify-between gap-1 whitespace-nowrap">
+            <span className="text-[10px] lg:text-[9.5px] xl:text-[10px] font-bold uppercase tracking-wider lg:tracking-tight xl:tracking-wider text-stone-500 whitespace-nowrap flex-shrink-0">
               Est. Monthly Amort:
             </span>
-            <span className="text-xs sm:text-sm font-bold text-[#eb6753] whitespace-nowrap">
+            <span className="text-xs lg:text-[11.5px] xl:text-sm font-bold text-[#eb6753] whitespace-nowrap flex-shrink-0">
               From ~₱{lowestMonthly.toLocaleString()}/mo
             </span>
           </div>
         </div>
 
         {/* Unit Specifications (Bedrooms, Bathrooms, AreaSqm) */}
-        <div className="flex items-center space-x-2.5 sm:space-x-3 text-xs sm:text-[13px] text-stone-700 font-medium whitespace-nowrap">
-          <div className="flex items-center space-x-1.5 flex-shrink-0 whitespace-nowrap">
-            <Bed className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-600 flex-shrink-0" />
+        <div className="flex items-center space-x-2 sm:space-x-2.5 lg:space-x-1.5 xl:space-x-2.5 text-xs lg:text-[11.5px] xl:text-[13px] text-stone-700 font-medium whitespace-nowrap">
+          <div className="flex items-center space-x-1 lg:space-x-1 xl:space-x-1.5 flex-shrink-0 whitespace-nowrap">
+            <Bed className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-stone-600 flex-shrink-0" />
             <span className="whitespace-nowrap">{bedDisplay}</span>
           </div>
           <span className="text-stone-300 select-none flex-shrink-0">|</span>
-          <div className="flex items-center space-x-1.5 flex-shrink-0 whitespace-nowrap">
-            <Bath className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-600 flex-shrink-0" />
+          <div className="flex items-center space-x-1 lg:space-x-1 xl:space-x-1.5 flex-shrink-0 whitespace-nowrap">
+            <Bath className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-stone-600 flex-shrink-0" />
             <span className="whitespace-nowrap">{bathDisplay}</span>
           </div>
           <span className="text-stone-300 select-none flex-shrink-0">|</span>
-          <div className="flex items-center space-x-1.5 flex-shrink-0 whitespace-nowrap">
-            <Ruler className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-600 flex-shrink-0" />
+          <div className="flex items-center space-x-1 lg:space-x-1 xl:space-x-1.5 flex-shrink-0 whitespace-nowrap">
+            <Ruler className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-stone-600 flex-shrink-0" />
             <span className="whitespace-nowrap">{areaDisplay}</span>
           </div>
         </div>

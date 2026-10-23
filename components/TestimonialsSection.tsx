@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { BadgeCheck, Building2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { BadgeCheck, ChevronRight, ChevronLeft } from 'lucide-react';
 import { homeownerTestimonials } from '@/data/testimonials';
 
 // Fallback background image if a testimonial does not have one
@@ -312,33 +312,6 @@ export default function TestimonialsSection() {
               />
             );
           })}
-        </div>
-
-        {/* Bottom Social Proof Metrics */}
-        <div className="mt-10 sm:mt-12 p-6 sm:p-8 rounded-2xl bg-white border border-stone-200/90 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-xl gold-gradient text-charcoal-900 flex items-center justify-center flex-shrink-0 shadow">
-              <Building2 className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="font-serif text-lg font-bold text-charcoal-900">
-                100,000+ Filipino Families Housed Nationwide
-              </h4>
-              <p className="text-xs text-stone-500 mt-0.5">
-                Join our flourishing communities across Metro Manila. Low reservations, flexible Pag-IBIG terms, and doorstep retail centers.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto">
-            <a
-              href="/inquire-now"
-              className="w-full md:w-auto btn-futuristic inline-flex items-center justify-center px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#eb6753] hover:bg-[#d85542] rounded-xl shadow-md shadow-[#eb6753]/25 transition-all transform hover:-translate-y-0.5"
-            >
-              <span>Share Inquiries</span>
-              <ChevronRight className="w-3.5 h-3.5 ml-1" />
-            </a>
-          </div>
         </div>
       </div>
     </section>

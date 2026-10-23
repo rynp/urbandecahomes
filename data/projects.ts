@@ -92,7 +92,7 @@ export const projects: Project[] = [
         { name: 'University of Santo Tomas (UST)', distance: '20 mins', type: 'School' },
       ],
     },
-    heroImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+    heroImage: '/images/manila/hero.jpg',
     galleryImages: [
       {
         url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80',
@@ -267,7 +267,7 @@ export const projects: Project[] = [
         { name: 'Rizal Transport Terminals', distance: '5 mins', type: 'Transit' },
       ],
     },
-    heroImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+    heroImage: '/images/ortigas/hero.jpg',
     galleryImages: [
       {
         url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
@@ -411,7 +411,7 @@ export const projects: Project[] = [
         { name: 'Smart Araneta Coliseum', distance: '6 mins walk', type: 'CBD' },
       ],
     },
-    heroImage: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+    heroImage: '/images/cubao/hero.jpg',
     galleryImages: [
       {
         url: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',

@@ -138,39 +138,108 @@ function InquiryContent() {
         </div>
       </section>
 
-      {/* Comprehensive FAQs Section */}
-      <section className="bg-white py-20 border-t border-stone-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full">
-              Buyer Questions
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
+      {/* Comprehensive FAQs Section - Dark Luxury Theme with Animated Mesh Gradient */}
+      <section className="bg-[#0c0c10] py-20 sm:py-24 border-t border-white/10 relative overflow-hidden">
+        {/* Subtle Cyber Grid */}
+        <div className="absolute inset-0 cyber-grid opacity-20 pointer-events-none" />
+
+        {/* Dynamic Multi-Stop Animated Gradient Mesh */}
+        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#eb6753]/25 via-[#eb6753]/10 to-transparent rounded-full blur-[100px] animate-gradient-shift pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-[540px] h-[540px] bg-gradient-to-tl from-[#e8cf7b]/20 via-[#d4b455]/10 to-transparent rounded-full blur-[110px] animate-gradient-shift-slow pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-radial from-[#eb6753]/10 via-transparent to-transparent rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md shadow-sm mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#eb6753] animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-widest text-gold-300">
+                Buyer Guidance &amp; Policies
+              </span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
               Frequently Asked Questions
             </h2>
-            <p className="text-stone-600 text-sm mt-2">
+            <p className="text-stone-300 text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
               Everything you need to know about purchasing, financing, and moving into your Urban Deca Homes condominium.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {globalFaqs.map((faq) => (
-              <div
-                key={faq.id}
-                className="p-6 rounded-xl bg-stone-50 border border-stone-200 space-y-2"
-              >
-                <div className="flex items-center space-x-2 text-[11px] font-bold uppercase tracking-wider text-gold-700">
-                  <HelpCircle className="w-3.5 h-3.5" />
-                  <span>{faq.category}</span>
+          {/* Open FAQ Cards (No Accordion Effect) */}
+          <div className="space-y-4 sm:space-y-5">
+            {globalFaqs.map((faq, index) => {
+              const indexNumber = String(index + 1).padStart(2, '0');
+              return (
+                <div
+                  key={faq.id}
+                  className="group relative rounded-2xl bg-[#14141c]/90 hover:bg-[#181822] border border-white/10 hover:border-[#eb6753]/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_32px_-6px_rgba(235,103,83,0.25)] hover:-translate-y-1 transition-all duration-300 p-6 sm:p-7 backdrop-blur-md overflow-hidden"
+                >
+                  {/* Ambient Multi-Stop Hover Glow Backdrop */}
+                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#eb6753]/30 via-[#e8cf7b]/25 to-[#eb6753]/30 opacity-0 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none blur-[6px]" />
+
+                  {/* Inner Corner Subtle Light Sheen */}
+                  <div className="absolute top-0 right-0 w-64 h-32 bg-gradient-to-bl from-[#eb6753]/15 via-[#e8cf7b]/10 to-transparent rounded-tr-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Left Vertical Active Indicator Bar */}
+                  <div className="absolute left-0 top-4 bottom-4 w-[3.5px] rounded-r-full bg-gradient-to-b from-[#eb6753] to-[#e8cf7b] opacity-0 group-hover:opacity-100 transition-all duration-300" />
+
+                  <div className="relative z-10">
+                    {/* Category Pill */}
+                    <div className="inline-flex items-center space-x-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gold-400 bg-white/5 border border-white/10 px-2.5 py-1 rounded-md mb-3">
+                      <HelpCircle className="w-3.5 h-3.5 text-gold-400" />
+                      <span>{faq.category}</span>
+                    </div>
+
+                    {/* Question Title with Monospace Index */}
+                    <div className="flex items-start space-x-3.5 sm:space-x-4 mb-3">
+                      <span className="font-mono text-xs sm:text-[13px] font-bold tracking-wider text-gold-400 pt-0.5 select-none">
+                        {indexNumber}
+                      </span>
+                      <h3 className="font-serif text-[17px] sm:text-[19px] font-bold text-white group-hover:text-gold-200 transition-colors tracking-tight leading-snug">
+                        {faq.question}
+                      </h3>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-white/10 my-3.5" />
+
+                    {/* Full Visible Answer (No Accordion Collapse) */}
+                    <p className="text-xs sm:text-sm text-stone-300 leading-[1.8] font-normal pl-7 sm:pl-8">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="font-serif text-base font-bold text-charcoal-900">
-                  {faq.question}
-                </h3>
-                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                  {faq.answer}
-                </p>
+              );
+            })}
+          </div>
+
+          {/* Still Need Assistance Concierge Card */}
+          <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#161620] via-[#1a1a24] to-[#161620] border border-white/10 text-center relative overflow-hidden shadow-2xl">
+            <div className="relative z-10">
+              <h4 className="font-serif text-lg sm:text-xl font-bold text-white">
+                Have a specific question not covered here?
+              </h4>
+              <p className="text-xs sm:text-sm text-stone-300 mt-2 max-w-lg mx-auto leading-relaxed">
+                Our accredited property specialists are on standby to provide personalized Pag-IBIG loan evaluations and answer unit availability inquiries.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3.5 mt-6">
+                <a
+                  href={`tel:${businessInfo.phones[0].value}`}
+                  className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/10 hover:bg-white text-white hover:text-charcoal-900 border border-white/15 text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm"
+                >
+                  <Phone className="w-3.5 h-3.5 mr-2 text-gold-400" />
+                  <span>Call Hotline: {businessInfo.phones[0].value}</span>
+                </a>
+                <a
+                  href={businessInfo.socialLinks.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm shadow-emerald-900/30"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 mr-2" />
+                  <span>Chat on WhatsApp</span>
+                </a>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
