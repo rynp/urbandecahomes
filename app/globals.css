@@ -172,36 +172,44 @@ body {
 @keyframes zoomSeqBDO {
   0%, 25%, 100% {
     transform: scale(1);
+    z-index: 1;
   }
   12.5% {
-    transform: scale(0.82);
+    transform: scale(1.18);
+    z-index: 10;
   }
 }
 
 @keyframes zoomSeqSecurity {
   0%, 25%, 50%, 100% {
     transform: scale(1);
+    z-index: 1;
   }
   37.5% {
-    transform: scale(0.82);
+    transform: scale(1.18);
+    z-index: 10;
   }
 }
 
 @keyframes zoomSeqPagIbig {
   0%, 50%, 75%, 100% {
     transform: scale(1);
+    z-index: 1;
   }
   62.5% {
-    transform: scale(0.82);
+    transform: scale(1.18);
+    z-index: 10;
   }
 }
 
 @keyframes zoomSeqBPI {
   0%, 75%, 100% {
     transform: scale(1);
+    z-index: 1;
   }
   87.5% {
-    transform: scale(0.82);
+    transform: scale(1.18);
+    z-index: 10;
   }
 }
 
@@ -223,6 +231,14 @@ body {
 .badge-seq-pag {
   animation: zoomSeqPagIbig 8s ease-in-out infinite;
   will-change: transform;
+}
+
+.badge-seq-sec:hover,
+.badge-seq-bpi:hover,
+.badge-seq-bdo:hover,
+.badge-seq-pag:hover {
+  transform: scale(1.22) !important;
+  z-index: 20;
 }
 
 /* Glow Pulse Animation for Hero Action Buttons */

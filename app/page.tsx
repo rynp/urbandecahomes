@@ -47,8 +47,8 @@ export default function HomePage() {
 
 
       {/* Featured Condominium Developments */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-left max-w-3xl mb-12 sm:mb-16">
+      <section className="pt-10 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-left max-w-3xl mb-8 sm:mb-10">
           <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-[#eb6753] bg-[#eb6753]/10 border border-[#eb6753]/20 px-3.5 py-1.5 rounded-full mb-3">
             <Building2 className="w-3.5 h-3.5 text-[#eb6753]" />
             <span>Active Metro Manila Communities</span>
@@ -69,10 +69,56 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Unit Comparison Section */}
+      <section className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <UnitComparison />
+      </section>
+
+      {/* Interactive Financing Calculator Section */}
+      <section id="calculator" className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <FinancingCalculator />
+      </section>
+
+      {/* Main Conversion Inquiry Form Section */}
+      <section className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <InquiryForm
+          title="Reserve Your Unit or Request Free Computations"
+          subtitle="Submit your details below to schedule a model unit viewing or receive an official Pag-IBIG computation sheet."
+        />
+      </section>
+
+      {/* 4PH Housing Banner */}
+      <section className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="rounded-2xl gold-gradient p-8 sm:p-12 text-charcoal-900 flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
+          <div className="space-y-3 max-w-2xl">
+            <span className="inline-block px-3 py-1 bg-charcoal-900 text-gold-400 text-xs font-bold uppercase tracking-wider rounded-full">
+              National Housing Program
+            </span>
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
+              Pambansang Pabahay para sa Pilipino (4PH) at Urban Deca Homes
+            </h3>
+            <p className="text-sm sm:text-base text-charcoal-800 leading-relaxed font-medium">
+              Qualified minimum-wage earners and entry-level employees can avail of subsidized interest rates and extended Pag-IBIG loan terms at Urban Deca Homes Manila in Tondo.
+            </p>
+          </div>
+
+          <Link
+            href="/4ph"
+            className="flex-shrink-0 inline-flex items-center px-8 py-4 text-xs font-bold uppercase tracking-wider bg-charcoal-900 text-white hover:bg-charcoal-800 rounded-lg shadow transition-all transform hover:-translate-y-0.5"
+          >
+            <span>Learn About 4PH Program</span>
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Buyer Testimonials & Real Stories Component */}
+      <TestimonialsSection />
+
       {/* Why Choose Urban Deca Homes (Pillars) */}
-      <section className="bg-stone-100/70 py-24 border-y border-stone-200/80 relative cyber-grid-light">
+      <section className="bg-stone-100/70 py-12 sm:py-16 border-y border-stone-200/80 relative cyber-grid-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-[#eb6753] bg-white px-3.5 py-1.5 rounded-full border border-stone-200 shadow-2xs">
               Price • Quality • Service
             </span>
@@ -127,56 +173,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Unit Comparison Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <UnitComparison />
-      </section>
-
-      {/* Interactive Financing Calculator Section */}
-      <section id="calculator" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <FinancingCalculator />
-      </section>
-
-      {/* 4PH Housing Banner */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="rounded-2xl gold-gradient p-8 sm:p-12 text-charcoal-900 flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
-          <div className="space-y-3 max-w-2xl">
-            <span className="inline-block px-3 py-1 bg-charcoal-900 text-gold-400 text-xs font-bold uppercase tracking-wider rounded-full">
-              National Housing Program
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
-              Pambansang Pabahay para sa Pilipino (4PH) at Urban Deca Homes
-            </h3>
-            <p className="text-sm sm:text-base text-charcoal-800 leading-relaxed font-medium">
-              Qualified minimum-wage earners and entry-level employees can avail of subsidized interest rates and extended Pag-IBIG loan terms at Urban Deca Homes Manila in Tondo.
-            </p>
-          </div>
-
-          <Link
-            href="/4ph"
-            className="flex-shrink-0 inline-flex items-center px-8 py-4 text-xs font-bold uppercase tracking-wider bg-charcoal-900 text-white hover:bg-charcoal-800 rounded-lg shadow transition-all transform hover:-translate-y-0.5"
-          >
-            <span>Learn About 4PH Program</span>
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Buyer Testimonials & Real Stories Component */}
-      <TestimonialsSection />
-
-      {/* Main Conversion Inquiry Form Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <InquiryForm
-          title="Reserve Your Unit or Request Free Computations"
-          subtitle="Submit your details below to schedule a model unit viewing or receive an official Pag-IBIG computation sheet."
-        />
-      </section>
-
       {/* FAQ Preview Section */}
-      <section className="bg-white py-20 border-t border-stone-200">
+      <section className="bg-white py-12 sm:py-16 border-t border-stone-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 sm:mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full">
               Frequently Asked Questions
             </span>

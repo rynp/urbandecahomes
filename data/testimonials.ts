@@ -11,12 +11,13 @@ export interface Testimonial {
   yearMovedIn: string;
   category: 'Manila' | 'Ortigas' | 'Cubao' | 'OFW';
   highlight: string;
+  bgImage?: string;
 }
 
 export const homeownerTestimonials: Testimonial[] = [
   {
     id: 't-1',
-    name: 'Eduardo & Marissa Ramos',
+    name: 'Marissa Ramos',
     role: 'Unit Owners & Family',
     project: 'Urban Deca Homes Manila',
     unitType: '2-Bedroom Unit',
@@ -28,10 +29,11 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2023',
     category: 'Manila',
     highlight: 'Saved ₱14,000/mo vs Renting',
+    bgImage: '/images/testimonials/testimonial-1.jpg',
   },
   {
     id: 't-2',
-    name: 'Camille Anne Santos',
+    name: 'Jalke & Camille Santos',
     role: 'BPO Team Leader',
     project: 'Urban Deca Homes Ortigas',
     unitType: '2-Bedroom Unit',
@@ -43,6 +45,7 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2024',
     category: 'Ortigas',
     highlight: 'Reduced Daily Commute by 2 Hours',
+    bgImage: '/images/testimonials/testimonial-2.jpg',
   },
   {
     id: 't-3',
@@ -58,10 +61,11 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2022',
     category: 'OFW',
     highlight: '100% Tenancy Rate Since Handover',
+    bgImage: '/images/testimonials/testimonial-3.jpg',
   },
   {
     id: 't-4',
-    name: 'Patricia & Mark Reyes',
+    name: 'Patricia Reyes',
     role: 'Hospital Staff Nurse & Medical Tech',
     project: 'Urban Deca Homes Manila',
     unitType: '2-Bedroom Unit',
@@ -73,6 +77,7 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2024',
     category: 'Manila',
     highlight: 'Fast-Track Pag-IBIG 3-Week Approval',
+    bgImage: '/images/testimonials/testimonial-4.jpg',
   },
   {
     id: 't-5',
@@ -88,10 +93,11 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2023',
     category: 'Ortigas',
     highlight: 'Work-from-Home Lifestyle & DECA Mall',
+    bgImage: '/images/testimonials/testimonial-5.jpg',
   },
   {
     id: 't-6',
-    name: 'Maria Cristina Flores',
+    name: 'Mark & Cristina Flores',
     role: 'Government Administrative Officer',
     project: 'Urban Deca Towers Cubao',
     unitType: 'Transit Studio Suite',
@@ -103,10 +109,11 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2024',
     category: 'Cubao',
     highlight: '₱10,000 Reservation Easy Entry',
+    bgImage: '/images/testimonials/testimonial-6.jpg',
   },
   {
     id: 't-7',
-    name: 'Alvin & Joy Soriano',
+    name: 'Alvin Soriano',
     role: 'E-Commerce Business Owners',
     project: 'Urban Deca Homes Manila',
     unitType: '2-Bedroom Corner Unit',
@@ -118,6 +125,7 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2023',
     category: 'Manila',
     highlight: 'Self-Employed Loan Assistance',
+    bgImage: '/images/testimonials/testimonial-7.jpg',
   },
   {
     id: 't-8',
@@ -133,5 +141,38 @@ export const homeownerTestimonials: Testimonial[] = [
     yearMovedIn: '2023',
     category: 'OFW',
     highlight: 'Gated 24/7 Family Security',
+    bgImage: '/images/testimonials/testimonial-8.jpg',
+  },
+  {
+    id: 't-9',
+    name: 'Kenneth & Sarah Del Rosario',
+    role: 'IT Project Manager & Finance Analyst',
+    project: 'Urban Deca Homes Manila',
+    unitType: '2-Bedroom Unit',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&h=256&q=80',
+    initials: 'KD',
+    quote:
+      'Finding a fully finished home with accessible Pag-IBIG monthly amortization in Tondo made our move seamless. Having the DECA Mall right beside us gives our family effortless convenience every day.',
+    rating: 5,
+    yearMovedIn: '2024',
+    category: 'Manila',
+    highlight: 'Seamless Family Turnover',
+    bgImage: '/images/testimonials/testimonial-9.jpg',
+  },
+  {
+    id: 't-10',
+    name: 'Ramon Bautista',
+    role: 'Senior Operations Lead',
+    project: 'Urban Deca Towers Cubao',
+    unitType: 'Transit Studio Suite',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80',
+    initials: 'RB',
+    quote:
+      'Being steps away from MRT-3 Cubao cuts my daily commuting stress down to zero. The ₱10,000 reservation fee and fast loan processing made owning my first city home truly reachable.',
+    rating: 5,
+    yearMovedIn: '2024',
+    category: 'Cubao',
+    highlight: 'Prime Transit Convenience along EDSA',
+    bgImage: '/images/testimonials/testimonial-10.jpg',
   },
 ];

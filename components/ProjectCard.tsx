@@ -77,39 +77,39 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 Contract Price (TCP)
               </span>
 
-              {/* Financing Partner Logos: overlapping top, zero effect on label container height */}
-              <div className="flex items-center gap-1.5 flex-shrink-0 -mt-2.5 -mr-0.5">
+              {/* Financing Partner Logos: a bit bigger, slightly overlapping the main contract price top border */}
+              <div className="flex items-center gap-1.5 flex-shrink-0 -mt-5 -mr-0.5 relative z-10">
                 <img
                   src="/images/partners/security-bank.svg"
                   alt="Security Bank"
                   title="Security Bank"
-                  className="w-5 h-5 rounded object-contain shadow-2xs badge-seq-sec hover:scale-110 transition-transform"
-                  width={20}
-                  height={20}
+                  className="w-[26px] h-[26px] rounded object-contain shadow-xs badge-seq-sec transition-transform cursor-pointer"
+                  width={26}
+                  height={26}
                 />
                 <img
                   src="/images/partners/bpi.svg"
                   alt="BPI"
                   title="BPI"
-                  className="w-5 h-5 rounded object-contain shadow-2xs badge-seq-bpi hover:scale-110 transition-transform"
-                  width={20}
-                  height={20}
+                  className="w-[26px] h-[26px] rounded object-contain shadow-xs badge-seq-bpi transition-transform cursor-pointer"
+                  width={26}
+                  height={26}
                 />
                 <img
                   src="/images/partners/bdo.svg"
                   alt="BDO"
                   title="BDO"
-                  className="w-5 h-5 rounded object-contain shadow-2xs badge-seq-bdo hover:scale-110 transition-transform"
-                  width={20}
-                  height={20}
+                  className="w-[26px] h-[26px] rounded object-contain shadow-xs badge-seq-bdo transition-transform cursor-pointer"
+                  width={26}
+                  height={26}
                 />
                 <img
                   src="/images/partners/pag-ibig.svg"
                   alt="Pag-IBIG Fund"
                   title="Pag-IBIG Fund"
-                  className="w-5 h-5 rounded object-contain shadow-2xs badge-seq-pag hover:scale-110 transition-transform"
-                  width={20}
-                  height={20}
+                  className="w-[26px] h-[26px] rounded object-contain shadow-xs badge-seq-pag transition-transform cursor-pointer"
+                  width={26}
+                  height={26}
                 />
               </div>
             </div>
