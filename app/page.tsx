@@ -127,7 +127,7 @@ export default function HomePage() {
                 <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-charcoal-900">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.05]"
-                    style={{ backgroundImage: `url('/images/ortigas/model-unit-living.jpg')` }}
+                    style={{ backgroundImage: `url('/images/features/affordability-consultation.png')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-black/20 to-black/30" />
 
@@ -208,7 +208,7 @@ export default function HomePage() {
                 <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-charcoal-900">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.05]"
-                    style={{ backgroundImage: `url('/images/manila/community-mall.jpg')` }}
+                    style={{ backgroundImage: `url('/images/features/commercial-mall-lifestyle.png')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-black/20 to-black/30" />
 
@@ -289,7 +289,7 @@ export default function HomePage() {
                 <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-charcoal-900">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.05]"
-                    style={{ backgroundImage: `url('/images/ortigas/amenity-admin-office.jpg')` }}
+                    style={{ backgroundImage: `url('/images/features/pagibig-documentation.png')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-black/20 to-black/30" />
 
