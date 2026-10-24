@@ -30,17 +30,16 @@ interface ManilaGoogle3DMapProps {
 }
 
 export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
-  const [viewMode, setViewMode] = useState<'3d-tilted' | 'satellite' | 'earth'>('3d-tilted');
+  const [viewMode, setViewMode] = useState<'satellite' | 'street'>('satellite');
   const [zoomLevel, setZoomLevel] = useState<number>(17);
-  const [isRotating, setIsRotating] = useState<boolean>(false);
-  const [tiltAngle, setTiltAngle] = useState<number>(65); // 3D isometric tilt
+  const [tiltAngle, setTiltAngle] = useState<number>(65); // 3D isometric tilt for gmp-map-3d
   const [headingAngle, setHeadingAngle] = useState<number>(35);
   const [hasMap3DSupport, setHasMap3DSupport] = useState<boolean>(false);
   const map3dContainerRef = useRef<HTMLDivElement>(null);
 
-  // Urban Deca Homes Manila Coordinates
-  const lat = 14.6225;
-  const lng = 120.9575;
+  // Urban Deca Homes Manila Coordinates (Exact Vitas St, Tondo)
+  const lat = 14.62553;
+  const lng = 120.96279;
 
   // Google Maps API Key from props or environment variable
   const activeApiKey = apiKey || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
@@ -70,16 +69,15 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
   const googleEarthUrl = `https://earth.google.com/web/search/Urban+Deca+Homes+Manila/@${lat},${lng},25a,600d,35y,${headingAngle}h,${tiltAngle}t,0r`;
 
   // Standard Google Maps directions URL
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=Urban+Deca+Homes+Manila,+Vitas+St,+Tondo,+Manila`;
 
-  // Interactive Satellite Embed URL with satellite mode and high zoom
-  const mapEmbedUrl = `https://maps.google.com/maps?q=${lat},${lng}&t=${
-    viewMode === 'satellite' ? 'k' : 'k'
+  // Interactive Satellite Embed URL with high resolution centering on Urban Deca Homes Manila
+  const mapEmbedUrl = `https://maps.google.com/maps?q=Urban+Deca+Homes+Manila,+Vitas+Street,+Tondo,+Manila&t=${
+    viewMode === 'satellite' ? 'k' : 'm'
   }&z=${zoomLevel}&ie=UTF8&iwloc=&output=embed`;
 
-  const toggleTilt = () => {
-    setTiltAngle((prev) => (prev === 65 ? 0 : 65));
-    setViewMode((prev) => (prev === '3d-tilted' ? 'satellite' : '3d-tilted'));
+  const toggleViewMode = () => {
+    setViewMode((prev) => (prev === 'satellite' ? 'street' : 'satellite'));
   };
 
   const rotateHeading = () => {
@@ -101,7 +99,7 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
               <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Live Geo Position" />
             </h3>
             <p className="text-xs text-stone-600 mt-0.5">
-              Photorealistic 3D aerial view centered along Vitas Street, Tondo with 3D buildings and waterfront topography.
+              Photorealistic aerial view centered along Vitas Street, Tondo with 13 residential towers and Deca Mall.
             </p>
           </div>
 
@@ -109,21 +107,21 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
           <div className="flex items-center gap-1.5 self-start sm:self-center bg-stone-100 p-1 rounded-xl border border-stone-200">
             <button
               type="button"
-              onClick={toggleTilt}
+              onClick={toggleViewMode}
               className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                tiltAngle === 65
+                viewMode === 'satellite'
                   ? 'bg-charcoal-900 text-white shadow-sm'
                   : 'text-stone-600 hover:text-charcoal-900'
               }`}
             >
-              <Compass className="w-3.5 h-3.5 text-gold-400" />
-              <span>3D Tilt ({tiltAngle}°)</span>
+              <Layers className="w-3.5 h-3.5 text-gold-400" />
+              <span>{viewMode === 'satellite' ? 'Satellite 3D' : 'Street Map'}</span>
             </button>
             <button
               type="button"
               onClick={rotateHeading}
               className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-stone-600 hover:text-charcoal-900 hover:bg-white/80 transition-all"
-              title="Rotate Heading"
+              title="Heading Angle"
             >
               <RotateCw className="w-3.5 h-3.5 text-stone-500" />
               <span>{headingAngle}°</span>
@@ -134,13 +132,8 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
 
       {/* 3D Viewport Box */}
       <div className="relative h-[340px] sm:h-[400px] w-full bg-charcoal-950 overflow-hidden group">
-        {/* Dynamic 3D Transform Wrapper to simulate photorealistic 3D tilt and perspective */}
-        <div
-          className="w-full h-full transition-transform duration-700 ease-out origin-center"
-          style={{
-            transform: tiltAngle === 65 ? 'perspective(1000px) rotateX(16deg) scale(1.08)' : 'perspective(1000px) rotateX(0deg) scale(1)',
-          }}
-        >
+        {/* Map Viewport Container */}
+        <div className="w-full h-full">
           {/* Real Google Maps 3D Web Component if API key available and loaded */}
           {hasMap3DSupport && activeApiKey ? (
             <div ref={map3dContainerRef} className="w-full h-full">
@@ -159,13 +152,14 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
               </gmp-map-3d>
             </div>
           ) : (
-            /* Photorealistic Google Maps Satellite 3D Viewer */
+            /* Photorealistic Google Maps Satellite Viewer */
             <iframe
-              title="Urban Deca Homes Manila 3D Map View"
+              title="Urban Deca Homes Manila 3D Satellite Map View"
               src={mapEmbedUrl}
-              className="w-full h-full border-0 filter contrast-[1.08] saturate-[1.15]"
+              className="w-full h-full border-0 filter contrast-[1.04]"
               loading="lazy"
               allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
             />
           )}
         </div>
@@ -181,7 +175,7 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
               </span>
             </div>
             <div className="text-[9px] font-mono text-gold-400 mt-0.5">
-              14.6225° N, 120.9575° E • Vitas St.
+              14.6255° N, 120.9628° E • Vitas St., Tondo
             </div>
           </div>
 
@@ -238,7 +232,7 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
               <span>13 RESIDENTIAL TOWERS</span>
             </div>
             <div className="text-stone-400">
-              LAT: 14.6225° N | LNG: 120.9575° E | ELEV: 14M
+              LAT: 14.6255° N | LNG: 120.9628° E | ELEV: 12M
             </div>
           </div>
         </div>

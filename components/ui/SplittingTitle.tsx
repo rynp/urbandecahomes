@@ -26,20 +26,23 @@ export default function SplittingTitle({
     const el = containerRef.current;
     if (!el) return;
 
+    // Check if already in viewport on mount
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setInFocus(true);
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setInFocus(true);
-          } else {
-            // Immediate reset when scrolled out of view
-            setInFocus(false);
           }
         });
       },
       {
-        threshold: 0.2,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1,
+        rootMargin: '0px 0px -20px 0px',
       }
     );
 
