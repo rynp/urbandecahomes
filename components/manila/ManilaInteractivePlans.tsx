@@ -13,6 +13,7 @@ import {
   Video,
 } from 'lucide-react';
 import ZoomablePlanModal from './ZoomablePlanModal';
+import SplittingTitle from '@/components/ui/SplittingTitle';
 
 export default function ManilaInteractivePlans() {
   const [activeModal, setActiveModal] = useState<{
@@ -110,17 +111,15 @@ export default function ManilaInteractivePlans() {
   return (
     <>
       {/* 1. SITE DEVELOPMENT PLAN SECTION */}
-      <section id="site-development-plan" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-200">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <section id="site-plan" className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container border-t border-stone-200 scroll-mt-20">
+        <div className="text-left max-w-2xl mb-8">
           <div className="inline-flex items-center space-x-2 px-3 py-1 bg-gold-50 text-gold-800 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border border-gold-200">
             <Compass className="w-3.5 h-3.5 text-gold-600" />
             <span>Master Community Masterplan</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 tracking-tight">
-            Site Development Plan
-          </h2>
-          <p className="text-stone-600 text-sm sm:text-base mt-2 leading-relaxed">
-            A comprehensive 8.4-hectare master-planned community along Vitas Street featuring 13 mid-rise residential towers, a two-storey Deca Community Mall, and resort amenities.
+          <SplittingTitle text="Site Development Plan" className="mt-1" />
+          <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+            An 8.4-hectare master-planned community featuring 13 mid-rise residential towers and Deca Mall.
           </p>
         </div>
 
@@ -229,17 +228,15 @@ export default function ManilaInteractivePlans() {
       </section>
 
       {/* 2. TYPICAL FLOOR PLAN SECTION */}
-      <section id="typical-floor-plan" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-stone-100/60 border-y border-stone-200">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <section id="floor-plan" className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container bg-stone-100/60 border-y border-stone-200 scroll-mt-20">
+        <div className="text-left max-w-2xl mb-8">
           <div className="inline-flex items-center space-x-2 px-3 py-1 bg-gold-50 text-gold-800 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border border-gold-200">
             <Layers className="w-3.5 h-3.5 text-gold-600" />
             <span>Building Architecture & Layout</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 tracking-tight">
-            Typical Building Floor Plan
-          </h2>
-          <p className="text-stone-600 text-sm sm:text-base mt-2 leading-relaxed">
-            Thoughtfully engineered floor plates designed for maximum natural light, cross-ventilation, dual elevator circulation, and fire-safe dual stairwells.
+          <SplittingTitle text="Typical Building Floor Plan" className="mt-1" />
+          <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+            Dual-elevator tower floor plates engineered for natural ventilation and daylight.
           </p>
         </div>
 
@@ -347,17 +344,15 @@ export default function ManilaInteractivePlans() {
       </section>
 
       {/* 3. UNIT LAYOUT SECTION */}
-      <section id="unit-layout" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-14">
+      <section id="unit-layout" className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container scroll-mt-20">
+        <div className="text-left max-w-2xl mb-8">
           <div className="inline-flex items-center space-x-2 px-3 py-1 bg-gold-50 text-gold-800 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border border-gold-200">
             <Home className="w-3.5 h-3.5 text-gold-600" />
             <span>Interactive Unit Blueprints</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 tracking-tight">
-            Unit Layout Plans & Turnover Cuts
-          </h2>
-          <p className="text-stone-600 text-sm sm:text-base mt-2 leading-relaxed">
-            Click on any unit layout plan to open the high-definition interactive blueprint viewer where you can zoom in, pan, and examine all room dimensions.
+          <SplittingTitle text="Unit Layout Plans & Turnover Cuts" className="mt-1" />
+          <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+            Interactive architectural unit cuts for Studio, 1-Bedroom, and 2-Bedroom layouts.
           </p>
         </div>
 

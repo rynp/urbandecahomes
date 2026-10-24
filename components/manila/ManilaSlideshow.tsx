@@ -14,6 +14,7 @@ import {
   HeartPulse,
 } from 'lucide-react';
 import ZoomablePlanModal from './ZoomablePlanModal';
+import SplittingTitle from '@/components/ui/SplittingTitle';
 
 export interface SlideshowItem {
   id: string;
@@ -90,7 +91,7 @@ export default function ManilaSlideshow({
   };
 
   return (
-    <section id={id} className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" onKeyDown={handleKeyDown} tabIndex={0}>
+    <section id={id} className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container scroll-mt-20" onKeyDown={handleKeyDown} tabIndex={0}>
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
         <div>
@@ -98,10 +99,8 @@ export default function ManilaSlideshow({
             {renderIcon()}
             <span>{tag}</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 tracking-tight">
-            {title}
-          </h2>
-          <p className="text-stone-600 text-sm mt-2 max-w-2xl leading-relaxed">
+          <SplittingTitle text={title} className="mt-1" />
+          <p className="text-stone-600 text-sm mt-1.5 max-w-2xl leading-normal">
             {subtitle}
           </p>
         </div>

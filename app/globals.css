@@ -424,4 +424,28 @@ input[type='range']::-webkit-slider-thumb:hover {
   scrollbar-width: none;
 }
 
+/* Fluid responsive container spacing with exactly 30px breathing room from the sidebar on all screens */
+.manila-section-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .manila-section-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .manila-section-container {
+    /* Below 1400px, content starts at 96px to preserve exactly 30px gap from the 66px sidebar; above 1400px, settles smoothly into standard 32px padding without any jumps */
+    padding-left: max(2rem, calc(96px - max(0px, (100vw - 1280px) / 2)));
+    padding-right: 2rem;
+  }
+}
+
 

@@ -20,10 +20,11 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
     <>
       <JsonLd data={getBreadcrumbSchema(fullItems)} />
       <nav
+        id="page-breadcrumbs"
         aria-label="Breadcrumb"
         className="relative z-20 py-2.5 px-4 bg-charcoal-950/90 backdrop-blur-md border-b border-white/[0.08] transition-colors"
       >
-        <div className="max-w-7xl mx-auto flex items-center space-x-2 text-xs md:text-sm text-stone-300 overflow-x-auto whitespace-nowrap scrollbar-none">
+        <div className="manila-section-container flex items-center space-x-2 text-xs md:text-sm text-stone-300 overflow-x-auto whitespace-nowrap scrollbar-none">
           <Link
             href="/"
             className="flex items-center text-stone-300 hover:text-gold-400 transition-colors group font-medium"

@@ -24,9 +24,12 @@ import { getProjectBySlug } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
 import { getProjectApartmentComplexSchema } from '@/lib/schema';
 import ManilaGoogleMap from '@/components/manila/ManilaGoogleMap';
+import ManilaGoogle3DMap from '@/components/manila/ManilaGoogle3DMap';
 import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
 import ManilaListingCards from '@/components/manila/ManilaListingCards';
 import ManilaInteractivePlans from '@/components/manila/ManilaInteractivePlans';
+import ManilaSidebarNav from '@/components/manila/ManilaSidebarNav';
+import SplittingTitle from '@/components/ui/SplittingTitle';
 import {
   neighborhoodItems,
   schoolItems,
@@ -60,10 +63,14 @@ export default function ManilaProjectPage() {
     <>
       <JsonLd data={getProjectApartmentComplexSchema(project)} />
 
+      {/* Sticky Floating Sidebar Navigation (Tablet & Desktop) */}
+      <ManilaSidebarNav />
+
       {/* Breadcrumbs */}
       <Breadcrumbs items={[{ name: project.name, path: `/${project.slug}` }]} />
 
-      {/* Project Hero Header */}
+      {/* Project Hero Header — TEMPORARILY HIDDEN */}
+      {/*
       <section className="relative bg-charcoal-950 text-white py-16 sm:py-24 border-b border-charcoal-800 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center filter brightness-[0.35]"
@@ -131,9 +138,10 @@ export default function ManilaProjectPage() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Project Overview & Gallery */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Story & Details (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
@@ -141,9 +149,7 @@ export default function ManilaProjectPage() {
               <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full">
                 Development Overview
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-charcoal-900 mt-2">
-                Urban Waterfront Living in the Heart of Tondo
-              </h2>
+              <SplittingTitle text="Urban Waterfront Living in the Heart of Tondo" className="mt-2" />
             </div>
 
             {project.overview.map((paragraph, index) => (
@@ -181,6 +187,9 @@ export default function ManilaProjectPage() {
                 ))}
               </ul>
             </div>
+
+            {/* Google 3D Aerial Map & Location Marker */}
+            <ManilaGoogle3DMap />
           </div>
 
           {/* Right Column: Visual Showcase Gallery (5 cols) */}
@@ -225,17 +234,15 @@ export default function ManilaProjectPage() {
       </section>
 
       {/* Available Unit Floor Plans */}
-      <section id="units" className="bg-stone-100/70 py-20 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+      <section id="units" className="bg-stone-100/70 pt-8 sm:pt-10 pb-12 sm:pb-16 border-y border-stone-200 scroll-mt-20">
+        <div className="manila-section-container">
+          <div className="text-left max-w-2xl mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-white px-3 py-1 rounded-full border border-stone-200">
               Floor Plans & Cuts
             </span>
-            <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
-              Available Unit Categories & Specifications
-            </h2>
-            <p className="text-stone-600 text-sm mt-2">
-              All units are fully tiled and turn-key finished with private balconies and windows.
+            <SplittingTitle text="Available Unit Categories & Specifications" className="mt-2" />
+            <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+              Move-in ready, fully tiled units with private balconies and turnkey inclusions.
             </p>
           </div>
 
@@ -333,16 +340,14 @@ export default function ManilaProjectPage() {
       </section>
 
       {/* Community Amenities */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+      <section id="amenities" className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container scroll-mt-20">
+        <div className="text-left max-w-2xl mb-10">
           <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full">
             Lifestyle Facilities
           </span>
-          <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
-            Complete Community Amenities in Tondo
-          </h2>
-          <p className="text-stone-600 text-sm mt-2">
-            Enjoy full resort lifestyle comforts, sports facilities, and shopping right within your secured gated community.
+          <SplittingTitle text="Complete Community Amenities in Tondo" className="mt-2" />
+          <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+            Resort-inspired swimming pool, multi-purpose sports courts, and gated community comforts.
           </p>
         </div>
 
@@ -368,7 +373,7 @@ export default function ManilaProjectPage() {
         id="project-features"
         tag="Community Amenities & Inclusions"
         title="Project Features"
-        subtitle="Enjoy secure, modern mid-rise condominium living with comprehensive sports facilities, lush pocket parks, and on-site mall conveniences."
+        subtitle="Modern mid-rise condominium living with pocket parks, sports facilities, and on-site mall."
         items={projectFeatureItems}
         referenceGraphicUrl="/images/manila/project-features-pks.png"
         referenceGraphicTitle="Project Features Masterplan"
@@ -380,7 +385,7 @@ export default function ManilaProjectPage() {
           id="unit-specifications"
           tag="Turnkey Move-In Deliverables"
           title="Unit Specifications"
-          subtitle="Every home at Urban Deca Homes Manila is turned over completely finished, tiled, and move-in ready with granite counters, blinds, and utility provisions."
+          subtitle="Turnkey move-in turnover with fully tiled floors, granite counters, and utility provisions."
           items={unitSpecificationItems}
           referenceGraphicUrl="/images/manila/unit-specs.png"
           referenceGraphicTitle="Turnkey Deliverables Schematic"
@@ -392,7 +397,7 @@ export default function ManilaProjectPage() {
         id="facilities-and-services"
         tag="Engineering Systems & Life Safety"
         title="Facilities and Services"
-        subtitle="Built to stringent engineering standards with high-speed elevators, automatic fire suppression, sewage treatment, and standby emergency power."
+        subtitle="High-speed dual elevators, standby emergency power, and comprehensive life-safety infrastructure."
         items={facilityItems}
         referenceGraphicUrl="/images/manila/facilities.png"
         referenceGraphicTitle="Facilities Master Schematic"
@@ -404,19 +409,17 @@ export default function ManilaProjectPage() {
       <ManilaInteractivePlans />
 
       {/* Location Proximity & Map Guide */}
-      <section className="bg-stone-100/60 py-20 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-stone-100/60 pt-8 sm:pt-10 pb-12 sm:pb-16 border-y border-stone-200">
+        <div className="manila-section-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-white px-3 py-1 rounded-full border border-stone-200">
                   Strategic Proximity
                 </span>
-                <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
-                  Minutes from Divisoria, Port Area & University Belt
-                </h2>
-                <p className="text-stone-600 text-sm mt-3 leading-relaxed">
-                  Located along Vitas Street, Urban Deca Homes Manila provides convenient access to Manila&apos;s commercial hubs, transit lines, and schools without long daily commutes.
+                <SplittingTitle text="Minutes from Divisoria, Port Area & University Belt" className="mt-2" />
+                <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+                  Direct access to commercial trading hubs, transit lines, and top academic institutions.
                 </p>
               </div>
 
@@ -450,7 +453,7 @@ export default function ManilaProjectPage() {
           id="neighborhood"
           tag="Manila Vicinity & Commercial Hubs"
           title="Neighborhood"
-          subtitle="Explore the bustling retail destinations, historic cultural attractions, wholesale trading centers, and rapid transit lines within easy reach of your residence."
+          subtitle="Key retail destinations, historic wholesale trading centers, and rapid transit lines nearby."
           items={neighborhoodItems}
           officialGraphicUrl="/images/manila/establishment.png"
           officialGraphicTitle="Neighborhood Establishments Map"
@@ -463,7 +466,7 @@ export default function ManilaProjectPage() {
         id="schools-nearby"
         tag="Academic Centers & Academies"
         title="Schools Nearby"
-        subtitle="Convenient access to established primary schools, premier high schools, Christian academies, and the historic University Belt."
+        subtitle="Close proximity to primary schools, top high schools, and Manila's historic University Belt."
         items={schoolItems}
         officialGraphicUrl="/images/manila/schools.png"
         officialGraphicTitle="Schools Vicinity Map"
@@ -476,7 +479,7 @@ export default function ManilaProjectPage() {
           id="hospitals-nearby"
           tag="Healthcare & Medical Centers"
           title="Hospitals Nearby"
-          subtitle="Immediate peace of mind with 14 trusted public tertiary hospitals, specialized maternal centers, university clinics, and emergency health centers nearby."
+          subtitle="Immediate peace of mind with 14 trusted public and private tertiary hospitals nearby."
           items={hospitalItems}
           officialGraphicUrl="/images/manila/hospitals.png"
           officialGraphicTitle="Hospitals Vicinity Map"
@@ -485,12 +488,12 @@ export default function ManilaProjectPage() {
       </div>
 
       {/* Calculator Component */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-20 manila-section-container">
         <FinancingCalculator initialPrice={2400000} initialProject="manila" />
       </section>
 
       {/* Lead Capture Form */}
-      <section id="inquire" className="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <section id="inquire" className="py-16 px-4 sm:px-6 md:px-8 max-w-4xl mx-auto">
         <InquiryForm
           initialProject="manila"
           title="Inquire About Urban Deca Homes Manila"

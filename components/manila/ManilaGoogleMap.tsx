@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import ZoomablePlanModal from './ZoomablePlanModal';
+import SplittingTitle from '@/components/ui/SplittingTitle';
 
 export default function ManilaGoogleMap() {
   const [activeTab, setActiveTab] = useState<'google' | 'vicinity'>('google');
@@ -24,22 +25,20 @@ export default function ManilaGoogleMap() {
     'https://www.google.com/maps/dir/?api=1&destination=Urban+Deca+Homes+Manila,+Vitas+St,+Tondo,+Manila';
 
   return (
-    <section id="location-map" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="google-map" className="pt-8 sm:pt-10 pb-12 sm:pb-16 manila-section-container scroll-mt-20">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 bg-gold-50 text-gold-800 rounded-full text-xs font-bold uppercase tracking-wider mb-3 border border-gold-200">
+      <div className="text-left max-w-2xl mb-8">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 bg-gold-50 text-gold-800 rounded-full text-xs font-bold uppercase tracking-wider mb-2 border border-gold-200">
           <MapPin className="w-3.5 h-3.5 text-gold-600" />
           <span>Building Location & Vicinity Guide</span>
         </div>
-        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 tracking-tight">
-          Strategic Waterfront Location in Tondo, Manila
-        </h2>
-        <p className="text-stone-600 text-sm sm:text-base mt-3 leading-relaxed">
-          Situated directly along Vitas Street with convenient links to Manila North Harbor, Divisoria, Tayuman LRT, and the NLEX Harbor Link expressway.
+        <SplittingTitle text="Strategic Waterfront Location in Tondo, Manila" className="mt-1" />
+        <p className="text-stone-600 text-sm mt-1.5 leading-normal">
+          Directly along Vitas Street with rapid links to North Harbor, Divisoria, and NLEX.
         </p>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center justify-center mt-6">
+        <div className="flex items-center justify-start mt-5">
           <div className="inline-flex p-1 bg-stone-100 rounded-xl border border-stone-200">
             <button
               type="button"
