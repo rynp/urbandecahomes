@@ -1,0 +1,412 @@
+'use client';
+
+import React, { useState } from 'react';
+import {
+  Download,
+  Check,
+  Building2,
+  Layers,
+  ArrowRight,
+  Maximize2,
+  Sparkles,
+  Compass,
+} from 'lucide-react';
+
+interface UnitPlanData {
+  id: string;
+  badge: string;
+  name: string;
+  sqm: string;
+  bedrooms: number;
+  bathrooms: number;
+  desc: string;
+  tcp: string;
+  monthly: string;
+  specs: { label: string; value: string }[];
+}
+
+const unitData: Record<string, UnitPlanData> = {
+  '2br-inner': {
+    id: '2br-inner',
+    badge: '2-BEDROOM INNER CONFIGURATION',
+    name: '2-Bedroom Inner Turnkey Unit',
+    sqm: '30.60',
+    bedrooms: 2,
+    bathrooms: 1,
+    desc: 'Practical 30.60 sqm 2-bedroom home providing independent bedrooms, quiet mid-corridor location, excellent heat insulation, and private balcony access.',
+    tcp: '₱2,900,000',
+    monthly: '₱15,800',
+    specs: [
+      { label: 'Floor Finish', value: '400mm × 400mm Ceramic Tiles' },
+      { label: 'Wall Deliverable', value: 'Painted Smooth Masonry Walls' },
+      { label: 'Toilet & Bath', value: 'Complete Tiled w/ Water Heater Slot' },
+      { label: 'Safety Features', value: 'Smoke Detector & Auto Sprinkler' },
+      { label: 'Ceiling Height', value: '2.65m Clear Finished Height' },
+      { label: 'Balcony', value: 'Included w/ Steel Protective Railings' },
+    ],
+  },
+  '2br-corner': {
+    id: '2br-corner',
+    badge: '2-BEDROOM CORNER / DELUXE',
+    name: '2-Bedroom Corner Unit (Type A/C)',
+    sqm: '35.57',
+    bedrooms: 2,
+    bathrooms: 1,
+    desc: 'Corner 35.57 sqm cut designed for young families requiring extra room for children or a dedicated remote-work station, with dual-aspect exterior windows.',
+    tcp: '₱3,400,000',
+    monthly: '₱18,500',
+    specs: [
+      { label: 'Floor Finish', value: '400mm × 400mm Ceramic Tiles' },
+      { label: 'Window Exposure', value: 'Dual-Aspect Corner Windows' },
+      { label: 'Toilet & Bath', value: 'Complete Tiled w/ Water Heater Slot' },
+      { label: 'Safety Features', value: 'Smoke Detector & Auto Sprinkler' },
+      { label: 'Ceiling Height', value: '2.65m Clear Finished Height' },
+      { label: 'Balcony', value: 'Extended Corner Balcony' },
+    ],
+  },
+  '3br': {
+    id: '3br',
+    badge: '3-BEDROOM EXECUTIVE',
+    name: '3-Bedroom Executive Suite',
+    sqm: '42.00',
+    bedrooms: 3,
+    bathrooms: 2,
+    desc: 'Spacious 42.00 sqm format featuring a dedicated master suite, two guest/kids bedrooms, two complete bathrooms, and expansive central living hall.',
+    tcp: '₱4,100,000',
+    monthly: '₱23,500',
+    specs: [
+      { label: 'Floor Finish', value: '400mm × 400mm Ceramic Tiles' },
+      { label: 'Wall Deliverable', value: 'Painted Smooth Masonry Walls' },
+      { label: 'Bathrooms', value: '2 Full Finished Bathrooms' },
+      { label: 'Safety Features', value: 'Smoke Detector & Auto Sprinkler' },
+      { label: 'Ceiling Height', value: '2.65m Clear Finished Height' },
+      { label: 'Balcony', value: 'Dual Access Private Balcony' },
+    ],
+  },
+};
+
+export default function OrtigasUnitFloorplanSelector() {
+  const [activeTab, setActiveTab] = useState<'2br-inner' | '2br-corner' | '3br'>('2br-inner');
+  const [downloadNotice, setDownloadNotice] = useState(false);
+
+  const activeUnit = unitData[activeTab];
+
+  const handleDownload = () => {
+    setDownloadNotice(true);
+    setTimeout(() => setDownloadNotice(false), 4000);
+  };
+
+  return (
+    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="units">
+      {/* Section Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-200">
+        <div>
+          <span className="text-ochre-700 tracking-widest uppercase font-bold text-xs">
+            Architectural Blueprint &amp; Specs
+          </span>
+          <h2 className="font-editorial text-4xl lg:text-5xl font-semibold text-charcoal-900 mt-1">
+            Explore Unit Layouts &amp; Floorplans
+          </h2>
+          <p className="text-gray-600 text-sm mt-2 max-w-2xl leading-relaxed">
+            Engineered for maximum livability, space efficiency, and natural cross-ventilation. Every home is handed over fully finished, eliminating messy renovation delays.
+          </p>
+        </div>
+
+        {/* Unit Switcher Tabs */}
+        <div className="mt-6 md:mt-0 inline-flex p-1.5 bg-gray-100/90 rounded-xl border border-gray-200 shadow-inner">
+          <button
+            type="button"
+            onClick={() => setActiveTab('2br-inner')}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === '2br-inner'
+                ? 'bg-white text-charcoal-900 shadow-sm border border-gray-200'
+                : 'text-gray-500 hover:text-charcoal-900'
+            }`}
+          >
+            2-Bedroom Inner • 30.60 sqm
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('2br-corner')}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === '2br-corner'
+                ? 'bg-white text-charcoal-900 shadow-sm border border-gray-200'
+                : 'text-gray-500 hover:text-charcoal-900'
+            }`}
+          >
+            2-Bedroom Corner • 35.57 sqm
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('3br')}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === '3br'
+                ? 'bg-white text-charcoal-900 shadow-sm border border-gray-200'
+                : 'text-gray-500 hover:text-charcoal-900'
+            }`}
+          >
+            3-Bedroom Exec • 42.00 sqm
+          </button>
+        </div>
+      </div>
+
+      {/* Active Unit Presentation Container */}
+      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+        {/* Left (7 cols): Interactive SVG Floor Plan Display Panel */}
+        <div className="lg:col-span-7 bg-[#F4F4F6] p-6 sm:p-10 lg:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-gray-200 relative grid-lines">
+          <div className="flex items-center justify-between z-10 mb-6 flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <span className="inline-block px-2.5 py-1 bg-white border border-gray-300 rounded text-[11px] font-mono font-medium text-gray-700 shadow-sm">
+                SCALE: 1:50 METRIC
+              </span>
+              <span className="inline-block px-2.5 py-1 bg-ochre-100 border border-ochre-300 rounded text-[11px] font-mono font-medium text-ochre-800">
+                {activeTab === '2br-corner' ? 'DUAL-ASPECT CORNER WINDOWS' : 'EAST/WEST VENTILATION'}
+              </span>
+            </div>
+            <span className="text-xs text-gray-400 font-mono">SPEC-ID: UDH-ORT-V2</span>
+          </div>
+
+          {/* Dynamic Floor Plan Graphic Container */}
+          <div className="py-6 flex items-center justify-center min-h-[320px]">
+            {/* 2-BEDROOM INNER PLAN SVG */}
+            {activeTab === '2br-inner' && (
+              <div className="w-full max-w-md transition-all duration-300 animate-fadeIn">
+                <svg className="w-full h-auto drop-shadow-md" viewBox="0 0 420 320">
+                  {/* Outer boundary */}
+                  <rect x="20" y="20" width="380" height="280" rx="8" fill="#ffffff" stroke="#1f2937" strokeWidth="3" />
+                  <rect x="25" y="25" width="370" height="270" fill="none" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="4 4" />
+
+                  {/* Bedroom 1 (Master) */}
+                  <rect x="210" y="25" width="185" height="135" fill="#FAFAFA" stroke="#1f2937" strokeWidth="2" />
+                  <text x="225" y="50" className="text-[11px] font-bold fill-gray-800">MASTER BEDROOM</text>
+                  <text x="225" y="65" className="text-[9px] font-mono fill-gray-400">11.40 sqm</text>
+                  <rect x="240" y="75" width="100" height="75" rx="3" fill="#EEF2F6" stroke="#94A3B8" strokeWidth="1.2" />
+                  <rect x="250" y="80" width="35" height="18" rx="2" fill="#CBD5E1" />
+                  <rect x="295" y="80" width="35" height="18" rx="2" fill="#CBD5E1" />
+
+                  {/* Bedroom 2 */}
+                  <rect x="210" y="160" width="185" height="135" fill="#FAFAFA" stroke="#1f2937" strokeWidth="2" />
+                  <text x="225" y="185" className="text-[11px] font-bold fill-gray-800">BEDROOM 2</text>
+                  <text x="225" y="200" className="text-[9px] font-mono fill-gray-400">8.20 sqm</text>
+                  <rect x="255" y="210" width="75" height="75" rx="3" fill="#EEF2F6" stroke="#94A3B8" strokeWidth="1.2" />
+
+                  {/* Bathroom */}
+                  <rect x="25" y="25" width="95" height="115" fill="#F8FAFC" stroke="#1f2937" strokeWidth="2" />
+                  <text x="45" y="60" className="text-[11px] font-mono fill-gray-600 font-bold">T&amp;B</text>
+                  <circle cx="70" cy="85" r="12" fill="#CBD5E1" stroke="#475569" strokeWidth="1.5" />
+
+                  {/* Kitchen Area */}
+                  <rect x="25" y="140" width="105" height="55" fill="#FFFBEB" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="35" y="172" className="text-[10px] font-mono fill-ochre-800 font-bold">KITCHEN</text>
+                  <circle cx="95" cy="168" r="6" fill="none" stroke="#DC2626" strokeWidth="1.2" />
+
+                  {/* Living & Dining Area */}
+                  <text x="135" y="55" className="text-[11px] font-bold fill-gray-800">LIVING &amp; DINING</text>
+                  <rect x="130" y="70" width="70" height="50" rx="3" fill="#F1F5F9" stroke="#94A3B8" />
+
+                  {/* Balcony / Window */}
+                  <line x1="398" y1="40" x2="398" y2="260" stroke="#0ea5e9" strokeWidth="6" />
+                  <text x="290" y="285" className="text-[9px] font-sans fill-sky-600 font-semibold tracking-wider">▲ BREEZE BALCONY</text>
+
+                  {/* Main Entry Swing */}
+                  <path d="M 25 260 Q 70 260 70 215" fill="none" stroke="#94A3B8" strokeDasharray="3 3" />
+                  <line x1="25" y1="260" x2="25" y2="215" stroke="#1e293b" strokeWidth="3" />
+                  <text x="35" y="280" className="text-[9px] font-mono fill-gray-500">MAIN ENTRY</text>
+                </svg>
+              </div>
+            )}
+
+            {/* 2-BEDROOM CORNER PLAN SVG */}
+            {activeTab === '2br-corner' && (
+              <div className="w-full max-w-md transition-all duration-300 animate-fadeIn">
+                <svg className="w-full h-auto drop-shadow-md" viewBox="0 0 420 320">
+                  <rect x="20" y="20" width="380" height="280" rx="8" fill="#ffffff" stroke="#1f2937" strokeWidth="3" />
+
+                  {/* Corner Windows on North and East */}
+                  <line x1="20" y1="20" x2="400" y2="20" stroke="#0ea5e9" strokeWidth="4" />
+                  <line x1="398" y1="20" x2="398" y2="280" stroke="#0ea5e9" strokeWidth="6" />
+
+                  {/* Master Bedroom Corner */}
+                  <rect x="210" y="25" width="185" height="145" fill="#FAFAFA" stroke="#1f2937" strokeWidth="2" />
+                  <text x="225" y="50" className="text-[11px] font-bold fill-gray-800">CORNER MASTER SUITE</text>
+                  <text x="225" y="65" className="text-[9px] font-mono fill-sky-600">Dual Window Exposure</text>
+                  <rect x="245" y="80" width="105" height="80" rx="3" fill="#EEF2F6" stroke="#94A3B8" strokeWidth="1.2" />
+
+                  {/* Bedroom 2 */}
+                  <rect x="210" y="170" width="185" height="125" fill="#FAFAFA" stroke="#1f2937" strokeWidth="2" />
+                  <text x="225" y="195" className="text-[11px] font-bold fill-gray-800">BEDROOM 2 / OFFICE</text>
+                  <rect x="255" y="210" width="85" height="70" rx="3" fill="#EEF2F6" stroke="#94A3B8" strokeWidth="1.2" />
+
+                  {/* Living and Dining */}
+                  <text x="50" y="55" className="text-[12px] font-bold fill-gray-800">CORNER LIVING ROOM</text>
+                  <rect x="40" y="70" width="110" height="55" rx="3" fill="#F1F5F9" stroke="#94A3B8" />
+
+                  {/* Kitchen */}
+                  <rect x="25" y="145" width="115" height="60" fill="#FFFBEB" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="40" y="180" className="text-[10px] font-mono fill-ochre-800 font-bold">GRANITE KITCHEN</text>
+
+                  {/* Bathroom */}
+                  <rect x="145" y="145" width="60" height="115" fill="#F8FAFC" stroke="#1f2937" strokeWidth="2" />
+                  <text x="155" y="195" className="text-[10px] font-mono fill-gray-600 font-bold">BATH</text>
+
+                  {/* Balcony tag */}
+                  <text x="280" y="285" className="text-[9px] font-sans fill-sky-600 font-semibold tracking-wider">▲ PANORAMIC BALCONY</text>
+                </svg>
+              </div>
+            )}
+
+            {/* 3-BEDROOM PLAN SVG */}
+            {activeTab === '3br' && (
+              <div className="w-full max-w-md transition-all duration-300 animate-fadeIn">
+                <svg className="w-full h-auto drop-shadow-md" viewBox="0 0 420 320">
+                  <rect x="20" y="20" width="380" height="280" rx="8" fill="#ffffff" stroke="#1f2937" strokeWidth="3" />
+
+                  {/* Bedroom 1 Master */}
+                  <rect x="250" y="25" width="145" height="110" fill="#FAFAFA" stroke="#1f2937" strokeWidth="2" />
+                  <text x="260" y="50" className="text-[10px] font-bold fill-gray-800">MASTER SUITE</text>
+                  <rect x="270" y="60" width="85" height="65" rx="3" fill="#EEF2F6" stroke="#94A3B8" />
+
+                  {/* Bedroom 2 */}
+                  <rect x="250" y="135" width="145" height="80" fill="#FAFAFA" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="260" y="160" className="text-[10px] font-bold fill-gray-800">BEDROOM 2</text>
+
+                  {/* Bedroom 3 */}
+                  <rect x="250" y="215" width="145" height="80" fill="#FAFAFA" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="260" y="240" className="text-[10px] font-bold fill-gray-800">BEDROOM 3</text>
+
+                  {/* Living and Dining */}
+                  <text x="40" y="50" className="text-[12px] font-bold fill-gray-800">EXECUTIVE LIVING HALL</text>
+                  <rect x="35" y="65" width="130" height="60" rx="3" fill="#F1F5F9" stroke="#94A3B8" />
+
+                  {/* 2 Bathrooms */}
+                  <rect x="175" y="135" width="70" height="75" fill="#F8FAFC" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="185" y="175" className="text-[9px] font-mono fill-gray-600 font-bold">BATH 1</text>
+                  <rect x="175" y="215" width="70" height="80" fill="#F8FAFC" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="185" y="255" className="text-[9px] font-mono fill-gray-600 font-bold">BATH 2</text>
+
+                  {/* Kitchen */}
+                  <rect x="25" y="145" width="140" height="65" fill="#FFFBEB" stroke="#1f2937" strokeWidth="1.5" />
+                  <text x="40" y="180" className="text-[10px] font-mono fill-ochre-800 font-bold">CHEF'S KITCHEN</text>
+
+                  <line x1="398" y1="30" x2="398" y2="280" stroke="#0ea5e9" strokeWidth="6" />
+                </svg>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-200/80 flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-2.5 h-2.5 bg-sky-500 rounded-sm" />
+              <span>External Window Ventilation</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-2.5 h-2.5 bg-ochre-500 rounded-sm" />
+              <span>Finished Wet Areas</span>
+            </div>
+            <span className="font-mono text-[11px]">CAD Drawing rev 2024</span>
+          </div>
+        </div>
+
+        {/* Right (5 cols): Specification Matrix & Interactive Amortization Calculator */}
+        <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
+          <div>
+            {/* Title & Dynamic Area Badge */}
+            <div className="flex items-start justify-between">
+              <div>
+                <span className="inline-block text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 mb-2">
+                  {activeUnit.badge}
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-charcoal-900">
+                  {activeUnit.name}
+                </h3>
+              </div>
+              <div className="text-right">
+                <span className="text-2xl font-bold font-mono text-charcoal-900">
+                  {activeUnit.sqm}
+                </span>
+                <span className="text-xs text-gray-500 block">SQUARE METERS</span>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+              {activeUnit.desc}
+            </p>
+
+            {/* Specifications Table */}
+            <div className="mt-6 border border-gray-100 rounded-xl overflow-hidden bg-gray-50/60 text-xs">
+              <div className="divide-y divide-gray-200">
+                {activeUnit.specs.map((item, index) => (
+                  <div key={index} className="flex justify-between py-2.5 px-3.5">
+                    <span className="text-gray-500">{item.label}</span>
+                    <span className="font-semibold text-gray-900">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Financing & Price Amortization Panel */}
+            <div className="mt-6 p-4 rounded-xl bg-charcoal-900 text-white space-y-3">
+              <div className="flex justify-between items-center border-b border-white/10 pb-2">
+                <span className="text-xs font-medium text-gray-300">Total Contract Price (TCP est.)</span>
+                <span className="text-base font-bold text-ochre-200">
+                  {activeUnit.tcp}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-1 text-xs">
+                <div>
+                  <span className="text-gray-400 block text-[11px]">Reservation Fee</span>
+                  <span className="font-bold text-white">₱10,000 only</span>
+                </div>
+                <div>
+                  <span className="text-gray-400 block text-[11px]">Downpayment Term</span>
+                  <span className="font-bold text-white">Flexible Equity Spread</span>
+                </div>
+              </div>
+
+              {/* Estimated Monthly Pill */}
+              <div className="bg-charcoal-850 p-3 rounded-lg flex items-center justify-between border border-white/5">
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider text-ochre-400 font-bold block">
+                    Estimated Pag-IBIG Monthly
+                  </span>
+                  <span className="text-xl font-black text-white">
+                    {activeUnit.monthly}
+                    <span className="text-xs font-normal text-gray-400">/mo</span>
+                  </span>
+                </div>
+                <span className="text-[10px] text-right text-gray-400">
+                  30 Years term<br />6.25% repricing
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Download Blueprint & Schedule Button */}
+          <div className="mt-6 flex items-center gap-3">
+            <a
+              href="#inquire"
+              className="flex-1 text-center bg-ochre-500 hover:bg-ochre-600 text-charcoal-900 font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-md transition-all hover:shadow-ochre-500/25"
+            >
+              Inquire About This Unit
+            </a>
+            <button
+              type="button"
+              onClick={handleDownload}
+              className="p-3 border border-gray-300 hover:border-gray-400 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+              title="Download Spec Sheet PDF"
+            >
+              <Download className="w-5 h-5" />
+            </button>
+          </div>
+
+          {downloadNotice && (
+            <div className="mt-3 p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs text-center animate-fadeIn">
+              ✓ Spec sheet blueprint requested! Our team will provide the brochure packet upon inquiry.
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}

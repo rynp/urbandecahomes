@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import {
   MapPin,
@@ -11,27 +12,35 @@ import {
   ArrowRight,
   Check,
   TreePine,
-  ArrowUpCircle,
+  Sparkles,
+  Calculator,
+  Download,
+  ExternalLink,
+  Store,
+  Navigation,
+  School,
+  HeartPulse,
+  Waves,
+  Car,
+  Clock,
+  Phone,
 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FinancingCalculator from '@/components/FinancingCalculator';
 import InquiryForm from '@/components/InquiryForm';
-import ViewingScheduler from '@/components/ViewingScheduler';
+import OrtigasBookingForm from '@/components/ortigas/OrtigasBookingForm';
 import JsonLd from '@/components/JsonLd';
 import { getProjectBySlug } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
 import { getProjectApartmentComplexSchema } from '@/lib/schema';
 import OrtigasGoogleMap from '@/components/ortigas/OrtigasGoogleMap';
-import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
-import ManilaListingCards from '@/components/manila/ManilaListingCards';
 import OrtigasInteractivePlans from '@/components/ortigas/OrtigasInteractivePlans';
+import OrtigasUnitFloorplanSelector from '@/components/ortigas/OrtigasUnitFloorplanSelector';
+import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
 import {
   ortigasNeighborhoodItems,
   ortigasSchoolItems,
   ortigasHospitalItems,
-  ortigasProjectFeatureItems,
-  ortigasUnitSpecificationItems,
-  ortigasFacilityItems,
 } from '@/data/ortigasSectionsData';
 
 const project = getProjectBySlug('ortigas')!;
@@ -48,6 +57,7 @@ export const metadata: Metadata = constructMetadata({
     'Pag-IBIG condo Pasig',
     'Condo near Eastwood City',
     '2 bedroom condo Ortigas Pasig',
+    'Lagoon park condo Pasig',
   ],
 });
 
@@ -61,381 +71,497 @@ export default function OrtigasProjectPage() {
       {/* Breadcrumbs */}
       <Breadcrumbs items={[{ name: project.name, path: `/${project.slug}` }]} />
 
-      {/* Hero Banner */}
-      <section className="relative bg-charcoal-950 text-white py-16 sm:py-24 border-b border-charcoal-800 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center filter brightness-[0.35]"
-          style={{ backgroundImage: `url(${project.heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950 via-charcoal-900/80 to-charcoal-950/70" />
+      {/* ============================================================ */}
+      {/* 1. FULL-BLEED EDITORIAL SPLIT HERO SECTION                   */}
+      {/* ============================================================ */}
+      <section className="relative bg-[#1A1D20] text-white border-b border-gray-800 overflow-hidden" id="overview">
+        {/* Ambient architectural radial glow */}
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-ochre-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[300px] bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 bg-gold-400 text-charcoal-900 rounded-full text-xs font-bold uppercase tracking-wider mb-4 shadow">
-              <Building2 className="w-3.5 h-3.5" />
-              <span>{project.badge}</span>
-            </div>
-
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4 leading-tight">
-              {project.headline}
-            </h1>
-
-            <p className="flex items-center text-sm sm:text-base text-stone-200 mb-6">
-              <MapPin className="w-4 h-4 mr-2 text-gold-400 flex-shrink-0" />
-              <span>{project.location.address}</span>
-            </p>
-
-            <div className="flex flex-wrap items-center gap-6 p-4 rounded-xl bg-charcoal-900/90 border border-charcoal-700 max-w-xl mb-8">
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-stone-400 block">
-                  Price Range (TCP)
-                </span>
-                <span className="text-xl font-bold text-white">
-                  {project.priceRangeFormatted}
-                </span>
-              </div>
-              <div className="border-l border-charcoal-700 pl-6">
-                <span className="text-[11px] uppercase tracking-wider text-stone-400 block">
-                  Est. Pag-IBIG
-                </span>
-                <span className="text-xl font-bold text-gold-400">
-                  From ~₱15,800/mo
-                </span>
-              </div>
-              <div className="border-l border-charcoal-700 pl-6">
-                <span className="text-[11px] uppercase tracking-wider text-stone-400 block">
-                  Reservation
-                </span>
-                <span className="text-base font-bold text-white">
-                  ₱{project.reservationFeePhp.toLocaleString()}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#inquire"
-                className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-charcoal-900 gold-gradient hover:opacity-95 rounded-lg shadow transition-all"
-              >
-                Inquire & Check Availability
-              </a>
-              <a
-                href="#units"
-                className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-charcoal-800 hover:bg-charcoal-700 border border-stone-600 rounded-lg transition-all"
-              >
-                View 2-Bedroom Floor Cuts
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Masterplan Overview & Visual Showcase */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7 space-y-6">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full">
-                13-Hectare Enclave
-              </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-charcoal-900 mt-2">
-                Spacious Suburban Comfort Minutes from Ortigas CBD
-              </h2>
-            </div>
-
-            {project.overview.map((paragraph, index) => (
-              <p key={index} className="text-stone-600 text-sm sm:text-base leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-
-            <div className="bg-stone-50 rounded-xl p-5 border border-stone-200 grid grid-cols-2 gap-4">
-              {project.specifications.map((spec) => (
-                <div key={spec.label}>
-                  <span className="text-xs font-medium text-stone-500 block">
-                    {spec.label}
-                  </span>
-                  <span className="text-sm font-bold text-charcoal-900 block mt-0.5">
-                    {spec.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-6 bg-white rounded-xl border border-stone-200 shadow-sm space-y-3">
-              <h3 className="font-serif text-base font-bold text-charcoal-900 flex items-center">
-                <CheckCircle2 className="w-4 h-4 mr-2 text-gold-600" />
-                <span>Move-In Ready Turnkey Inclusions</span>
-              </h3>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-600">
-                {project.deliverables.map((item, i) => (
-                  <li key={i} className="flex items-start">
-                    <Check className="w-3.5 h-3.5 mr-1.5 text-gold-600 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5 space-y-4">
-            <h3 className="font-serif text-lg font-bold text-charcoal-900">
-              Community Parks & Model Unit Gallery
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {project.galleryImages.map((img, idx) => (
-                <div key={idx} className="group relative rounded-lg overflow-hidden bg-stone-100 shadow-sm border border-stone-200">
-                  <div
-                    className="h-44 w-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundImage: `url(${img.url})` }}
-                  />
-                  <div className="p-2 bg-white text-[11px] text-stone-600 border-t border-stone-100">
-                    {img.caption}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-5 rounded-xl gold-gradient text-charcoal-900 space-y-2 shadow-sm">
-              <span className="text-xs font-bold uppercase tracking-wider block">
-                Free Site Viewing
-              </span>
-              <h4 className="font-serif text-base font-bold">
-                Experience the 1.3-Hectare Lagoon Park
-              </h4>
-              <p className="text-xs text-charcoal-800 leading-normal">
-                Tour the completed clubhouse, open green spaces, and 2-bedroom model units in Pasig City.
-              </p>
-              <a
-                href="#scheduler"
-                className="inline-block mt-2 px-4 py-2 text-xs font-bold uppercase tracking-wider bg-charcoal-900 text-white rounded hover:bg-charcoal-800 transition-colors"
-              >
-                Book Pasig Tour
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Available Unit Configurations */}
-      <section id="units" className="bg-stone-100/70 py-20 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-white px-3 py-1 rounded-full border border-stone-200">
-              Unit Floor Cuts
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
-              Urban Deca Homes Ortigas Available Units
-            </h2>
-            <p className="text-stone-600 text-sm mt-2">
-              Choose between functional 30.60 sqm inner cuts or spacious 35.57 sqm corner units with private balconies.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {project.unitTypes.map((unit) => {
-              const isSoldOut = unit.status === 'Sold Out';
-              return (
-                <div
-                  key={unit.id}
-                  className={`bg-white rounded-xl border p-6 flex flex-col justify-between shadow-sm ${
-                    isSoldOut
-                      ? 'opacity-60 border-stone-200 bg-stone-50/70'
-                      : 'border-stone-200 hover:border-gold-400 hover:shadow-md transition-all'
-                  }`}
-                >
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-serif text-lg font-bold text-charcoal-900">
-                          {unit.name}
-                        </h3>
-                        <span className="text-xs text-stone-500 font-medium">
-                          {unit.bedrooms} Bedroom(s) • {unit.bathrooms} Toilet & Bath
-                        </span>
-                      </div>
-                      <span
-                        className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase ${
-                          unit.status === 'Available'
-                            ? 'bg-green-100 text-green-800'
-                            : unit.status === 'Limited Availability'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'bg-stone-200 text-stone-600'
-                        }`}
-                      >
-                        {unit.status}
-                      </span>
-                    </div>
-
-                    <div className="bg-stone-50 p-3 rounded-lg border border-stone-100">
-                      <div className="flex justify-between items-baseline mb-1">
-                        <span className="text-xs text-stone-500">Floor Area:</span>
-                        <span className="text-sm font-bold text-charcoal-900">{unit.areaSqm} sq.m.</span>
-                      </div>
-                      <div className="flex justify-between items-baseline mb-1">
-                        <span className="text-xs text-stone-500">Price Range:</span>
-                        <span className="text-sm font-bold text-charcoal-900">
-                          ₱{(unit.priceMinPhp / 1000000).toFixed(2)}M – ₱{(unit.priceMaxPhp / 1000000).toFixed(2)}M
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-baseline">
-                        <span className="text-xs text-stone-500">Est. Pag-IBIG:</span>
-                        <span className="text-sm font-bold text-gold-700">
-                          From ~₱{unit.estMonthlyPagIbigPhp.toLocaleString()}/mo
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      {unit.description}
-                    </p>
-
-                    <div className="space-y-1.5 pt-2 border-t border-stone-100">
-                      <span className="text-[11px] font-bold uppercase text-stone-400 block">
-                        Features & Finishes:
-                      </span>
-                      {unit.features.slice(0, 4).map((f, i) => (
-                        <div key={i} className="flex items-center text-xs text-stone-600">
-                          <Check className="w-3.5 h-3.5 text-gold-600 mr-1.5 flex-shrink-0" />
-                          <span>{f}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-6 mt-4 border-t border-stone-100">
-                    {isSoldOut ? (
-                      <span className="block text-center text-xs text-stone-400 font-medium py-2">
-                        Sold Out in All Phases
-                      </span>
-                    ) : (
-                      <a
-                        href={`#inquire`}
-                        className="w-full inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-charcoal-900 gold-gradient hover:opacity-90 rounded-md shadow-sm transition-all"
-                      >
-                        <span>Reserve Unit</span>
-                        <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Amenities Grid */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full">
-            Community Lifestyle
-          </span>
-          <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
-            Resort-Inspired Amenities for Your Family
-          </h2>
-          <p className="text-stone-600 text-sm mt-2">
-            1.3 hectares of dedicated open spaces, lagoon reflections, and pedestrian recreational walkways.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {project.amenities.map((amenity) => (
-            <div key={amenity.name} className="p-6 rounded-xl bg-white border border-stone-200 shadow-sm space-y-2">
-              <div className="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-charcoal-900 mb-3 shadow-sm">
-                <CheckCircle2 className="w-5 h-5 text-charcoal-900" />
-              </div>
-              <h3 className="font-serif text-lg font-bold text-charcoal-900">
-                {amenity.name}
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                {amenity.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* PROJECT FEATURES SECTION */}
-      <ManilaListingCards
-        id="project-features"
-        tag="13-Hectare Enclave Amenities"
-        title="Project Features"
-        subtitle="Experience integrated resort-style living with an on-site Deca Community Mall, 1.3-hectare central Lagoon Park, and multi-purpose sports arenas."
-        items={ortigasProjectFeatureItems}
-        referenceGraphicUrl="/images/ortigas/site-development-plan.png"
-        referenceGraphicTitle="Project Features Masterplan"
-      />
-
-      {/* UNIT SPECIFICATIONS SECTION */}
-      <section className="bg-stone-100/60 border-y border-stone-200">
-        <ManilaListingCards
-          id="unit-specifications"
-          tag="Turnkey Move-In Deliverables"
-          title="Unit Specifications"
-          subtitle="Every home at Urban Deca Homes Ortigas is delivered 100% turnkey finished with full ceramic flooring, granite countertops, balconies, and life safety provisions."
-          items={ortigasUnitSpecificationItems}
-          referenceGraphicUrl="/images/ortigas/typical-floor-plan.png"
-          referenceGraphicTitle="Turnkey Inclusions Schematic"
-        />
-      </section>
-
-      {/* FACILITIES AND SERVICES SECTION */}
-      <ManilaListingCards
-        id="facilities-and-services"
-        tag="Building Systems & Utilities"
-        title="Facilities and Services"
-        subtitle="Built to high-density modern standards featuring 4 high-speed elevators per tower, complete fire suppression networks, biological sewage treatment, and emergency power."
-        items={ortigasFacilityItems}
-        referenceGraphicUrl="/images/ortigas/building-phases.png"
-        referenceGraphicTitle="Tower Phases & Systems Schematic"
-      />
-
-      {/* SITE DEVELOPMENT PLAN, TYPICAL FLOOR PLAN, UNIT LAYOUT WITH ZOOM MODAL */}
-      <OrtigasInteractivePlans />
-
-      {/* Location Proximity & Map */}
-      <section className="bg-stone-100/60 py-20 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Editorial Content & Fast Stats (6 cols) */}
             <div className="lg:col-span-6 space-y-6">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-white px-3 py-1 rounded-full border border-stone-200">
-                  Pasig & Ortigas Corridor
-                </span>
-                <h2 className="font-serif text-3xl font-bold text-charcoal-900 mt-2">
-                  Direct Access to Ortigas Center & Eastwood
-                </h2>
-                <p className="text-stone-600 text-sm mt-3 leading-relaxed">
-                  Located along Ortigas Avenue Extension in Rosario, Pasig City. Public utility jeepneys, express vans, and bus routes stop right outside the subdivision gates.
-                </p>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-ochre-500/15 border border-ochre-500/30 text-ochre-200 text-xs font-semibold tracking-widest uppercase">
+                <span className="w-2 h-2 rounded-full bg-ochre-500 animate-pulse" />
+                13-Hectare Masterplanned Community • Pasig City
               </div>
 
-              <div className="space-y-3">
-                {project.location.landmarks.map((l) => (
-                  <div key={l.name} className="flex items-center justify-between p-3 bg-white rounded-lg border border-stone-200 text-xs sm:text-sm">
-                    <span className="font-semibold text-charcoal-900">{l.name}</span>
-                    <span className="text-xs font-bold text-gold-800 bg-gold-50 px-2.5 py-1 rounded">
-                      {l.distance}
+              <h1 className="font-editorial text-4xl sm:text-5xl xl:text-6xl text-white font-medium tracking-tight leading-[1.08]">
+                Spacious Suburban Living by the <span className="italic font-normal text-ochre-200">Ortigas CBD Corridor</span>.
+              </h1>
+
+              <p className="text-gray-300 text-base leading-relaxed max-w-xl font-normal">
+                Urban Deca Homes Ortigas redefines eastern Metro Manila living. A sprawling 13-hectare integrated community featuring 22 mid-rise buildings, 4 high-speed elevators per tower, a 1.3-hectare central Lagoon Park, and an on-site Deca Community Mall right along Ortigas Avenue Extension in Pasig City.
+              </p>
+
+              {/* Architectural Spec Strip / Project Stats Bar */}
+              <div className="grid grid-cols-4 gap-3 py-4 border-y border-white/10 bg-white/[0.02] rounded-xl px-4 backdrop-blur-sm">
+                <div>
+                  <span className="block text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Masterplan</span>
+                  <span className="text-lg font-bold text-white tracking-tight">13.0 Ha</span>
+                  <span className="block text-[11px] text-gray-400">Total Land Area</span>
+                </div>
+                <div className="border-l border-white/10 pl-3">
+                  <span className="block text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Towers</span>
+                  <span className="text-lg font-bold text-white tracking-tight">22 Buildings</span>
+                  <span className="block text-[11px] text-gray-400">4 Lifts Per Tower</span>
+                </div>
+                <div className="border-l border-white/10 pl-3">
+                  <span className="block text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Turnover</span>
+                  <span className="text-lg font-bold text-ochre-200 tracking-tight">100% Turnkey</span>
+                  <span className="block text-[11px] text-gray-400">Fully Finished Ready</span>
+                </div>
+                <div className="border-l border-white/10 pl-3">
+                  <span className="block text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Status</span>
+                  <span className="text-lg font-bold text-emerald-400 tracking-tight">RFO</span>
+                  <span className="block text-[11px] text-gray-400">Ready for Occupancy</span>
+                </div>
+              </div>
+
+              {/* Quick Pag-IBIG Estimator Box */}
+              <div className="p-4 rounded-xl bg-charcoal-800/80 border border-white/10 shadow-xl flex items-center justify-between gap-4">
+                <div className="space-y-0.5">
+                  <span className="text-[11px] uppercase tracking-wider text-ochre-200 font-medium">
+                    Quick Pag-IBIG Estimator
+                  </span>
+                  <div className="text-lg font-bold text-white flex items-baseline gap-2">
+                    <span>₱15,800</span>
+                    <span className="text-xs text-gray-400 font-normal">/ mo. starting amortization</span>
+                  </div>
+                  <p className="text-[11px] text-gray-400">
+                    Estimated based on 30-year Pag-IBIG Fund loan for 2-Bedroom unit
+                  </p>
+                </div>
+                <a
+                  href="#units"
+                  className="shrink-0 px-4 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs tracking-wider uppercase border border-white/15 transition-all"
+                >
+                  Compare Units →
+                </a>
+              </div>
+
+              {/* Trust badges row */}
+              <div className="flex flex-wrap items-center gap-6 pt-1 text-xs text-gray-400">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-ochre-400" />
+                  <span>Pag-IBIG / Bank / In-House</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-ochre-400" />
+                  <span>Perpetual Ownership</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TreePine className="w-4 h-4 text-ochre-400" />
+                  <span>1.3-Ha Lagoon Park</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Immersive Editorial Architectural Photo Gallery Grid (6 cols) */}
+            <div className="lg:col-span-6">
+              <div className="grid grid-cols-12 gap-3.5 relative">
+                {/* Large Main Building Exterior Feature */}
+                <div className="col-span-12 relative rounded-2xl overflow-hidden group shadow-2xl border border-white/10 aspect-[16/9] bg-charcoal-900">
+                  <div
+                    className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                    style={{ backgroundImage: `url('/images/ortigas/hero.jpg')` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+
+                  {/* Floating Badges */}
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md text-white text-[11px] font-medium border border-white/20">
+                      Actual Masterplan Facade
+                    </span>
+                    <span className="px-2.5 py-1 rounded bg-ochre-500/90 text-charcoal-900 text-[11px] font-bold">
+                      13-Hectare Gated Perimeter
                     </span>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            <div className="lg:col-span-6">
-              <div id="scheduler">
-                <ViewingScheduler />
+                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                    <div>
+                      <p className="text-white text-sm font-semibold">22 Mid-Rise Residences in Pasig</p>
+                      <p className="text-gray-300 text-xs">Features 1.3-ha lagoon park, wide tree-lined walkways, and 4 lifts per tower</p>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-mono">
+                      Phase 1 &amp; 2 RFO
+                    </span>
+                  </div>
+                </div>
+
+                {/* Thumbnail 1: Living Area */}
+                <div className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900">
+                  <div
+                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                    style={{ backgroundImage: `url('/images/ortigas/model-unit-living.jpg')` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
+                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
+                    Tiled Living &amp; Dining
+                  </span>
+                </div>
+
+                {/* Thumbnail 2: Kitchen Area */}
+                <div className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900">
+                  <div
+                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                    style={{ backgroundImage: `url('/images/ortigas/model-unit-kitchen.jpg')` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
+                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
+                    Modular Kitchen Area
+                  </span>
+                </div>
+
+                {/* Thumbnail 3: Turnkey Bathroom */}
+                <div className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900">
+                  <div
+                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                    style={{ backgroundImage: `url('/images/ortigas/turnover-bathroom.jpg')` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
+                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
+                    Finished T&amp;B Fixtures
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* LOCATION GOOGLE MAP SECTION */}
+      {/* ============================================================ */}
+      {/* 2. INTERACTIVE UNIT LAYOUT & FLOORPLAN SELECTOR             */}
+      {/* ============================================================ */}
+      <OrtigasUnitFloorplanSelector />
+
+      {/* ============================================================ */}
+      {/* 3. CURATED AMENITIES & INTEGRATED LIFESTYLE GRID             */}
+      {/* ============================================================ */}
+      <section className="py-20 bg-[#F2F2F4] border-y border-gray-200" id="amenities">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-ochre-700 uppercase tracking-widest text-xs font-bold">
+              Community Infrastructure
+            </span>
+            <h2 className="font-editorial text-4xl lg:text-5xl font-semibold text-charcoal-900 mt-1">
+              Curated Everyday Conveniences
+            </h2>
+            <p className="text-gray-600 text-sm mt-3">
+              Enjoy full resort amenities and integrated retail right inside the secure 13-hectare perimeter, designed for family well-being and active recreation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Amenity Card 1: 1.3-Hectare Lagoon Park */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="h-48 overflow-hidden relative bg-stone-100">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url('/images/ortigas/amenity-pool-lagoon.jpg')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute bottom-3 left-4 text-xs font-semibold px-2.5 py-0.5 rounded bg-ochre-500/90 text-charcoal-900">
+                  Doorstep Nature Sanctuary
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-lg font-bold text-charcoal-900">1.3-Hectare Central Lagoon Park</h3>
+                <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                  Reflection ponds, lush open lawns, and perimeter jogging trails provide refreshing open spaces rare for Metro Manila condo developments.
+                </p>
+              </div>
+            </div>
+
+            {/* Amenity Card 2: Community Mall */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="h-48 overflow-hidden relative bg-stone-100">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url('/images/ortigas/amenity-community-mall.jpg')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute bottom-3 left-4 text-xs font-semibold text-white px-2.5 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/20">
+                  Integrated Retail Hub
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-lg font-bold text-charcoal-900">Deca Community Mall</h3>
+                <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                  Supermarket, dining options, laundry hubs, pharmacies, and daily service shops right on site. Complete your daily errands without getting into city traffic.
+                </p>
+              </div>
+            </div>
+
+            {/* Amenity Card 3: Grand Clubhouse */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="h-48 overflow-hidden relative bg-stone-100">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url('/images/ortigas/amenity-clubhouse-exterior.jpg')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute bottom-3 left-4 text-xs font-semibold text-white px-2.5 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/20">
+                  Social Celebrations
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-lg font-bold text-charcoal-900">Grand Multipurpose Clubhouse</h3>
+                <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                  Spacious air-conditioned halls and outdoor pavilions for family milestones, birthdays, corporate meetings, and community gatherings.
+                </p>
+              </div>
+            </div>
+
+            {/* Amenity Card 4: Covered Basketball Court */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="h-48 overflow-hidden relative bg-stone-100">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url('/images/ortigas/amenity-basketball-court.jpg')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute bottom-3 left-4 text-xs font-semibold text-white px-2.5 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/20">
+                  Active Recreation
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-lg font-bold text-charcoal-900">Covered Basketball Court</h3>
+                <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                  Standard regulation court shielded from both monsoon rains and midday sun for year-round sports, fitness training, and friendly tournaments.
+                </p>
+              </div>
+            </div>
+
+            {/* Amenity Card 5: Children's Playground */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="h-48 overflow-hidden relative bg-stone-100">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url('/images/ortigas/amenity-playground.jpg')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute bottom-3 left-4 text-xs font-semibold text-white px-2.5 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/20">
+                  Safe &amp; Soft Paved
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-lg font-bold text-charcoal-900">Children&apos;s Outdoor Playground</h3>
+                <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                  Equipped with soft-fall rubberized surfaces, slides, monkey bars, and swings set inside a vehicle-free gated zone protected from street traffic.
+                </p>
+              </div>
+            </div>
+
+            {/* Amenity Card 6: 24/7 Gated Security & RFID */}
+            <div className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow group">
+              <div className="h-48 overflow-hidden relative bg-stone-100">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={{ backgroundImage: `url('/images/ortigas/amenity-admin-office.jpg')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute bottom-3 left-4 text-xs font-semibold text-white px-2.5 py-0.5 rounded bg-emerald-600 text-white">
+                  24/7 Gated Security
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-lg font-bold text-charcoal-900">RFID Boom Barriers &amp; CCTV</h3>
+                <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">
+                  Round-the-clock security personnel, automated RFID gate access, perimeter security walls, and continuous CCTV coverage across all tower lobbies.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* 4. TECHNICAL SCHEMATICS & PLANS (WITH ZOOMABLE MODAL)        */}
+      {/* ============================================================ */}
+      <OrtigasInteractivePlans />
+
+      {/* ============================================================ */}
+      {/* 5. INTERACTIVE NEIGHBORHOOD MAP & COMMUTE GUIDE             */}
+      {/* ============================================================ */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="location">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* Commute Details & Proximity Tags (5 cols) */}
+          <div className="lg:col-span-5 space-y-6">
+            <div>
+              <span className="text-ochre-700 tracking-widest uppercase font-bold text-xs">
+                Unmatched Pasig Connectivity
+              </span>
+              <h2 className="font-editorial text-4xl lg:text-5xl font-semibold text-charcoal-900 mt-1">
+                Minutes to Key CBDs &amp; Transit
+              </h2>
+              <p className="text-gray-600 text-sm mt-3 leading-relaxed">
+                Situated directly along Ortigas Avenue Extension in Rosario, Pasig City with rapid links to C-5, Amang Rodriguez, and East Bank Road. Enjoy effortless travel to Ortigas Center, Eastwood City, and Bonifacio Global City.
+              </p>
+            </div>
+
+            {/* Proximity Time Cards */}
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-gray-200 shadow-sm hover:border-ochre-500/50 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-ochre-100 flex items-center justify-center text-ochre-800">
+                    <ShoppingBag className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900">SM City East Ortigas</h4>
+                    <p className="text-[11px] text-gray-500">Groceries, retail &amp; department stores</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">
+                  5 mins
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-gray-200 shadow-sm hover:border-ochre-500/50 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-800">
+                    <Building2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900">Eastwood City Cyberpark</h4>
+                    <p className="text-[11px] text-gray-500">Major BPO business district &amp; dining</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold font-mono">
+                  10–15 mins
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-gray-200 shadow-sm hover:border-ochre-500/50 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-800">
+                    <Store className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900">Ortigas Center CBD</h4>
+                    <p className="text-[11px] text-gray-500">Megamall, Galleria &amp; corporate headquarters</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold font-mono">
+                  15–20 mins
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-gray-200 shadow-sm hover:border-ochre-500/50 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-red-800">
+                    <HeartPulse className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900">The Medical City Pasig</h4>
+                    <p className="text-[11px] text-gray-500">World-class tertiary medical institution</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-800 text-xs font-bold font-mono">
+                  15 mins
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-gray-200 shadow-sm hover:border-ochre-500/50 transition-all">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center text-purple-800">
+                    <Car className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-gray-900">Bonifacio Global City (BGC)</h4>
+                    <p className="text-[11px] text-gray-500">Direct transit via C-5 corridor</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold font-mono">
+                  25–30 mins
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Stylized Interactive Visual Neighborhood Map (7 cols) */}
+          <div className="lg:col-span-7">
+            <div className="relative bg-slate-900 rounded-3xl overflow-hidden border border-gray-800 shadow-2xl p-6 lg:p-8 text-white min-h-[460px] flex flex-col justify-between">
+              {/* Map Background Stylized Vector Art */}
+              <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="ortigas-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" strokeWidth="0.8" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#ortigas-grid)" />
+                {/* Marikina / Pasig River waterway vector */}
+                <path d="M 0 120 Q 140 180 200 460 L 0 460 Z" fill="#0369a1" opacity="0.35" />
+                {/* Main Highways (Ortigas Ave Ext & C-5) */}
+                <path d="M 60 460 L 220 200 L 480 80" fill="none" stroke="#f59e0b" strokeWidth="4" opacity="0.8" />
+                <path d="M 120 0 L 160 460" fill="none" stroke="#f59e0b" strokeWidth="3" opacity="0.6" />
+                <path d="M 90 260 L 520 290" fill="none" stroke="#94a3b8" strokeWidth="2" opacity="0.4" />
+              </svg>
+
+              {/* Top Map Meta */}
+              <div className="relative z-10 flex justify-between items-center flex-wrap gap-2">
+                <div className="bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
+                  <span className="text-xs font-semibold tracking-wider">PROJECT SITE: ORTIGAS AVE EXT., PASIG</span>
+                </div>
+                <span className="text-[11px] font-mono text-gray-400">14.5888° N, 121.0925° E</span>
+              </div>
+
+              {/* Stylized Map Pin Landmarks */}
+              <div className="relative z-10 my-10 space-y-6">
+                {/* Target Project Pin */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-ochre-500 to-amber-600 flex items-center justify-center text-charcoal-900 shadow-xl ring-4 ring-ochre-500/30">
+                    <Building2 className="w-6 h-6 text-charcoal-900" />
+                  </div>
+                  <div className="bg-charcoal-800/90 backdrop-blur-md p-3 rounded-xl border border-ochre-500/40">
+                    <span className="text-[10px] uppercase font-bold text-ochre-400 tracking-wider">You Are Here</span>
+                    <p className="text-sm font-bold text-white">Urban Deca Homes Ortigas Sales Pavilion</p>
+                    <p className="text-xs text-gray-300">Model units and completed Lagoon Park open for private tours</p>
+                  </div>
+                </div>
+
+                {/* Surrounding Hotspots */}
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="bg-black/50 backdrop-blur-md p-3 rounded-xl border border-white/10">
+                    <span className="text-[10px] text-cyan-400 font-mono">WEST CORRIDOR</span>
+                    <p className="text-xs font-bold mt-0.5">Ortigas CBD &amp; C-5 Road</p>
+                    <p className="text-[11px] text-gray-400">Direct UV Express and bus lines outside gate</p>
+                  </div>
+                  <div className="bg-black/50 backdrop-blur-md p-3 rounded-xl border border-white/10">
+                    <span className="text-[10px] text-amber-400 font-mono">EAST CORRIDOR</span>
+                    <p className="text-xs font-bold mt-0.5">Rizal Growth Corridor &amp; C-6</p>
+                    <p className="text-[11px] text-gray-400">Rapid access to Taytay, Cainta &amp; Antipolo</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Coordinates / Google Map Shortcut */}
+              <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10 text-xs">
+                <span className="text-gray-300">Sales Office Open Mon-Sat 9AM–5PM (Ortigas Ave Ext, Pasig)</span>
+                <a
+                  className="inline-flex items-center gap-1.5 text-ochre-200 hover:text-white font-medium"
+                  href="https://www.google.com/maps/dir/?api=1&destination=Urban+Deca+Homes+Ortigas,+Ortigas+Avenue+Extension,+Rosario,+Pasig"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <span>Open in Google Maps</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Embedded Full Google Map Section */}
       <OrtigasGoogleMap />
 
-      {/* NEIGHBORHOOD SLIDESHOW SECTION */}
+      {/* ============================================================ */}
+      {/* 6. NEIGHBORHOOD, SCHOOLS & HOSPITALS SLIDESHOWS              */}
+      {/* ============================================================ */}
       <div className="bg-stone-100/60 border-y border-stone-200">
         <ManilaSlideshow
           id="neighborhood"
@@ -449,7 +575,6 @@ export default function OrtigasProjectPage() {
         />
       </div>
 
-      {/* SCHOOLS NEARBY SLIDESHOW SECTION */}
       <ManilaSlideshow
         id="schools-nearby"
         tag="Academic Centers & Universities"
@@ -461,7 +586,6 @@ export default function OrtigasProjectPage() {
         themeIcon="schools"
       />
 
-      {/* HOSPITALS NEARBY SLIDESHOW SECTION */}
       <div className="bg-stone-100/60 border-y border-stone-200">
         <ManilaSlideshow
           id="hospitals-nearby"
@@ -475,12 +599,47 @@ export default function OrtigasProjectPage() {
         />
       </div>
 
-      {/* Calculator Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* ============================================================ */}
+      {/* 7. DEDICATED SITE VISIT BOOKING MODULE                       */}
+      {/* ============================================================ */}
+      <section className="py-20 bg-charcoal-900 text-white relative overflow-hidden" id="booking-drawer">
+        {/* Decorative background seal */}
+        <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full border border-white/5 pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-xl mx-auto mb-10">
+            <span className="text-ochre-400 font-bold uppercase tracking-widest text-xs">
+              Direct Developer Tour
+            </span>
+            <h2 className="font-editorial text-4xl lg:text-5xl font-semibold mt-1 text-white">
+              Book Your Actual Model Unit Viewing
+            </h2>
+            <p className="text-gray-300 text-xs sm:text-sm mt-2 leading-relaxed">
+              Experience the space firsthand. Our licensed in-house property advisors will guide you through actual finished deliverables, financing computation, and document processing.
+            </p>
+          </div>
+
+          {/* Interactive Booking Form */}
+          <OrtigasBookingForm />
+        </div>
+      </section>
+
+      {/* Interactive Financing Calculator Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="calculator">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-xs font-bold uppercase tracking-widest text-gold-700 bg-gold-50 px-3 py-1 rounded-full border border-gold-200">
+            Smart Mortgage Estimator
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal-900 mt-2">
+            Calculate Your Monthly Amortization
+          </h2>
+          <p className="text-stone-600 text-sm mt-2">
+            Customize your downpayment and loan tenure across Pag-IBIG Fund, commercial banks, or in-house developer financing.
+          </p>
+        </div>
         <FinancingCalculator initialPrice={2900000} initialProject="ortigas" />
       </section>
 
-      {/* Lead Capture Form */}
+      {/* Lead Capture Form Section */}
       <section id="inquire" className="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <InquiryForm
           initialProject="ortigas"
