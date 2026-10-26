@@ -104,7 +104,50 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const formattedJson = JSON.stringify(projects, null, 2);
+    // Calculate Loanable Balance = Price - Reservation Fee - Discount and enforce default values
+    const processedProjects = projects.map((project: any) => ({
+      ...project,
+      unitTypes: Array.isArray(project.unitTypes)
+        ? project.unitTypes.map((unit: any) => {
+            const price = Number(unit.pricePhp ?? unit.priceMinPhp ?? 0);
+            const reservationFee = Number(unit.reservationFeePhp ?? (project.reservationFeePhp || 10000));
+            const discount = Number(unit.discountPhp ?? 0);
+            const loanableBalance = Math.max(0, price - reservationFee - discount);
+            const pagibigInterestRate =
+              unit.pagibigInterestRate !== undefined && !isNaN(Number(unit.pagibigInterestRate))
+                ? Number(unit.pagibigInterestRate)
+                : 4.5;
+
+            // Remove priceMaxPhp and estMonthlyPagIbigPhp as requested
+            const { priceMaxPhp, estMonthlyPagIbigPhp, ...restUnit } = unit;
+
+            return {
+              ...restUnit,
+              name: unit.name || 'Unit',
+              pricePhp: price,
+              priceMinPhp: price,
+              reservationFeePhp: reservationFee,
+              discountPhp: discount,
+              loanableBalancePhp: loanableBalance,
+              pagibigInterestRate,
+              buildingName: unit.buildingName || '',
+              zone: unit.zone || '',
+              zoneLabel: unit.zoneLabel || '',
+              zoneType: unit.zoneType || '',
+              unitLayout: unit.unitLayout || '',
+              floorPlan: unit.floorPlan || '',
+              video: unit.video || '',
+              gallery1: unit.gallery1 || '',
+              gallery2: unit.gallery2 || '',
+              gallery3: unit.gallery3 || '',
+              gallery4: unit.gallery4 || '',
+              gallery5: unit.gallery5 || '',
+            };
+          })
+        : [],
+    }));
+
+    const formattedJson = JSON.stringify(processedProjects, null, 2);
 
     // 1. Write to local file on disk
     let diskSaved = false;

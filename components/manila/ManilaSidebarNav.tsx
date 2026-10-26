@@ -152,26 +152,26 @@ export default function ManilaSidebarNav() {
           onClick={() => setIsCollapsed(false)}
           aria-label="Show section navigation"
           title="Show section navigation"
-          className="group relative flex flex-col items-center gap-2 py-3 px-2 rounded-r-2xl bg-white/95 backdrop-blur-xl border-y border-r border-stone-200/90 shadow-xl shadow-black/10 hover:translate-x-1 hover:bg-stone-50 hover:border-gold-300/80 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb6753]"
+          className="group relative flex flex-col items-center gap-2 py-3 px-2 rounded-r-2xl bg-white/95 backdrop-blur-xl border-y border-r border-[#EADBBD] shadow-xl shadow-black/10 hover:translate-x-1 hover:bg-[#FAF5E6] hover:border-[#CE2029]/40 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#CE2029]"
         >
           {/* Pulsing indicator dot */}
           <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#eb6753] opacity-60" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#eb6753]" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#CE2029] opacity-60" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#CE2029]" />
           </span>
 
           {/* Icon + Vertical Label + Chevron */}
-          <div className="flex flex-col items-center gap-1.5 text-stone-500 group-hover:text-charcoal-900 transition-colors">
-            <Compass className="w-4 h-4 text-[#eb6753]" strokeWidth={2} />
-            <span className="[writing-mode:vertical-rl] rotate-180 text-[10px] font-bold tracking-widest uppercase text-stone-500 group-hover:text-charcoal-900 transition-colors py-1 select-none">
+          <div className="flex flex-col items-center gap-1.5 text-stone-500 group-hover:text-[#3E1C15] transition-colors">
+            <Compass className="w-4 h-4 text-[#CE2029]" strokeWidth={2} />
+            <span className="[writing-mode:vertical-rl] rotate-180 text-[10px] font-bold tracking-widest uppercase text-stone-500 group-hover:text-[#3E1C15] transition-colors py-1 select-none font-logo">
               Sections
             </span>
-            <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#eb6753] group-hover:translate-x-0.5 transition-all" strokeWidth={2.5} />
+            <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#CE2029] group-hover:translate-x-0.5 transition-all" strokeWidth={2.5} />
           </div>
 
           {/* Hover Tooltip */}
           <div className="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
-            <span className="inline-block px-2.5 py-1 text-[11px] font-semibold text-white bg-charcoal-900 rounded-lg shadow-lg">
+            <span className="inline-block px-2.5 py-1 text-[11px] font-semibold text-white bg-charcoal-900 rounded-lg shadow-lg font-logo">
               Show Section Navigation
             </span>
             {/* Tooltip arrow pointing left */}
@@ -187,7 +187,7 @@ export default function ManilaSidebarNav() {
           left: 'max(14px, calc((100vw - 1280px) / 2 - 50px))',
           top: `${sidebarTop}px`,
         }}
-        className={`hidden md:flex fixed z-40 flex-col items-center gap-1 py-3 px-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-stone-200/80 shadow-xl shadow-black/8 transition-all duration-300 ease-out ${
+        className={`hidden md:flex fixed z-40 flex-col items-center gap-1 py-3 px-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#EADBBD] shadow-xl shadow-black/8 transition-all duration-300 ease-out ${
           isCollapsed
             ? '-translate-x-24 opacity-0 pointer-events-none'
             : 'translate-x-0 opacity-100 pointer-events-auto'
@@ -199,14 +199,14 @@ export default function ManilaSidebarNav() {
           onClick={scrollToTop}
           title="Scroll to top"
           aria-label="Scroll to top"
-          className="group relative w-7 h-7 rounded-full bg-gradient-to-br from-[#eb6753] to-[#d85542] shadow-md shadow-[#eb6753]/30 flex items-center justify-center mb-1.5 transition-transform duration-200 hover:scale-110 active:scale-95 focus:outline-none"
+          className="group relative w-7 h-7 rounded-full bg-gradient-to-br from-[#CE2029] to-[#B51B23] shadow-md shadow-[#CE2029]/30 flex items-center justify-center mb-1.5 transition-transform duration-200 hover:scale-110 active:scale-95 focus:outline-none"
         >
           <span className="w-2 h-2 rounded-full bg-white/95 group-hover:hidden transition-all" />
           <ArrowUp className="w-3.5 h-3.5 text-white hidden group-hover:block transition-all" strokeWidth={2.5} />
 
           {/* Tooltip */}
           <div className="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
-            <span className="inline-block px-2.5 py-1 text-[11px] font-semibold text-white bg-charcoal-900 rounded-lg shadow-lg">
+            <span className="inline-block px-2.5 py-1 text-[11px] font-semibold text-white bg-charcoal-900 rounded-lg shadow-lg font-logo">
               Back to Top
             </span>
             <span className="absolute top-1/2 -translate-y-1/2 -left-1 w-2 h-2 bg-charcoal-900 rotate-45" />
@@ -214,7 +214,7 @@ export default function ManilaSidebarNav() {
         </button>
 
         {/* Thin separator */}
-        <div className="w-5 h-px bg-stone-200/80 mb-0.5" />
+        <div className="w-5 h-px bg-[#EADBBD] mb-0.5" />
 
         {/* Navigation Icons */}
         {sidebarItems.map((item) => {
@@ -229,12 +229,12 @@ export default function ManilaSidebarNav() {
                 onClick={() => scrollToSection(item.id)}
                 title={item.label}
                 aria-label={item.label}
-                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb6753] ${
+                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#CE2029] ${
                   isClicking
                     ? 'scale-90 bg-stone-200/80'
                     : isActive
-                    ? 'bg-stone-100 text-[#eb6753] shadow-sm font-semibold scale-105'
-                    : 'text-stone-400 hover:text-charcoal-900 hover:bg-stone-100/80'
+                    ? 'bg-[#FAF5E6] text-[#CE2029] shadow-sm font-semibold scale-105'
+                    : 'text-stone-400 hover:text-[#3E1C15] hover:bg-[#FAF5E6]'
                 }`}
               >
                 <Icon className="w-[18px] h-[18px]" strokeWidth={isActive ? 2 : 1.6} />
@@ -242,7 +242,7 @@ export default function ManilaSidebarNav() {
 
               {/* Tooltip to the right pointing left */}
               <div className="pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
-                <span className="inline-block px-2.5 py-1 text-[11px] font-semibold text-white bg-charcoal-900 rounded-lg shadow-lg">
+                <span className="inline-block px-2.5 py-1 text-[11px] font-semibold text-white bg-charcoal-900 rounded-lg shadow-lg font-logo">
                   {item.label}
                 </span>
                 <span className="absolute top-1/2 -translate-y-1/2 -left-1 w-2 h-2 bg-charcoal-900 rotate-45" />
@@ -252,7 +252,7 @@ export default function ManilaSidebarNav() {
         })}
 
         {/* Thin separator */}
-        <div className="w-5 h-px bg-stone-200/80 my-0.5" />
+        <div className="w-5 h-px bg-[#EADBBD] my-0.5" />
 
         {/* Collapse / Hide Toggle Button */}
         <div className="relative group">
@@ -261,7 +261,7 @@ export default function ManilaSidebarNav() {
             onClick={() => setIsCollapsed(true)}
             title="Hide navigation"
             aria-label="Hide navigation"
-            className="w-9 h-9 rounded-xl flex items-center justify-center text-stone-400 hover:text-charcoal-900 hover:bg-stone-100/90 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb6753] active:scale-90"
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-stone-400 hover:text-[#3E1C15] hover:bg-[#FAF5E6] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#CE2029] active:scale-90"
           >
             <ChevronLeft className="w-4 h-4" strokeWidth={2} />
           </button>

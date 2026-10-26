@@ -184,22 +184,22 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="bg-stone-100/70 py-12 sm:py-16 border-y border-stone-200/90 relative overflow-hidden cyber-grid-light">
+    <section className="bg-[#FAF5E6]/60 py-12 sm:py-16 border-y border-[#EADBBD] relative overflow-hidden cyber-grid-light">
       {/* Ambient background glows */}
-      <div className="absolute top-12 left-1/4 w-96 h-96 bg-[#eb6753]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-[#e8cf7b]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-12 left-1/4 w-96 h-96 bg-[#CE2029]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-[#FAF0C8]/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-stone-200 shadow-2xs text-[#eb6753] text-xs font-bold uppercase tracking-widest mb-3">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-[#EADBBD] shadow-2xs text-[#CE2029] text-xs font-bold uppercase tracking-widest mb-3 font-logo">
             <BadgeCheck className="w-4 h-4 text-emerald-600" />
             <span>Verified Homeowner Stories</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 tracking-tight">
+          <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#3E1C15] tracking-tight">
             Hear From Our Community Residents
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base mt-3.5 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-[#5C3D36] text-sm sm:text-base mt-3.5 leading-relaxed max-w-2xl mx-auto">
             Real experiences from everyday Filipino families, healthcare workers, BPO team leaders, and OFWs who turned their dreams of city condominium ownership into reality.
           </p>
         </div>
@@ -217,7 +217,7 @@ export default function TestimonialsSection() {
             type="button"
             onClick={prev}
             aria-label="Previous testimonial"
-            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md text-charcoal-900 shadow-xl border border-stone-200/80 flex items-center justify-center cursor-pointer z-40 hover:scale-110 active:scale-95 hover:bg-[#eb6753] hover:text-white hover:border-[#eb6753] transition-all duration-200"
+            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md text-[#3E1C15] shadow-xl border border-[#EADBBD] flex items-center justify-center cursor-pointer z-40 hover:scale-110 active:scale-95 hover:bg-[#CE2029] hover:text-white hover:border-[#CE2029] transition-all duration-200"
           >
             <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
@@ -227,7 +227,7 @@ export default function TestimonialsSection() {
             type="button"
             onClick={next}
             aria-label="Next testimonial"
-            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md text-charcoal-900 shadow-xl border border-stone-200/80 flex items-center justify-center cursor-pointer z-40 hover:scale-110 active:scale-95 hover:bg-[#eb6753] hover:text-white hover:border-[#eb6753] transition-all duration-200"
+            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/95 backdrop-blur-md text-[#3E1C15] shadow-xl border border-[#EADBBD] flex items-center justify-center cursor-pointer z-40 hover:scale-110 active:scale-95 hover:bg-[#CE2029] hover:text-white hover:border-[#CE2029] transition-all duration-200"
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
@@ -269,13 +269,13 @@ export default function TestimonialsSection() {
                 <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 lg:p-7 z-10 flex flex-col justify-end">
                   {/* Category / Unit Badge: Area and simplified Unit Type (e.g. "Manila • Bedroom") */}
                   <div className="mb-2">
-                    <span className="text-[11px] sm:text-xs font-semibold tracking-wide text-[#eb6753] bg-charcoal-950/85 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 inline-flex items-center space-x-1.5 shadow-sm">
+                    <span className="text-[11px] sm:text-xs font-semibold tracking-wide text-[#FAF0C8] bg-charcoal-950/85 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 inline-flex items-center space-x-1.5 shadow-sm font-logo">
                       <span>{formatLocationBadge(t.project, t.unitType)}</span>
                     </span>
                   </div>
 
                   {/* Author Name */}
-                  <h3 className="font-serif text-lg sm:text-xl font-bold text-white tracking-tight leading-tight mb-1 drop-shadow-sm">
+                  <h3 className="font-logo text-lg sm:text-xl font-extrabold text-white tracking-tight leading-tight mb-1 drop-shadow-sm">
                     {formatSurnameToInitial(t.name)}
                   </h3>
 
@@ -306,8 +306,8 @@ export default function TestimonialsSection() {
                 aria-label={`Go to slide ${i + 1}`}
                 className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? 'w-7 bg-[#eb6753] shadow-xs'
-                    : 'w-2 bg-stone-300 hover:bg-stone-400'
+                    ? 'w-7 bg-[#CE2029] shadow-xs'
+                    : 'w-2 bg-[#EADBBD] hover:bg-[#CE2029]/50'
                 }`}
               />
             );

@@ -59,19 +59,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: 'No file provided' }, { status: 400 });
     }
 
-    // Validate mime type
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/avif', 'image/jpg'];
-    if (!validTypes.includes(file.type)) {
+    // Validate mime type (images and videos)
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/avif', 'image/jpg'];
+    const validVideoTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/ogg', 'video/x-msvideo'];
+    const isVideo = validVideoTypes.includes(file.type) || file.type.startsWith('video/');
+    const isImage = validImageTypes.includes(file.type) || file.type.startsWith('image/');
+
+    if (!isImage && !isVideo) {
       return NextResponse.json(
-        { success: false, message: 'Invalid file format. Please upload an image (JPG, PNG, WebP, SVG).' },
+        { success: false, message: 'Invalid file format. Please upload an image (JPG, PNG, WebP, SVG) or video (MP4, WebM, MOV).' },
         { status: 400 }
       );
     }
 
-    // Size limit 10MB
-    if (file.size > 10 * 1024 * 1024) {
+    // Size limit: 60MB for videos, 15MB for images
+    const maxSize = isVideo ? 60 * 1024 * 1024 : 15 * 1024 * 1024;
+    if (file.size > maxSize) {
       return NextResponse.json(
-        { success: false, message: 'File is too large. Maximum size is 10MB.' },
+        { success: false, message: `File is too large. Maximum size is ${isVideo ? '60MB' : '15MB'}.` },
         { status: 400 }
       );
     }

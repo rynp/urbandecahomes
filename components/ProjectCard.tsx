@@ -12,7 +12,10 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const [showAllDeliverables, setShowAllDeliverables] = useState(false);
   const availableUnits = project.unitTypes.filter((u) => u.status !== 'Sold Out');
-  const lowestMonthly = Math.min(...availableUnits.map((u) => u.estMonthlyPagIbigPhp));
+  const getUnitMonthly = (u: any) =>
+    u.estMonthlyPagIbigPhp || Math.round(((u.loanableBalancePhp || u.pricePhp || u.priceMinPhp || 0) * 0.00506685));
+  const monthlies = availableUnits.map(getUnitMonthly).filter((m) => m > 0);
+  const lowestMonthly = monthlies.length > 0 ? Math.min(...monthlies) : 0;
 
   // Data-driven specifications
   const minBeds = Math.min(...availableUnits.map((u) => u.bedrooms));
@@ -55,25 +58,25 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Bottom Card Title & Location */}
         <div className="absolute bottom-4 left-4 right-4 text-white z-10">
-          <h3 className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-md group-hover:text-gold-300 transition-colors">
+          <h3 className="font-logo text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-md group-hover:text-[#FAF0C8] transition-colors">
             {project.name}
           </h3>
-          <p className="flex items-center text-xs text-stone-300 mt-1.5">
-            <MapPin className="w-3.5 h-3.5 mr-1 text-[#eb6753] flex-shrink-0 animate-pulse" />
+          <p className="flex items-center text-xs text-stone-200 mt-1.5">
+            <MapPin className="w-3.5 h-3.5 mr-1 text-[#CE2029] flex-shrink-0 animate-pulse" />
             <span className="truncate">{project.location.address}</span>
           </p>
         </div>
       </div>
 
       {/* Card Body */}
-      <div className="p-5 lg:p-4.5 xl:p-6 flex-1 flex flex-col justify-between space-y-4 lg:space-y-3.5 xl:space-y-5 bg-gradient-to-b from-white to-stone-50/60">
+      <div className="p-5 lg:p-4.5 xl:p-6 flex-1 flex flex-col justify-between space-y-4 lg:space-y-3.5 xl:space-y-5 bg-gradient-to-b from-white to-[#FAF5E6]/40">
         {/* Pricing Highlights in Futuristic Glass Box */}
-        <div className="p-3.5 lg:p-3 xl:p-3.5 rounded-xl bg-stone-100/70 border border-stone-200/80 backdrop-blur-sm space-y-2">
+        <div className="p-3.5 lg:p-3 xl:p-3.5 rounded-xl bg-[#FAF5E6]/70 border border-[#EADBBD] backdrop-blur-sm space-y-2">
           {/* Contract Price Block */}
           <div>
             {/* Header Line: Label on Left, Financing Logos on Right */}
             <div className="flex items-center justify-between relative">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500 block">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A6E5D] block font-logo">
                 Contract Price (TCP)
               </span>
 
@@ -115,43 +118,43 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </div>
 
             {/* Price Value: Proportional top and bottom spacing */}
-            <span className="text-base lg:text-[15px] xl:text-lg font-extrabold text-charcoal-900 block leading-tight mt-2.5 sm:mt-3 mb-0.5 whitespace-nowrap">
+            <span className="text-base lg:text-[15px] xl:text-lg font-extrabold text-[#3E1C15] block leading-tight mt-2.5 sm:mt-3 mb-0.5 whitespace-nowrap font-logo">
               {project.priceRangeFormatted}
             </span>
           </div>
 
           {/* Bottom Row: Monthly Amortization Full Width on One Line */}
-          <div className="pt-2 border-t border-stone-200/60 flex items-center justify-between gap-1 whitespace-nowrap">
-            <span className="text-[10px] lg:text-[9.5px] xl:text-[10px] font-bold uppercase tracking-wider lg:tracking-tight xl:tracking-wider text-stone-500 whitespace-nowrap flex-shrink-0">
+          <div className="pt-2 border-t border-[#E8DEC4] flex items-center justify-between gap-1 whitespace-nowrap">
+            <span className="text-[10px] lg:text-[9.5px] xl:text-[10px] font-bold uppercase tracking-wider lg:tracking-tight xl:tracking-wider text-[#7A6E5D] whitespace-nowrap flex-shrink-0 font-logo">
               Est. Monthly Amort:
             </span>
-            <span className="text-xs lg:text-[11.5px] xl:text-sm font-bold text-[#eb6753] whitespace-nowrap flex-shrink-0">
+            <span className="text-xs lg:text-[11.5px] xl:text-sm font-bold text-[#CE2029] whitespace-nowrap flex-shrink-0 font-logo">
               From ~₱{lowestMonthly.toLocaleString()}/mo
             </span>
           </div>
         </div>
 
         {/* Unit Specifications (Bedrooms, Bathrooms, AreaSqm) */}
-        <div className="flex items-center space-x-2 sm:space-x-2.5 lg:space-x-1.5 xl:space-x-2.5 text-xs lg:text-[11.5px] xl:text-[13px] text-stone-700 font-medium whitespace-nowrap">
+        <div className="flex items-center space-x-2 sm:space-x-2.5 lg:space-x-1.5 xl:space-x-2.5 text-xs lg:text-[11.5px] xl:text-[13px] text-[#5C3D36] font-medium whitespace-nowrap">
           <div className="flex items-center space-x-1 lg:space-x-1 xl:space-x-1.5 flex-shrink-0 whitespace-nowrap">
-            <Bed className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-stone-600 flex-shrink-0" />
+            <Bed className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-[#8C766F] flex-shrink-0" />
             <span className="whitespace-nowrap">{bedDisplay}</span>
           </div>
-          <span className="text-stone-300 select-none flex-shrink-0">|</span>
+          <span className="text-[#D5CBB3] select-none flex-shrink-0">|</span>
           <div className="flex items-center space-x-1 lg:space-x-1 xl:space-x-1.5 flex-shrink-0 whitespace-nowrap">
-            <Bath className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-stone-600 flex-shrink-0" />
+            <Bath className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-[#8C766F] flex-shrink-0" />
             <span className="whitespace-nowrap">{bathDisplay}</span>
           </div>
-          <span className="text-stone-300 select-none flex-shrink-0">|</span>
+          <span className="text-[#D5CBB3] select-none flex-shrink-0">|</span>
           <div className="flex items-center space-x-1 lg:space-x-1 xl:space-x-1.5 flex-shrink-0 whitespace-nowrap">
-            <Ruler className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-stone-600 flex-shrink-0" />
+            <Ruler className="w-3.5 h-3.5 lg:w-3.5 lg:h-3.5 xl:w-4 xl:h-4 text-[#8C766F] flex-shrink-0" />
             <span className="whitespace-nowrap">{areaDisplay}</span>
           </div>
         </div>
 
         {/* Deliverables with See More Toggle */}
         <div className="pt-1">
-          <div className="space-y-1.5 text-xs text-stone-600 transition-all duration-300">
+          <div className="space-y-1.5 text-xs text-[#5C3D36] transition-all duration-300">
             {(showAllDeliverables ? project.deliverables : project.deliverables.slice(0, 3)).map(
               (deliverable) => (
                 <div key={deliverable} className="flex items-center space-x-2">
@@ -167,7 +170,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               <button
                 type="button"
                 onClick={() => setShowAllDeliverables(!showAllDeliverables)}
-                className="inline-flex items-center justify-center text-[11px] font-semibold text-[#eb6753] hover:text-[#d85542] transition-colors py-1 px-3 rounded-full hover:bg-[#eb6753]/5"
+                className="inline-flex items-center justify-center text-[11px] font-bold text-[#CE2029] hover:text-[#B51B23] transition-colors py-1 px-3 rounded-full hover:bg-[#CE2029]/10 font-logo"
               >
                 <span>{showAllDeliverables ? 'See less' : 'See more'}</span>
                 <ChevronDown
@@ -181,10 +184,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         {/* Action Links */}
-        <div className="pt-4 border-t border-stone-200/80 flex items-center justify-between gap-3">
+        <div className="pt-4 border-t border-[#E8DEC4] flex items-center justify-between gap-3">
           <Link
             href={`/${project.slug}`}
-            className="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-charcoal-900 bg-stone-100 hover:bg-stone-200 hover:text-black rounded-xl transition-all group/btn"
+            className="flex-1 inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#3E1C15] bg-[#FAF5E6] hover:bg-[#FAF0C8] hover:text-[#CE2029] rounded-xl transition-all group/btn font-logo border border-[#EADBBD]"
           >
             <span>View Details</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
@@ -192,7 +195,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
           <Link
             href={`/inquire-now?project=${project.slug}`}
-            className="flex-1 btn-futuristic inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#eb6753] hover:bg-[#d85542] rounded-xl shadow-md shadow-[#eb6753]/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+            className="flex-1 btn-futuristic inline-flex items-center justify-center px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-md shadow-[#CE2029]/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 font-logo"
           >
             <span>Inquire</span>
           </Link>

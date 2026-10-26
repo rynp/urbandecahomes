@@ -99,28 +99,28 @@ export default function OrtigasUnitFloorplanSelector() {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="units">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-200">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-[#E8DEC4]">
         <div>
-          <span className="text-ochre-700 tracking-widest uppercase font-bold text-xs">
+          <span className="text-[#CE2029] tracking-widest uppercase font-bold text-xs">
             Architectural Blueprint &amp; Specs
           </span>
-          <h2 className="font-editorial text-4xl lg:text-5xl font-semibold text-charcoal-900 mt-1">
+          <h2 className="font-logo text-4xl lg:text-5xl font-extrabold text-[#3E1C15] mt-1">
             Explore Unit Layouts &amp; Floorplans
           </h2>
-          <p className="text-gray-600 text-sm mt-2 max-w-2xl leading-relaxed">
+          <p className="text-[#5C3D36] text-sm mt-2 max-w-2xl leading-relaxed">
             Engineered for maximum livability, space efficiency, and natural cross-ventilation. Every home is handed over fully finished, eliminating messy renovation delays.
           </p>
         </div>
 
         {/* Unit Switcher Tabs */}
-        <div className="mt-6 md:mt-0 inline-flex p-1.5 bg-gray-100/90 rounded-xl border border-gray-200 shadow-inner">
+        <div className="mt-6 md:mt-0 inline-flex p-1.5 bg-[#FAF3DE] rounded-xl border border-[#EADBBD] shadow-inner">
           <button
             type="button"
             onClick={() => setActiveTab('2br-inner')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === '2br-inner'
-                ? 'bg-white text-charcoal-900 shadow-sm border border-gray-200'
-                : 'text-gray-500 hover:text-charcoal-900'
+                ? 'bg-white text-[#241E15] shadow-sm border border-[#DFBD58]'
+                : 'text-[#6A6254] hover:text-[#241E15]'
             }`}
           >
             2-Bedroom Inner • 30.60 sqm
@@ -130,8 +130,8 @@ export default function OrtigasUnitFloorplanSelector() {
             onClick={() => setActiveTab('2br-corner')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === '2br-corner'
-                ? 'bg-white text-charcoal-900 shadow-sm border border-gray-200'
-                : 'text-gray-500 hover:text-charcoal-900'
+                ? 'bg-white text-[#241E15] shadow-sm border border-[#DFBD58]'
+                : 'text-[#6A6254] hover:text-[#241E15]'
             }`}
           >
             2-Bedroom Corner • 35.57 sqm
@@ -141,8 +141,8 @@ export default function OrtigasUnitFloorplanSelector() {
             onClick={() => setActiveTab('3br')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === '3br'
-                ? 'bg-white text-charcoal-900 shadow-sm border border-gray-200'
-                : 'text-gray-500 hover:text-charcoal-900'
+                ? 'bg-white text-[#241E15] shadow-sm border border-[#DFBD58]'
+                : 'text-[#6A6254] hover:text-[#241E15]'
             }`}
           >
             3-Bedroom Exec • 42.00 sqm
@@ -151,19 +151,19 @@ export default function OrtigasUnitFloorplanSelector() {
       </div>
 
       {/* Active Unit Presentation Container */}
-      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+      <div className="bg-white rounded-3xl border border-[#EADBBD] shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12">
         {/* Left (7 cols): Interactive SVG Floor Plan Display Panel */}
-        <div className="lg:col-span-7 bg-[#F4F4F6] p-6 sm:p-10 lg:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-gray-200 relative grid-lines">
+        <div className="lg:col-span-7 bg-[#FCFAF2] p-6 sm:p-10 lg:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#EADBBD] relative grid-lines">
           <div className="flex items-center justify-between z-10 mb-6 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <span className="inline-block px-2.5 py-1 bg-white border border-gray-300 rounded text-[11px] font-mono font-medium text-gray-700 shadow-sm">
+              <span className="inline-block px-2.5 py-1 bg-white border border-[#E0D5B8] rounded text-[11px] font-mono font-medium text-[#544D40] shadow-sm">
                 SCALE: 1:50 METRIC
               </span>
-              <span className="inline-block px-2.5 py-1 bg-ochre-100 border border-ochre-300 rounded text-[11px] font-mono font-medium text-ochre-800">
+              <span className="inline-block px-2.5 py-1 bg-[#FAF0C8] border border-[#DFBD58] rounded text-[11px] font-mono font-medium text-[#543E08]">
                 {activeTab === '2br-corner' ? 'DUAL-ASPECT CORNER WINDOWS' : 'EAST/WEST VENTILATION'}
               </span>
             </div>
-            <span className="text-xs text-gray-400 font-mono">SPEC-ID: UDH-ORT-V2</span>
+            <span className="text-xs text-[#8A8274] font-mono">SPEC-ID: UDH-ORT-V2</span>
           </div>
 
           {/* Dynamic Floor Plan Graphic Container */}
@@ -313,69 +313,69 @@ export default function OrtigasUnitFloorplanSelector() {
             {/* Title & Dynamic Area Badge */}
             <div className="flex items-start justify-between">
               <div>
-                <span className="inline-block text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-ochre-100 text-ochre-800 border border-ochre-200 mb-2">
+                <span className="inline-block text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-[#FAF0C8] text-[#543E08] border border-[#DFBD58] mb-2">
                   {activeUnit.badge}
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-charcoal-900">
+                <h3 className="font-logo text-2xl font-bold text-[#3E1C15]">
                   {activeUnit.name}
                 </h3>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-bold font-mono text-charcoal-900">
+                <span className="text-2xl font-bold font-mono text-[#3E1C15]">
                   {activeUnit.sqm}
                 </span>
-                <span className="text-xs text-gray-500 block">SQUARE METERS</span>
+                <span className="text-xs text-[#7A5B52] block">SQUARE METERS</span>
               </div>
             </div>
 
-            <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+            <p className="text-xs text-[#5C3D36] mt-2 leading-relaxed">
               {activeUnit.desc}
             </p>
 
             {/* Specifications Table */}
-            <div className="mt-6 border border-gray-100 rounded-xl overflow-hidden bg-gray-50/60 text-xs">
-              <div className="divide-y divide-gray-200">
+            <div className="mt-6 border border-[#EADBBD] rounded-xl overflow-hidden bg-[#FCFAF2] text-xs">
+              <div className="divide-y divide-[#EADBBD]">
                 {activeUnit.specs.map((item, index) => (
                   <div key={index} className="flex justify-between py-2.5 px-3.5">
-                    <span className="text-gray-500">{item.label}</span>
-                    <span className="font-semibold text-gray-900">{item.value}</span>
+                    <span className="text-[#7A5B52]">{item.label}</span>
+                    <span className="font-semibold text-[#3E1C15]">{item.value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Financing & Price Amortization Panel */}
-            <div className="mt-6 p-4 rounded-xl bg-charcoal-900 text-white space-y-3">
-              <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                <span className="text-xs font-medium text-gray-300">Total Contract Price (TCP est.)</span>
-                <span className="text-base font-bold text-ochre-200">
+            <div className="mt-6 p-4 rounded-xl bg-gradient-to-b from-[#FAF4E2] to-[#F5ECCE] border border-[#E8DAB2] text-[#3E1C15] space-y-3 shadow-sm">
+              <div className="flex justify-between items-center border-b border-[#DFD1A5] pb-2">
+                <span className="text-xs font-medium text-[#5C3D36]">Total Contract Price (TCP est.)</span>
+                <span className="text-base font-bold text-[#CE2029]">
                   {activeUnit.tcp}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-3 pt-1 text-xs">
                 <div>
-                  <span className="text-gray-400 block text-[11px]">Reservation Fee</span>
-                  <span className="font-bold text-white">₱10,000 only</span>
+                  <span className="text-[#7A5B52] block text-[11px]">Reservation Fee</span>
+                  <span className="font-bold text-[#3E1C15]">₱10,000 only</span>
                 </div>
                 <div>
-                  <span className="text-gray-400 block text-[11px]">Downpayment Term</span>
-                  <span className="font-bold text-white">Flexible Equity Spread</span>
+                  <span className="text-[#7A5B52] block text-[11px]">Downpayment Term</span>
+                  <span className="font-bold text-[#3E1C15]">Flexible Equity Spread</span>
                 </div>
               </div>
 
               {/* Estimated Monthly Pill */}
-              <div className="bg-charcoal-850 p-3 rounded-lg flex items-center justify-between border border-white/5">
+              <div className="bg-[#FEFDF9] p-3 rounded-lg flex items-center justify-between border border-[#E2D2A4] shadow-sm">
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-ochre-400 font-bold block">
+                  <span className="text-[10px] uppercase tracking-wider text-[#CE2029] font-bold block">
                     Estimated Pag-IBIG Monthly
                   </span>
-                  <span className="text-xl font-black text-white">
+                  <span className="text-xl font-black text-[#3E1C15]">
                     {activeUnit.monthly}
-                    <span className="text-xs font-normal text-gray-400">/mo</span>
+                    <span className="text-xs font-normal text-[#7A5B52]">/mo</span>
                   </span>
                 </div>
-                <span className="text-[10px] text-right text-gray-400">
+                <span className="text-[10px] text-right text-[#7A5B52]">
                   30 Years term<br />6.25% repricing
                 </span>
               </div>
@@ -386,14 +386,14 @@ export default function OrtigasUnitFloorplanSelector() {
           <div className="mt-6 flex items-center gap-3">
             <a
               href="#inquire"
-              className="flex-1 text-center bg-ochre-500 hover:bg-ochre-600 text-charcoal-900 font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-md transition-all hover:shadow-ochre-500/25"
+              className="flex-1 text-center bg-[#CE2029] hover:bg-[#B51B23] text-white font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-md transition-all hover:shadow-[#CE2029]/25"
             >
               Inquire About This Unit
             </a>
             <button
               type="button"
               onClick={handleDownload}
-              className="p-3 border border-gray-300 hover:border-gray-400 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+              className="p-3 border border-[#E0D5B8] hover:border-[#CFA93A] rounded-xl text-[#544D40] hover:bg-[#FAF5E6] transition-colors"
               title="Download Spec Sheet PDF"
             >
               <Download className="w-5 h-5" />

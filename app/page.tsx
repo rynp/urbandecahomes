@@ -51,14 +51,14 @@ export default function HomePage() {
       {/* Featured Condominium Developments */}
       <section className="pt-10 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-left max-w-3xl mb-8 sm:mb-10">
-          <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-[#eb6753] bg-[#eb6753]/10 border border-[#eb6753]/20 px-3.5 py-1.5 rounded-full mb-3">
-            <Building2 className="w-3.5 h-3.5 text-[#eb6753]" />
+          <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-[#CE2029] bg-[#CE2029]/10 border border-[#CE2029]/20 px-3.5 py-1.5 rounded-full mb-3 font-logo">
+            <Building2 className="w-3.5 h-3.5 text-[#CE2029]" />
             <span>Active Metro Manila Communities</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 tracking-tight">
+          <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#3E1C15] tracking-tight">
             Featured Projects in Metro Manila
           </h2>
-          <p className="text-stone-500 text-xs sm:text-sm mt-2 sm:mt-3 whitespace-nowrap truncate sm:whitespace-normal">
+          <p className="text-[#5C3D36] text-xs sm:text-sm mt-2 sm:mt-3 whitespace-nowrap truncate sm:whitespace-normal">
             Fully finished, move-in ready condos across Metro Manila.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function HomePage() {
 
       {/* Main Conversion Inquiry Form Section */}
       <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-96 bg-gradient-to-r from-[#eb6753]/10 via-gold-400/10 to-[#eb6753]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-96 bg-gradient-to-r from-[#CE2029]/10 via-[#FAF5E6] to-[#CE2029]/10 rounded-full blur-3xl pointer-events-none" />
         <InquiryForm
           title="Reserve Your Unit or Request Free Computations"
           subtitle="Submit your details below to schedule a model unit viewing or receive an official Pag-IBIG computation sheet."
@@ -95,22 +95,22 @@ export default function HomePage() {
       <TestimonialsSection />
 
       {/* Why Choose Urban Deca Homes (Pillars) */}
-      <section className="bg-gradient-to-b from-stone-100/90 via-stone-50/60 to-stone-100/90 py-16 sm:py-20 border-y border-stone-200/90 relative overflow-hidden cyber-grid-light">
+      <section className="bg-gradient-to-b from-[#FAF5E6]/90 via-[#FAF8F2] to-[#FAF5E6]/90 py-16 sm:py-20 border-y border-[#EADBBD] relative overflow-hidden cyber-grid-light">
         {/* Ambient atmospheric glows */}
-        <div className="absolute top-12 left-1/4 w-96 h-96 bg-[#eb6753]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-[#e8cf7b]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-12 left-1/4 w-96 h-96 bg-[#CE2029]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-[#FAF0C8] rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white border border-stone-200/90 shadow-2xs text-[#eb6753] text-xs font-bold uppercase tracking-widest mb-3.5">
-              <Sparkles className="w-3.5 h-3.5 text-gold-500" />
-              <span>Price • Quality • Service</span>
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white border border-[#EADBBD] shadow-2xs text-[#CE2029] text-xs font-bold uppercase tracking-widest mb-3.5 font-logo">
+              <Sparkles className="w-3.5 h-3.5 text-[#CE2029]" />
+              <span>Pride • Quality • Service</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 tracking-tight leading-tight">
+            <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#3E1C15] tracking-tight leading-tight">
               Why Everyday Filipinos Choose Urban Deca Homes
             </h2>
-            <p className="text-stone-600 text-sm sm:text-base mt-3.5 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-[#5C3D36] text-sm sm:text-base mt-3.5 leading-relaxed max-w-2xl mx-auto">
               Designed specifically to make quality condominium homeownership within reach of working families, BPO professionals, and OFWs with move-in ready ease.
             </p>
           </div>
@@ -118,9 +118,9 @@ export default function HomePage() {
           {/* 3 Immersive Visual Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Card 1: Affordability */}
-            <div className="group relative rounded-3xl bg-white border border-stone-200/90 shadow-md hover:shadow-2xl hover:border-charcoal-800 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
+            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-2xl hover:border-[#CE2029]/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
               {/* Outer Ambient Hover Glow Backdrop */}
-              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-charcoal-700/20 via-gold-400/25 to-[#eb6753]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
+              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-[#CE2029]/15 via-[#FAF0C8] to-[#CE2029]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
 
               <div>
                 {/* Visual Image Stage */}
@@ -133,11 +133,11 @@ export default function HomePage() {
 
                   {/* Top Floating Feature Badge */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-charcoal-950/85 backdrop-blur-md text-white border border-white/15 shadow-sm inline-flex items-center space-x-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#eb6753] animate-pulse" />
+                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-charcoal-950/85 backdrop-blur-md text-white border border-white/15 shadow-sm inline-flex items-center space-x-1.5 font-logo">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#CE2029] animate-pulse" />
                       <span>₱10,000 Reservation</span>
                     </span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gold-300 bg-charcoal-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-gold-400/30">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#FAF0C8] bg-charcoal-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-white/20 font-logo">
                       01
                     </span>
                   </div>
@@ -152,32 +152,32 @@ export default function HomePage() {
 
                 {/* Floating Icon Badge overlapping junction */}
                 <div className="relative -mt-6 ml-6 z-20">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#eb6753] to-[#d85542] text-white flex items-center justify-center shadow-lg shadow-[#eb6753]/35 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#CE2029] to-[#B51B23] text-white flex items-center justify-center shadow-lg shadow-[#CE2029]/35 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                     <Percent className="w-6 h-6" />
                   </div>
                 </div>
 
                 {/* Card Content Body */}
                 <div className="px-6 pt-3 pb-4">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#eb6753] block mb-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#CE2029] block mb-1 font-logo">
                     Financing Advantage
                   </span>
-                  <h3 className="font-serif text-xl sm:text-[22px] font-bold text-charcoal-900 mb-2.5 group-hover:text-charcoal-950 transition-colors leading-snug">
+                  <h3 className="font-logo text-xl sm:text-[22px] font-extrabold text-[#3E1C15] mb-2.5 group-hover:text-[#CE2029] transition-colors leading-snug">
                     Unmatched Affordability &amp; Low Cash-Out
                   </h3>
-                  <p className="text-stone-600 text-xs sm:text-[13px] leading-relaxed mb-4">
+                  <p className="text-[#5C3D36] text-xs sm:text-[13px] leading-relaxed mb-4">
                     Unit reservations start from only ₱10,000, with monthly amortizations starting around ₱12,500/month via Pag-IBIG Fund. Low equity promotions allow buyers to allocate savings toward furnishings instead of prohibitive downpayments.
                   </p>
 
                   {/* Scannable Micro-Pills */}
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                  <div className="flex flex-wrap gap-1.5 font-logo">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       ₱10,000 Reservation
                     </span>
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       From ~₱12.5k/mo
                     </span>
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       Up to 30-Yr Terms
                     </span>
                   </div>
@@ -188,10 +188,10 @@ export default function HomePage() {
               <div className="px-6 pb-6 pt-3">
                 <Link
                   href="/#calculator"
-                  className="w-full inline-flex items-center justify-between pt-3.5 border-t border-stone-100 text-xs font-bold uppercase tracking-wider text-charcoal-900 group-hover:text-charcoal-950 transition-colors"
+                  className="w-full inline-flex items-center justify-between pt-3.5 border-t border-[#EADBBD] text-xs font-bold uppercase tracking-wider text-[#3E1C15] hover:text-[#CE2029] transition-colors font-logo"
                 >
                   <span>Estimate Monthly Amort</span>
-                  <div className="w-7 h-7 rounded-full bg-stone-100 text-stone-600 group-hover:bg-charcoal-900 group-hover:text-gold-400 flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
+                  <div className="w-7 h-7 rounded-full bg-[#FAF5E6] text-[#3E1C15] group-hover:bg-[#CE2029] group-hover:text-white flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </Link>
@@ -199,9 +199,9 @@ export default function HomePage() {
             </div>
 
             {/* Card 2: Commercial Centers */}
-            <div className="group relative rounded-3xl bg-white border border-stone-200/90 shadow-md hover:shadow-2xl hover:border-charcoal-800 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
+            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-2xl hover:border-[#CE2029]/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
               {/* Outer Ambient Hover Glow Backdrop */}
-              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-charcoal-700/20 via-gold-400/25 to-[#eb6753]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
+              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-[#CE2029]/15 via-[#FAF0C8] to-[#CE2029]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
 
               <div>
                 {/* Visual Image Stage */}
@@ -214,11 +214,11 @@ export default function HomePage() {
 
                   {/* Top Floating Feature Badge */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-charcoal-950/85 backdrop-blur-md text-white border border-white/15 shadow-sm inline-flex items-center space-x-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
+                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-charcoal-950/85 backdrop-blur-md text-white border border-white/15 shadow-sm inline-flex items-center space-x-1.5 font-logo">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#EBA226] animate-pulse" />
                       <span>On-Site DECA Mall</span>
                     </span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gold-300 bg-charcoal-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-gold-400/30">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#FAF0C8] bg-charcoal-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-white/20 font-logo">
                       02
                     </span>
                   </div>
@@ -233,32 +233,32 @@ export default function HomePage() {
 
                 {/* Floating Icon Badge overlapping junction */}
                 <div className="relative -mt-6 ml-6 z-20">
-                  <div className="w-12 h-12 rounded-2xl gold-gradient text-charcoal-950 flex items-center justify-center shadow-lg shadow-gold-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                    <ShoppingBag className="w-6 h-6 text-charcoal-950" />
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#EBA226] to-[#CE2029] text-white flex items-center justify-center shadow-lg shadow-[#EBA226]/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <ShoppingBag className="w-6 h-6 text-white" />
                   </div>
                 </div>
 
                 {/* Card Content Body */}
                 <div className="px-6 pt-3 pb-4">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-gold-700 block mb-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#EBA226] block mb-1 font-logo">
                     Lifestyle Convenience
                   </span>
-                  <h3 className="font-serif text-xl sm:text-[22px] font-bold text-charcoal-900 mb-2.5 group-hover:text-charcoal-950 transition-colors leading-snug">
+                  <h3 className="font-logo text-xl sm:text-[22px] font-extrabold text-[#3E1C15] mb-2.5 group-hover:text-[#CE2029] transition-colors leading-snug">
                     Integrated Commercial Centers (DECA Mall)
                   </h3>
-                  <p className="text-stone-600 text-xs sm:text-[13px] leading-relaxed mb-4">
+                  <p className="text-[#5C3D36] text-xs sm:text-[13px] leading-relaxed mb-4">
                     Both Urban Deca Homes Manila and Ortigas integrate dedicated commercial shopping strips and on-site DECA Malls. Residents enjoy immediate doorstep access to supermarkets, retail shops, dining, and daily household services.
                   </p>
 
                   {/* Scannable Micro-Pills */}
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                  <div className="flex flex-wrap gap-1.5 font-logo">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       0 Mins Footbridge
                     </span>
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       Supermarket &amp; Retail
                     </span>
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       Restaurants &amp; Cafes
                     </span>
                   </div>
@@ -269,10 +269,10 @@ export default function HomePage() {
               <div className="px-6 pb-6 pt-3">
                 <Link
                   href="/manila"
-                  className="w-full inline-flex items-center justify-between pt-3.5 border-t border-stone-100 text-xs font-bold uppercase tracking-wider text-charcoal-900 group-hover:text-charcoal-950 transition-colors"
+                  className="w-full inline-flex items-center justify-between pt-3.5 border-t border-[#EADBBD] text-xs font-bold uppercase tracking-wider text-[#3E1C15] hover:text-[#CE2029] transition-colors font-logo"
                 >
                   <span>Explore Mall &amp; Amenities</span>
-                  <div className="w-7 h-7 rounded-full bg-stone-100 text-stone-600 group-hover:bg-charcoal-900 group-hover:text-gold-400 flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
+                  <div className="w-7 h-7 rounded-full bg-[#FAF5E6] text-[#3E1C15] group-hover:bg-[#CE2029] group-hover:text-white flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </Link>
@@ -280,9 +280,9 @@ export default function HomePage() {
             </div>
 
             {/* Card 3: Pag-IBIG Documentation */}
-            <div className="group relative rounded-3xl bg-white border border-stone-200/90 shadow-md hover:shadow-2xl hover:border-charcoal-800 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
+            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-2xl hover:border-[#CE2029]/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
               {/* Outer Ambient Hover Glow Backdrop */}
-              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-charcoal-700/20 via-gold-400/25 to-[#eb6753]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
+              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-[#CE2029]/15 via-[#FAF0C8] to-[#CE2029]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
 
               <div>
                 {/* Visual Image Stage */}
@@ -295,11 +295,11 @@ export default function HomePage() {
 
                   {/* Top Floating Feature Badge */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-charcoal-950/85 backdrop-blur-md text-white border border-white/15 shadow-sm inline-flex items-center space-x-1.5">
+                    <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-charcoal-950/85 backdrop-blur-md text-white border border-white/15 shadow-sm inline-flex items-center space-x-1.5 font-logo">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                       <span>Accredited Pag-IBIG Team</span>
                     </span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gold-300 bg-charcoal-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-gold-400/30">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#FAF0C8] bg-charcoal-950/70 backdrop-blur-md px-2.5 py-0.5 rounded-md border border-white/20 font-logo">
                       03
                     </span>
                   </div>
@@ -314,32 +314,32 @@ export default function HomePage() {
 
                 {/* Floating Icon Badge overlapping junction */}
                 <div className="relative -mt-6 ml-6 z-20">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-charcoal-800 to-charcoal-950 text-gold-400 border border-gold-400/30 flex items-center justify-center shadow-lg shadow-black/35 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                    <ShieldCheck className="w-6 h-6 text-gold-400" />
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4A1E17] to-[#3E1C15] text-[#FAF0C8] border border-[#CE2029]/30 flex items-center justify-center shadow-lg shadow-black/35 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <ShieldCheck className="w-6 h-6 text-[#FAF0C8]" />
                   </div>
                 </div>
 
                 {/* Card Content Body */}
                 <div className="px-6 pt-3 pb-4">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-charcoal-700 block mb-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#4A1E17] block mb-1 font-logo">
                     Hassle-Free Processing
                   </span>
-                  <h3 className="font-serif text-xl sm:text-[22px] font-bold text-charcoal-900 mb-2.5 group-hover:text-charcoal-950 transition-colors leading-snug">
+                  <h3 className="font-logo text-xl sm:text-[22px] font-extrabold text-[#3E1C15] mb-2.5 group-hover:text-[#CE2029] transition-colors leading-snug">
                     Accredited Pag-IBIG Documentation Team
                   </h3>
-                  <p className="text-stone-600 text-xs sm:text-[13px] leading-relaxed mb-4">
+                  <p className="text-[#5C3D36] text-xs sm:text-[13px] leading-relaxed mb-4">
                     Avoid confusing red tape and bank bureaucracy. Our dedicated in-house documentation specialists assist you in compiling, evaluating, and submitting requirements directly to Pag-IBIG Fund for swift loan approval.
                   </p>
 
                   {/* Scannable Micro-Pills */}
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                  <div className="flex flex-wrap gap-1.5 font-logo">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       Direct Pag-IBIG Link
                     </span>
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       SPA Assistance for OFWs
                     </span>
-                    <span className="text-[11px] font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-md border border-stone-200/80">
+                    <span className="text-[11px] font-semibold text-[#3E1C15] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD]">
                       Step-by-Step Approval
                     </span>
                   </div>
@@ -350,10 +350,10 @@ export default function HomePage() {
               <div className="px-6 pb-6 pt-3">
                 <Link
                   href="/inquire-now"
-                  className="w-full inline-flex items-center justify-between pt-3.5 border-t border-stone-100 text-xs font-bold uppercase tracking-wider text-charcoal-900 group-hover:text-charcoal-950 transition-colors"
+                  className="w-full inline-flex items-center justify-between pt-3.5 border-t border-[#EADBBD] text-xs font-bold uppercase tracking-wider text-[#3E1C15] hover:text-[#CE2029] transition-colors font-logo"
                 >
                   <span>Request Loan Assistance</span>
-                  <div className="w-7 h-7 rounded-full bg-stone-100 text-stone-600 group-hover:bg-charcoal-900 group-hover:text-gold-400 flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
+                  <div className="w-7 h-7 rounded-full bg-[#FAF5E6] text-[#3E1C15] group-hover:bg-[#CE2029] group-hover:text-white flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </Link>
@@ -365,16 +365,16 @@ export default function HomePage() {
 
       {/* 100,000+ Families Housed Social Proof Banner */}
       <section className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-stone-200/90 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#EADBBD] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-xl gold-gradient text-charcoal-900 flex items-center justify-center flex-shrink-0 shadow">
-              <Building2 className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#CE2029] to-[#B51B23] text-white flex items-center justify-center flex-shrink-0 shadow">
+              <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h4 className="font-serif text-lg font-bold text-charcoal-900">
+              <h4 className="font-logo text-lg font-extrabold text-[#3E1C15]">
                 100,000+ Filipino Families Housed Nationwide
               </h4>
-              <p className="text-xs text-stone-500 mt-0.5">
+              <p className="text-xs text-[#5C3D36] mt-0.5">
                 Join our flourishing communities across Metro Manila. Low reservations, flexible Pag-IBIG terms, and doorstep retail centers.
               </p>
             </div>
@@ -383,7 +383,7 @@ export default function HomePage() {
           <div className="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto">
             <Link
               href="/inquire-now"
-              className="w-full md:w-auto btn-futuristic inline-flex items-center justify-center px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#eb6753] hover:bg-[#d85542] rounded-xl shadow-md shadow-[#eb6753]/25 transition-all transform hover:-translate-y-0.5"
+              className="w-full md:w-auto btn-futuristic inline-flex items-center justify-center px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-md shadow-[#CE2029]/25 transition-all transform hover:-translate-y-0.5 font-logo"
             >
               <span>Share Inquiries</span>
               <ChevronRight className="w-3.5 h-3.5 ml-1" />
@@ -394,22 +394,22 @@ export default function HomePage() {
 
       {/* 4PH Housing Banner */}
       <section className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="rounded-2xl gold-gradient p-8 sm:p-12 text-charcoal-900 flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
+        <div className="rounded-2xl bg-gradient-to-r from-[#FAF0C8] via-[#FAF5E6] to-[#FAF0C8] border border-[#EADBBD] p-8 sm:p-12 text-[#3E1C15] flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
           <div className="space-y-3 max-w-2xl">
-            <span className="inline-block px-3 py-1 bg-charcoal-900 text-gold-400 text-xs font-bold uppercase tracking-wider rounded-full">
+            <span className="inline-block px-3 py-1 bg-[#3E1C15] text-[#FAF0C8] text-xs font-bold uppercase tracking-wider rounded-full font-logo">
               National Housing Program
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight">
+            <h3 className="font-logo text-2xl sm:text-3xl font-extrabold tracking-tight text-[#3E1C15]">
               Pambansang Pabahay para sa Pilipino (4PH) at Urban Deca Homes
             </h3>
-            <p className="text-sm sm:text-base text-charcoal-800 leading-relaxed font-medium">
+            <p className="text-sm sm:text-base text-[#5C3D36] leading-relaxed font-medium">
               Qualified minimum-wage earners and entry-level employees can avail of subsidized interest rates and extended Pag-IBIG loan terms at Urban Deca Homes Manila in Tondo.
             </p>
           </div>
 
           <Link
             href="/4ph"
-            className="flex-shrink-0 inline-flex items-center px-8 py-4 text-xs font-bold uppercase tracking-wider bg-charcoal-900 text-white hover:bg-charcoal-800 rounded-lg shadow transition-all transform hover:-translate-y-0.5"
+            className="flex-shrink-0 inline-flex items-center px-8 py-4 text-xs font-bold uppercase tracking-wider bg-[#CE2029] text-white hover:bg-[#B51B23] rounded-xl shadow transition-all transform hover:-translate-y-0.5 font-logo shadow-[#CE2029]/25"
           >
             <span>Learn About 4PH Program</span>
             <ArrowRight className="w-4 h-4 ml-2" />
@@ -423,19 +423,19 @@ export default function HomePage() {
         <div className="absolute inset-0 cyber-grid opacity-20 pointer-events-none" />
 
         {/* Dynamic Multi-Stop Animated Gradient Mesh */}
-        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#eb6753]/25 via-[#eb6753]/10 to-transparent rounded-full blur-[100px] animate-gradient-shift pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#CE2029]/25 via-[#CE2029]/10 to-transparent rounded-full blur-[100px] animate-gradient-shift pointer-events-none" />
         <div className="absolute -bottom-32 -right-32 w-[540px] h-[540px] bg-gradient-to-tl from-[#e8cf7b]/20 via-[#d4b455]/10 to-transparent rounded-full blur-[110px] animate-gradient-shift-slow pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-radial from-[#eb6753]/10 via-transparent to-transparent rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-radial from-[#CE2029]/10 via-transparent to-transparent rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12 sm:mb-14">
             <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md shadow-sm mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#eb6753] animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-widest text-gold-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#CE2029] animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-widest text-[#EBA226] font-logo">
                 Frequently Asked Questions
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
               Common Questions from Prospective Buyers
             </h2>
             <p className="text-stone-300 text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
@@ -448,12 +448,12 @@ export default function HomePage() {
           <div className="text-center mt-12 sm:mt-14">
             <Link
               href="/inquire-now"
-              className="group relative inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-[#181820] hover:bg-[#eb6753] border border-white/15 hover:border-[#eb6753] text-xs font-bold uppercase tracking-wider text-white shadow-xl shadow-black/40 hover:shadow-[0_0_35px_rgba(235,103,83,0.65),0_0_15px_rgba(235,103,83,0.45)] transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-md overflow-hidden"
+              className="group relative inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-[#181820] hover:bg-[#CE2029] border border-white/15 hover:border-[#CE2029] text-xs font-bold uppercase tracking-wider text-white shadow-xl shadow-black/40 hover:shadow-[0_0_35px_rgba(206,32,41,0.65),0_0_15px_rgba(206,32,41,0.45)] transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-md overflow-hidden font-logo"
             >
               {/* Subtle light shimmer sweep on hover */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
               <span className="relative z-10">Explore All FAQs &amp; Financing Guidelines</span>
-              <ArrowRight className="relative z-10 w-4 h-4 text-gold-400 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1.5" />
+              <ArrowRight className="relative z-10 w-4 h-4 text-[#FAF0C8] group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1.5" />
             </Link>
           </div>
         </div>

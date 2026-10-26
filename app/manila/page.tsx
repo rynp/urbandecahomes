@@ -287,15 +287,19 @@ export default function ManilaProjectPage() {
                         <span className="text-sm font-bold text-charcoal-900">{unit.areaSqm} sq.m.</span>
                       </div>
                       <div className="flex justify-between items-baseline mb-1">
-                        <span className="text-xs text-stone-500">Price Range:</span>
+                        <span className="text-xs text-stone-500">
+                          {unit.priceMaxPhp && unit.priceMaxPhp !== (unit.pricePhp ?? unit.priceMinPhp) ? 'Price Range:' : 'Price:'}
+                        </span>
                         <span className="text-sm font-bold text-charcoal-900">
-                          ₱{(unit.priceMinPhp / 1000000).toFixed(2)}M – ₱{(unit.priceMaxPhp / 1000000).toFixed(2)}M
+                          {unit.priceMaxPhp && unit.priceMaxPhp !== (unit.pricePhp ?? unit.priceMinPhp)
+                            ? `₱${((unit.pricePhp ?? unit.priceMinPhp) / 1000000).toFixed(2)}M – ₱${(unit.priceMaxPhp / 1000000).toFixed(2)}M`
+                            : `₱${((unit.pricePhp ?? unit.priceMinPhp) / 1000000).toFixed(2)}M`}
                         </span>
                       </div>
                       <div className="flex justify-between items-baseline">
                         <span className="text-xs text-stone-500">Est. Pag-IBIG:</span>
                         <span className="text-sm font-bold text-gold-700">
-                          From ~₱{unit.estMonthlyPagIbigPhp.toLocaleString()}/mo
+                          From ~₱{(unit.estMonthlyPagIbigPhp || Math.round(((unit.loanableBalancePhp || unit.pricePhp || unit.priceMinPhp || 0) * 0.00506685))).toLocaleString()}/mo
                         </span>
                       </div>
                     </div>

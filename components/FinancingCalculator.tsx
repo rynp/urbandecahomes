@@ -47,16 +47,16 @@ export default function FinancingCalculator({
         <div className="absolute inset-0 cyber-grid opacity-25 pointer-events-none" />
 
         {/* Ambient Glow Orbs */}
-        <div className="absolute -top-16 -right-16 w-72 h-72 bg-[#eb6753]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-12 left-1/3 w-72 h-72 bg-gold-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-16 -right-16 w-72 h-72 bg-[#CE2029]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-12 left-1/3 w-72 h-72 bg-[#FAF0C8]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center space-x-2 text-xs font-bold text-gold-400 mb-3 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 backdrop-blur-md shadow-sm">
-              <Calculator className="w-3.5 h-3.5 text-gold-400 animate-pulse" />
+            <div className="inline-flex items-center space-x-2 text-xs font-bold text-[#CE2029] mb-3 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 backdrop-blur-md shadow-sm font-logo">
+              <Calculator className="w-3.5 h-3.5 text-[#CE2029] animate-pulse" />
               <span>Real-Time Mortgage Estimator</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+            <h2 className="font-logo text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
               Pag-IBIG &amp; Bank Monthly Amortization Calculator
             </h2>
             <p className="text-xs sm:text-sm text-stone-300 mt-2 max-w-xl leading-relaxed">
@@ -65,7 +65,7 @@ export default function FinancingCalculator({
           </div>
 
           {/* Loan Scheme Selector */}
-          <div className="flex rounded-2xl bg-[#1c1c22] p-1.5 border border-white/15 backdrop-blur-md self-start lg:self-auto shadow-inner">
+          <div className="flex rounded-2xl bg-[#1c1c22] p-1.5 border border-white/15 backdrop-blur-md self-start lg:self-auto shadow-inner font-logo">
             <button
               type="button"
               onClick={() => {
@@ -74,7 +74,7 @@ export default function FinancingCalculator({
               }}
               className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
                 loanType === 'pag-ibig'
-                  ? 'bg-[#eb6753] text-white shadow-lg shadow-[#eb6753]/35 ring-1 ring-white/20'
+                  ? 'bg-[#CE2029] text-white shadow-lg shadow-[#CE2029]/35 ring-1 ring-white/20'
                   : 'text-stone-400 hover:text-white'
               }`}
             >
@@ -88,7 +88,7 @@ export default function FinancingCalculator({
               }}
               className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
                 loanType === 'bank'
-                  ? 'bg-[#eb6753] text-white shadow-lg shadow-[#eb6753]/35 ring-1 ring-white/20'
+                  ? 'bg-[#CE2029] text-white shadow-lg shadow-[#CE2029]/35 ring-1 ring-white/20'
                   : 'text-stone-400 hover:text-white'
               }`}
             >
@@ -157,9 +157,9 @@ export default function FinancingCalculator({
               step="50000"
               value={tcp}
               onChange={(e) => setTcp(Number(e.target.value))}
-              className="w-full h-2.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-[#eb6753] focus:outline-none"
+              className="w-full h-2.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-[#CE2029] focus:outline-none"
             />
-            <div className="flex justify-between text-[11px] font-semibold text-stone-400 mt-2">
+            <div className="flex justify-between text-[11px] font-semibold text-stone-400 mt-2 font-logo">
               <span>₱1.50M</span>
               <span>₱3.00M</span>
               <span>₱5.00M</span>
@@ -169,14 +169,14 @@ export default function FinancingCalculator({
           {/* Downpayment Percentage */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label htmlFor="downpayment-percent" className="text-xs font-bold uppercase tracking-wider text-charcoal-900">
+              <label htmlFor="downpayment-percent" className="text-xs font-bold uppercase tracking-wider text-charcoal-900 font-logo">
                 Downpayment / Equity:
               </label>
-              <span className="text-xs font-bold text-gold-700 bg-gold-50 px-2.5 py-1 rounded-md border border-gold-200">
+              <span className="text-xs font-bold text-[#CE2029] bg-[#FAF5E6] px-2.5 py-1 rounded-md border border-[#EADBBD] font-logo">
                 {dpPercent}% = {formatPhp(result.downpaymentAmount)}
               </span>
             </div>
-            <div className="grid grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-3 gap-2.5 font-logo">
               {[10, 15, 20].map((pct) => {
                 const isSelected = dpPercent === pct;
                 const dpAmount = (tcp * pct) / 100;
@@ -187,7 +187,7 @@ export default function FinancingCalculator({
                     onClick={() => setDpPercent(pct)}
                     className={`py-2.5 px-3 rounded-xl border text-center transition-all duration-300 ${
                       isSelected
-                        ? 'bg-gold-500 border-gold-600 text-charcoal-950 font-bold shadow-sm shadow-gold-500/20'
+                        ? 'bg-[#CE2029] border-[#CE2029] text-white font-bold shadow-sm shadow-[#CE2029]/20'
                         : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50 font-medium'
                     }`}
                   >
@@ -202,14 +202,14 @@ export default function FinancingCalculator({
           {/* Loan Tenure */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label htmlFor="loan-tenure" className="text-xs font-bold uppercase tracking-wider text-charcoal-900">
+              <label htmlFor="loan-tenure" className="text-xs font-bold uppercase tracking-wider text-charcoal-900 font-logo">
                 Loan Term:
               </label>
-              <span className="text-xs font-bold text-charcoal-900 bg-stone-100 px-2.5 py-1 rounded-md">
+              <span className="text-xs font-bold text-charcoal-900 bg-stone-100 px-2.5 py-1 rounded-md font-logo">
                 {termYears} Years ({termYears * 12} Mos)
               </span>
             </div>
-            <div className="grid grid-cols-4 gap-2.5">
+            <div className="grid grid-cols-4 gap-2.5 font-logo">
               {[10, 15, 20, 30].map((years) => {
                 const disabled = loanType === 'bank' && years > 20;
                 const isSelected = termYears === years;
@@ -223,7 +223,7 @@ export default function FinancingCalculator({
                       disabled
                         ? 'opacity-30 cursor-not-allowed bg-stone-100 text-stone-400 border-stone-200'
                         : isSelected
-                        ? 'bg-charcoal-900 text-white border-charcoal-900 shadow-md shadow-black/15'
+                        ? 'bg-[#3E1C15] text-white border-[#3E1C15] shadow-md shadow-black/15'
                         : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
                     }`}
                   >
@@ -246,16 +246,16 @@ export default function FinancingCalculator({
           <div className="absolute inset-0 cyber-grid opacity-25 pointer-events-none" />
 
           {/* Ambient Glow */}
-          <div className="absolute top-0 right-0 w-56 h-56 bg-[#eb6753]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gold-400/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-56 h-56 bg-[#CE2029]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#FAF0C8]/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="space-y-6 relative z-10">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#eb6753] flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-[#eb6753] animate-pulse" />
+            <div className="flex items-center justify-between font-logo">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#CE2029] flex items-center space-x-2">
+                <span className="w-2 h-2 rounded-full bg-[#CE2029] animate-pulse" />
                 <span>Estimated Financing Summary</span>
               </span>
-              <span className="text-[10px] text-gold-300 bg-white/10 px-2.5 py-1 rounded-md border border-white/15 font-bold uppercase tracking-wider">
+              <span className="text-[10px] text-[#FAF0C8] bg-white/10 px-2.5 py-1 rounded-md border border-white/15 font-bold uppercase tracking-wider">
                 {loanType === 'pag-ibig' ? 'Pag-IBIG @ 6.25%' : 'Bank @ 7.00%'}
               </span>
             </div>
@@ -268,10 +268,10 @@ export default function FinancingCalculator({
               </span>
               
               {/* High-Contrast Crystal-Clear Hero Number */}
-              <div className="flex items-baseline justify-center text-3xl sm:text-4xl lg:text-[42px] font-extrabold font-serif tracking-tight mt-1">
-                <span className="text-gold-400 mr-1 text-2xl sm:text-3xl lg:text-4xl">₱</span>
+              <div className="flex items-baseline justify-center text-3xl sm:text-4xl lg:text-[42px] font-extrabold font-logo tracking-tight mt-1">
+                <span className="text-[#CE2029] mr-1 text-2xl sm:text-3xl lg:text-4xl">₱</span>
                 <span className="text-white drop-shadow-sm">{result.totalMonthlyPayment.toLocaleString('en-PH')}</span>
-                <span className="text-xs sm:text-sm font-sans font-semibold text-stone-400 ml-1.5">/ mo</span>
+                <span className="text-xs sm:text-sm font-logo font-semibold text-stone-400 ml-1.5">/ mo</span>
               </div>
 
               <span className="text-[11px] text-stone-300 mt-2 block">
@@ -280,7 +280,7 @@ export default function FinancingCalculator({
             </div>
 
             {/* Line Item Breakdown */}
-            <div className="space-y-3 text-xs text-stone-300 pt-3 border-t border-white/10">
+            <div className="space-y-3 text-xs text-stone-300 pt-3 border-t border-white/10 font-logo">
               <div className="flex justify-between items-center">
                 <span className="text-stone-400">Principal &amp; Interest Amortization:</span>
                 <span className="font-bold text-white text-sm">
@@ -295,19 +295,19 @@ export default function FinancingCalculator({
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-stone-400">Net Loanable Balance:</span>
-                <span className="font-bold text-gold-300 text-sm">
+                <span className="font-bold text-[#FAF0C8] text-sm">
                   {formatPhp(result.loanableAmount)}
                 </span>
               </div>
             </div>
 
             {/* Income Qualification Box */}
-            <div className="bg-[#1e1e26] p-4 sm:p-5 rounded-2xl border border-gold-500/30 backdrop-blur-md">
-              <div className="flex items-center space-x-2 text-xs font-bold text-gold-400 mb-1.5">
-                <ShieldCheck className="w-4 h-4 text-gold-400 flex-shrink-0" />
+            <div className="bg-[#1e1e26] p-4 sm:p-5 rounded-2xl border border-[#CE2029]/30 backdrop-blur-md">
+              <div className="flex items-center space-x-2 text-xs font-bold text-[#FAF0C8] mb-1.5 font-logo">
+                <ShieldCheck className="w-4 h-4 text-[#CE2029] flex-shrink-0" />
                 <span>Required Gross Monthly Household Income</span>
               </div>
-              <div className="text-xl sm:text-2xl font-extrabold text-white flex items-baseline space-x-1.5">
+              <div className="text-xl sm:text-2xl font-extrabold text-white flex items-baseline space-x-1.5 font-logo">
                 <span>{formatPhp(result.requiredGrossMonthlyIncome)}</span>
                 <span className="text-xs font-normal text-stone-400">/ month</span>
               </div>
@@ -321,7 +321,7 @@ export default function FinancingCalculator({
           <div className="pt-6 mt-6 border-t border-white/10 relative z-10">
             <Link
               href={`/inquire-now?project=${initialProject}&price=${tcp}`}
-              className="w-full inline-flex items-center justify-center px-6 py-4 text-xs font-bold uppercase tracking-wider text-charcoal-950 gold-gradient hover:opacity-95 rounded-xl shadow-lg shadow-gold-500/20 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+              className="w-full inline-flex items-center justify-center px-6 py-4 text-xs font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-lg shadow-[#CE2029]/30 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 font-logo"
             >
               <span>Get Formal Computation Sheet</span>
               <ArrowRight className="w-4 h-4 ml-2" />

@@ -39,11 +39,11 @@ function InquiryContent() {
       {/* Hero Header */}
       <section className="bg-charcoal-950 text-white py-14 sm:py-16 border-b border-charcoal-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-charcoal-800 border border-gold-500/40 text-gold-400 text-xs font-semibold mb-4">
-            <ShieldCheck className="w-4 h-4" />
+          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-charcoal-800 border border-[#CE2029]/30 text-[#CE2029] text-xs font-semibold mb-4 font-logo">
+            <ShieldCheck className="w-4 h-4 text-[#CE2029]" />
             <span>Direct Developer Sales Desk</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+          <h1 className="font-logo text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
             Inquire & Schedule Site Viewing
           </h1>
           <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
@@ -66,24 +66,24 @@ function InquiryContent() {
           {/* Contact Details & Office Hours Column */}
           <div className="lg:col-span-5 space-y-6">
             {/* Quick Contact Card */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
-              <h3 className="font-serif text-lg font-bold text-charcoal-900 border-b border-stone-100 pb-3">
+            <div className="bg-white rounded-2xl border border-[#EADBBD] p-6 shadow-sm space-y-4">
+              <h3 className="font-logo text-lg font-bold text-[#3E1C15] border-b border-stone-100 pb-3">
                 Need Faster Assistance?
               </h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
+              <p className="text-xs text-[#5C3D36] leading-relaxed">
                 Our sales officers are available via phone, Viber, and WhatsApp during office hours to answer your questions in real-time.
               </p>
 
               <div className="space-y-3 pt-2 text-xs">
                 <a
                   href={`tel:${businessInfo.phones[0].value}`}
-                  className="flex items-center space-x-3 p-3 rounded-lg bg-stone-50 hover:bg-gold-50 border border-stone-200 transition-colors"
+                  className="flex items-center space-x-3 p-3 rounded-lg bg-stone-50 hover:bg-[#FAF5E6] border border-stone-200 hover:border-[#EADBBD] transition-colors"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-charcoal-900 text-gold-400 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-lg bg-[#3E1C15] text-[#FAF0C8] flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4 h-4 text-[#CE2029]" />
                   </div>
                   <div>
-                    <span className="block font-bold text-charcoal-900">Primary Sales Hotline</span>
+                    <span className="block font-bold text-[#3E1C15] font-logo">Primary Sales Hotline</span>
                     <span className="block text-stone-500">{businessInfo.phones[0].display}</span>
                   </div>
                 </a>
@@ -92,21 +92,21 @@ function InquiryContent() {
                   href={businessInfo.socialLinks.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-3 p-3 rounded-lg bg-stone-50 hover:bg-green-50 border border-stone-200 transition-colors"
+                  className="flex items-center space-x-3 p-3 rounded-lg bg-stone-50 hover:bg-green-50 border border-stone-200 hover:border-green-300 transition-colors"
                 >
                   <div className="w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center flex-shrink-0">
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="block font-bold text-charcoal-900">Official WhatsApp Chat</span>
+                    <span className="block font-bold text-[#3E1C15] font-logo">Official WhatsApp Chat</span>
                     <span className="block text-stone-500">Tap for instant messaging</span>
                   </div>
                 </a>
               </div>
 
-              <div className="p-3 bg-stone-50 rounded-lg border border-stone-200 text-xs text-stone-600 space-y-1">
-                <div className="flex items-center font-semibold text-charcoal-900">
-                  <Clock className="w-3.5 h-3.5 mr-1.5 text-gold-600" />
+              <div className="p-3 bg-[#FAF5E6] rounded-lg border border-[#EADBBD] text-xs text-[#5C3D36] space-y-1">
+                <div className="flex items-center font-semibold text-[#3E1C15] font-logo">
+                  <Clock className="w-3.5 h-3.5 mr-1.5 text-[#CE2029]" />
                   <span>Viewing Hours:</span>
                 </div>
                 <div>{businessInfo.officeHours.days}: {businessInfo.officeHours.hours}</div>
@@ -115,21 +115,21 @@ function InquiryContent() {
             </div>
 
             {/* Why Inquire Directly */}
-            <div className="bg-gold-50 rounded-2xl border border-gold-200 p-6 space-y-3 text-xs text-gold-950">
-              <h4 className="font-serif text-sm font-bold uppercase tracking-wider text-gold-900">
+            <div className="bg-[#FAF5E6] rounded-2xl border border-[#EADBBD] p-6 space-y-3 text-xs text-[#3E1C15]">
+              <h4 className="font-logo text-sm font-bold uppercase tracking-wider text-[#3E1C15]">
                 Direct Developer Assurance
               </h4>
               <ul className="space-y-2">
                 <li className="flex items-start">
-                  <CheckCircle2 className="w-4 h-4 text-gold-700 mr-2 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#CE2029] mr-2 flex-shrink-0 mt-0.5" />
                   <span>No hidden brokerage fees or agent markups on published prices.</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle2 className="w-4 h-4 text-gold-700 mr-2 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#CE2029] mr-2 flex-shrink-0 mt-0.5" />
                   <span>Direct submission to Pag-IBIG Fund and accredited bank underwriting desks.</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle2 className="w-4 h-4 text-gold-700 mr-2 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#CE2029] mr-2 flex-shrink-0 mt-0.5" />
                   <span>Complimentary assisted site tours and model unit viewings.</span>
                 </li>
               </ul>
@@ -144,19 +144,19 @@ function InquiryContent() {
         <div className="absolute inset-0 cyber-grid opacity-20 pointer-events-none" />
 
         {/* Dynamic Multi-Stop Animated Gradient Mesh */}
-        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#eb6753]/25 via-[#eb6753]/10 to-transparent rounded-full blur-[100px] animate-gradient-shift pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-[540px] h-[540px] bg-gradient-to-tl from-[#e8cf7b]/20 via-[#d4b455]/10 to-transparent rounded-full blur-[110px] animate-gradient-shift-slow pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-radial from-[#eb6753]/10 via-transparent to-transparent rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#CE2029]/25 via-[#CE2029]/10 to-transparent rounded-full blur-[100px] animate-gradient-shift pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-[540px] h-[540px] bg-gradient-to-tl from-[#FAF0C8]/20 via-[#EADBBD]/10 to-transparent rounded-full blur-[110px] animate-gradient-shift-slow pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-radial from-[#CE2029]/10 via-transparent to-transparent rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md shadow-sm mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#eb6753] animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-widest text-gold-300">
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md shadow-sm mb-4 font-logo">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#CE2029] animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-widest text-[#FAF0C8]">
                 Buyer Guidance &amp; Policies
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
               Frequently Asked Questions
             </h2>
             <p className="text-stone-300 text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
@@ -171,30 +171,30 @@ function InquiryContent() {
               return (
                 <div
                   key={faq.id}
-                  className="group relative rounded-2xl bg-[#14141c]/90 hover:bg-[#181822] border border-white/10 hover:border-[#eb6753]/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_32px_-6px_rgba(235,103,83,0.25)] hover:-translate-y-1 transition-all duration-300 p-6 sm:p-7 backdrop-blur-md overflow-hidden"
+                  className="group relative rounded-2xl bg-[#14141c]/90 hover:bg-[#181822] border border-white/10 hover:border-[#CE2029]/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_32px_-6px_rgba(206,32,41,0.25)] hover:-translate-y-1 transition-all duration-300 p-6 sm:p-7 backdrop-blur-md overflow-hidden"
                 >
                   {/* Ambient Multi-Stop Hover Glow Backdrop */}
-                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#eb6753]/30 via-[#e8cf7b]/25 to-[#eb6753]/30 opacity-0 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none blur-[6px]" />
+                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#CE2029]/30 via-[#FAF0C8]/25 to-[#CE2029]/30 opacity-0 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none blur-[6px]" />
 
                   {/* Inner Corner Subtle Light Sheen */}
-                  <div className="absolute top-0 right-0 w-64 h-32 bg-gradient-to-bl from-[#eb6753]/15 via-[#e8cf7b]/10 to-transparent rounded-tr-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-0 right-0 w-64 h-32 bg-gradient-to-bl from-[#CE2029]/15 via-[#FAF0C8]/10 to-transparent rounded-tr-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* Left Vertical Active Indicator Bar */}
-                  <div className="absolute left-0 top-4 bottom-4 w-[3.5px] rounded-r-full bg-gradient-to-b from-[#eb6753] to-[#e8cf7b] opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                  <div className="absolute left-0 top-4 bottom-4 w-[3.5px] rounded-r-full bg-gradient-to-b from-[#CE2029] to-[#FAF0C8] opacity-0 group-hover:opacity-100 transition-all duration-300" />
 
                   <div className="relative z-10">
                     {/* Category Pill */}
-                    <div className="inline-flex items-center space-x-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-gold-400 bg-white/5 border border-white/10 px-2.5 py-1 rounded-md mb-3">
-                      <HelpCircle className="w-3.5 h-3.5 text-gold-400" />
+                    <div className="inline-flex items-center space-x-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#FAF0C8] bg-white/5 border border-white/10 px-2.5 py-1 rounded-md mb-3 font-logo">
+                      <HelpCircle className="w-3.5 h-3.5 text-[#CE2029]" />
                       <span>{faq.category}</span>
                     </div>
 
                     {/* Question Title with Monospace Index */}
                     <div className="flex items-start space-x-3.5 sm:space-x-4 mb-3">
-                      <span className="font-mono text-xs sm:text-[13px] font-bold tracking-wider text-gold-400 pt-0.5 select-none">
+                      <span className="font-mono text-xs sm:text-[13px] font-bold tracking-wider text-[#CE2029] pt-0.5 select-none">
                         {indexNumber}
                       </span>
-                      <h3 className="font-serif text-[17px] sm:text-[19px] font-bold text-white group-hover:text-gold-200 transition-colors tracking-tight leading-snug">
+                      <h3 className="font-logo text-[17px] sm:text-[19px] font-bold text-white group-hover:text-gold-200 transition-colors tracking-tight leading-snug">
                         {faq.question}
                       </h3>
                     </div>
@@ -215,18 +215,18 @@ function InquiryContent() {
           {/* Still Need Assistance Concierge Card */}
           <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#161620] via-[#1a1a24] to-[#161620] border border-white/10 text-center relative overflow-hidden shadow-2xl">
             <div className="relative z-10">
-              <h4 className="font-serif text-lg sm:text-xl font-bold text-white">
+              <h4 className="font-logo text-lg sm:text-xl font-bold text-white">
                 Have a specific question not covered here?
               </h4>
               <p className="text-xs sm:text-sm text-stone-300 mt-2 max-w-lg mx-auto leading-relaxed">
                 Our accredited property specialists are on standby to provide personalized Pag-IBIG loan evaluations and answer unit availability inquiries.
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-3.5 mt-6">
+              <div className="flex flex-wrap items-center justify-center gap-3.5 mt-6 font-logo">
                 <a
                   href={`tel:${businessInfo.phones[0].value}`}
                   className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/10 hover:bg-white text-white hover:text-charcoal-900 border border-white/15 text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm"
                 >
-                  <Phone className="w-3.5 h-3.5 mr-2 text-gold-400" />
+                  <Phone className="w-3.5 h-3.5 mr-2 text-[#CE2029]" />
                   <span>Call Hotline: {businessInfo.phones[0].value}</span>
                 </a>
                 <a

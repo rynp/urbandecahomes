@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -29,6 +29,13 @@ import {
   Check,
   Compass,
   FileCode,
+  Video,
+  ChevronDown,
+  ChevronUp,
+  ArrowUpDown,
+  SlidersHorizontal,
+  Filter,
+  RotateCcw,
 } from 'lucide-react';
 import type { Project, UnitType, Amenity } from '@/data/projects';
 
@@ -54,6 +61,47 @@ export default function AdminPage() {
   const [gitSyncConfigured, setGitSyncConfigured] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingGalleryIndex, setUploadingGalleryIndex] = useState<number | null>(null);
+  const [collapsedSubsections, setCollapsedSubsections] = useState<Record<string, boolean>>({});
+
+  // Unit Configurations Filter & Sort State
+  const [unitSort, setUnitSort] = useState<'default' | 'id-asc' | 'id-desc' | 'price-asc' | 'price-desc'>('default');
+  const [filterBuilding, setFilterBuilding] = useState<string>('');
+  const [filterBedrooms, setFilterBedrooms] = useState<string>('');
+  const [filterZone, setFilterZone] = useState<string>('');
+  const [filterZoneType, setFilterZoneType] = useState<string>('');
+
+  // Reset filters when switching active project
+  useEffect(() => {
+    setFilterBuilding('');
+    setFilterBedrooms('');
+    setFilterZone('');
+    setFilterZoneType('');
+    setUnitSort('default');
+  }, [activeProjectSlug]);
+
+  function isSubsectionOpen(unitKey: string, sectionKey: 'pricing' | 'layout' | 'photos') {
+    return collapsedSubsections[`${unitKey}-${sectionKey}`] !== false;
+  }
+
+  function toggleSubsection(unitKey: string, sectionKey: 'pricing' | 'layout' | 'photos') {
+    setCollapsedSubsections((prev) => {
+      const key = `${unitKey}-${sectionKey}`;
+      const current = prev[key] !== false;
+      return { ...prev, [key]: !current };
+    });
+  }
+
+  function toggleAllSubsections(open: boolean) {
+    if (!activeProject) return;
+    const nextState: Record<string, boolean> = {};
+    activeProject.unitTypes.forEach((u, i) => {
+      const key = u.id || `unit-${i}`;
+      nextState[`${key}-pricing`] = open;
+      nextState[`${key}-layout`] = open;
+      nextState[`${key}-photos`] = open;
+    });
+    setCollapsedSubsections(nextState);
+  }
 
   const fileInputHeroRef = useRef<HTMLInputElement>(null);
   const fileInputGalleryRef = useRef<HTMLInputElement>(null);
@@ -147,16 +195,253 @@ export default function AdminPage() {
     );
   }
 
+  // Unit Management Helpers
+  const updateUnit = (unitKey: string, updater: (prevUnit: UnitType) => UnitType) => {
+    updateActiveProject((p) => ({
+      ...p,
+      unitTypes: p.unitTypes.map((u, i) => {
+        const key = u.id || `unit-${i}`;
+        return key === unitKey ? updater(u) : u;
+      }),
+    }));
+  };
+
+  const deleteUnit = (unitKey: string) => {
+    updateActiveProject((p) => ({
+      ...p,
+      unitTypes: p.unitTypes.filter((u, i) => (u.id || `unit-${i}`) !== unitKey),
+    }));
+  };
+
+  const handleAddNewUnit = () => {
+    if (!activeProject) return;
+    const newId = `${activeProject.slug}-unit-${Date.now()}`;
+    const basePrice = 2900000;
+    const resFee = activeProject.reservationFeePhp || 10000;
+    const discount = 0;
+
+    const newUnit: UnitType = {
+      id: newId,
+      name: 'New Unit Cut',
+      buildingName: '',
+      zone: '',
+      zoneLabel: '',
+      zoneType: '',
+      unitLayout: '',
+      floorPlan: '',
+      video: '',
+      gallery1: '',
+      gallery2: '',
+      gallery3: '',
+      gallery4: '',
+      gallery5: '',
+      category: '2-Bedroom',
+      areaSqm: 30.6,
+      bedrooms: 2,
+      bathrooms: 1,
+      balcony: true,
+      pricePhp: basePrice,
+      priceMinPhp: basePrice,
+      reservationFeePhp: resFee,
+      discountPhp: discount,
+      loanableBalancePhp: Math.max(0, basePrice - resFee - discount),
+      pagibigInterestRate: 4.5,
+      status: 'Available',
+      features: ['2 Bedrooms', 'Tiled Bathroom', 'Balcony'],
+      description: 'Modern residential format designed for comfort.',
+    };
+
+    // Prepend to top of unitTypes array
+    updateActiveProject((p) => ({
+      ...p,
+      unitTypes: [newUnit, ...p.unitTypes],
+    }));
+
+    // Reset filters and sort to default so the newly added unit is at the very top of the list!
+    setFilterBuilding('');
+    setFilterBedrooms('');
+    setFilterZone('');
+    setFilterZoneType('');
+    setUnitSort('default');
+
+    // Ensure all subsections are open for this new unit
+    setCollapsedSubsections((prev) => ({
+      ...prev,
+      [`${newId}-pricing`]: true,
+      [`${newId}-layout`]: true,
+      [`${newId}-photos`]: true,
+    }));
+  };
+
+  const resetFiltersAndSort = () => {
+    setFilterBuilding('');
+    setFilterBedrooms('');
+    setFilterZone('');
+    setFilterZoneType('');
+    setUnitSort('default');
+  };
+
+  // Derive unique options for filters
+  const uniqueBuildings = useMemo(() => {
+    if (!activeProject?.unitTypes) return [];
+    const set = new Set<string>();
+    activeProject.unitTypes.forEach((u) => {
+      const b = (u.buildingName || '').trim();
+      if (b) set.add(b);
+    });
+    return Array.from(set).sort();
+  }, [activeProject?.unitTypes]);
+
+  const uniqueBedrooms = useMemo(() => {
+    if (!activeProject?.unitTypes) return [];
+    const set = new Set<number>();
+    activeProject.unitTypes.forEach((u) => {
+      if (typeof u.bedrooms === 'number' && !isNaN(u.bedrooms)) set.add(u.bedrooms);
+    });
+    return Array.from(set).sort((a, b) => a - b);
+  }, [activeProject?.unitTypes]);
+
+  const uniqueZones = useMemo(() => {
+    if (!activeProject?.unitTypes) return [];
+    const set = new Set<string>();
+    activeProject.unitTypes.forEach((u) => {
+      const z = (u.zone || '').trim();
+      if (z) set.add(z);
+    });
+    return Array.from(set).sort();
+  }, [activeProject?.unitTypes]);
+
+  const uniqueZoneTypes = useMemo(() => {
+    if (!activeProject?.unitTypes) return [];
+    const set = new Set<string>();
+    activeProject.unitTypes.forEach((u) => {
+      const zt = (u.zoneType || '').trim();
+      if (zt) set.add(zt);
+    });
+    return Array.from(set).sort();
+  }, [activeProject?.unitTypes]);
+
+  // Filtered & Sorted Units
+  const filteredAndSortedUnits = useMemo(() => {
+    if (!activeProject?.unitTypes) return [];
+    let list = [...activeProject.unitTypes];
+
+    // Filter by Building Name
+    if (filterBuilding) {
+      list = list.filter(
+        (u) => (u.buildingName || '').trim().toLowerCase() === filterBuilding.trim().toLowerCase()
+      );
+    }
+
+    // Filter by Bedroom Count
+    if (filterBedrooms !== '') {
+      const count = parseInt(filterBedrooms, 10);
+      list = list.filter((u) => u.bedrooms === count);
+    }
+
+    // Filter by Zone
+    if (filterZone) {
+      list = list.filter(
+        (u) => (u.zone || '').trim().toLowerCase() === filterZone.trim().toLowerCase()
+      );
+    }
+
+    // Filter by Zone Type
+    if (filterZoneType) {
+      list = list.filter(
+        (u) => (u.zoneType || '').trim().toLowerCase() === filterZoneType.trim().toLowerCase()
+      );
+    }
+
+    // Sorting
+    if (unitSort === 'id-asc') {
+      list.sort((a, b) =>
+        (a.id || '').localeCompare(b.id || '', undefined, { numeric: true, sensitivity: 'base' })
+      );
+    } else if (unitSort === 'id-desc') {
+      list.sort((a, b) =>
+        (b.id || '').localeCompare(a.id || '', undefined, { numeric: true, sensitivity: 'base' })
+      );
+    } else if (unitSort === 'price-asc') {
+      list.sort((a, b) => {
+        const pa = Number(a.pricePhp ?? a.priceMinPhp ?? 0);
+        const pb = Number(b.pricePhp ?? b.priceMinPhp ?? 0);
+        return pa - pb;
+      });
+    } else if (unitSort === 'price-desc') {
+      list.sort((a, b) => {
+        const pa = Number(a.pricePhp ?? a.priceMinPhp ?? 0);
+        const pb = Number(b.pricePhp ?? b.priceMinPhp ?? 0);
+        return pb - pa;
+      });
+    }
+
+    return list;
+  }, [
+    activeProject?.unitTypes,
+    filterBuilding,
+    filterBedrooms,
+    filterZone,
+    filterZoneType,
+    unitSort,
+  ]);
+
   // Save All Changes
   async function handleSave() {
     setIsSaving(true);
     setStatusMessage(null);
 
+    // Calculate Loanable Balance = Price - Reservation Fee - Discount and enforce default values for all units
+    const projectsToSave = projects.map((p) => ({
+      ...p,
+      unitTypes: p.unitTypes.map((unit) => {
+        const price = Number(unit.pricePhp ?? unit.priceMinPhp ?? 0);
+        const reservationFee = Number(
+          unit.reservationFeePhp !== undefined
+            ? unit.reservationFeePhp
+            : p.reservationFeePhp || 10000
+        );
+        const discount = Number(unit.discountPhp ?? 0);
+        const loanableBalance = Math.max(0, price - reservationFee - discount);
+        const pagibigRate =
+          unit.pagibigInterestRate !== undefined && !isNaN(Number(unit.pagibigInterestRate))
+            ? Number(unit.pagibigInterestRate)
+            : 4.5;
+
+        const { priceMaxPhp, estMonthlyPagIbigPhp, ...restUnit } = unit;
+
+        return {
+          ...restUnit,
+          name: unit.name || 'Unit',
+          pricePhp: price,
+          priceMinPhp: price,
+          reservationFeePhp: reservationFee,
+          discountPhp: discount,
+          loanableBalancePhp: loanableBalance,
+          pagibigInterestRate: pagibigRate,
+          buildingName: unit.buildingName || '',
+          zone: unit.zone || '',
+          zoneLabel: unit.zoneLabel || '',
+          zoneType: unit.zoneType || '',
+          unitLayout: unit.unitLayout || '',
+          floorPlan: unit.floorPlan || '',
+          video: unit.video || '',
+          gallery1: unit.gallery1 || '',
+          gallery2: unit.gallery2 || '',
+          gallery3: unit.gallery3 || '',
+          gallery4: unit.gallery4 || '',
+          gallery5: unit.gallery5 || '',
+        };
+      }),
+    }));
+
+    setProjects(projectsToSave);
+
     try {
       const res = await fetch('/api/admin/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ projects }),
+        body: JSON.stringify({ projects: projectsToSave }),
       });
 
       const data = await res.json();
@@ -527,7 +812,7 @@ export default function AdminPage() {
                   { id: 'general', label: '1. General & Pricing', icon: Building2 },
                   { id: 'images', label: '2. Images & Gallery', icon: ImageIcon },
                   { id: 'location', label: '3. Map & Location', icon: MapPin },
-                  { id: 'units', label: '4. Unit Types & Specs', icon: Layers },
+                  { id: 'units', label: '4. Unit Configuration', icon: Layers },
                   { id: 'amenities', label: '5. Amenities', icon: Sparkles },
                   { id: 'faqs', label: '6. Overview & FAQs', icon: HelpCircle },
                   { id: 'seo', label: '7. SEO & Meta Tags', icon: FileCode },
@@ -1081,254 +1366,1002 @@ export default function AdminPage() {
                 </div>
               )}
 
-              {/* SECTION 4: UNIT TYPES & PRICING */}
+              {/* SECTION 4: UNIT CONFIGURATION */}
               {activeSection === 'units' && (
                 <div className="space-y-6">
-                  <div className="flex items-center justify-between">
+                  {/* Section Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                      <h2 className="font-editorial text-2xl font-semibold text-white">Unit Configurations &amp; Layouts</h2>
+                      <h2 className="font-editorial text-2xl font-semibold text-white">Unit Configuration</h2>
                       <p className="text-xs text-gray-400 mt-1">
-                        Configure floor area, bedroom count, pricing, and Pag-IBIG monthly estimates.
+                        Configure floor area, bedroom count, pricing, loanable balance, and Pag-IBIG monthly estimates.
                       </p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        updateActiveProject((p) => ({
-                          ...p,
-                          unitTypes: [
-                            ...p.unitTypes,
-                            {
-                              id: `${p.slug}-unit-${Date.now()}`,
-                              name: 'New Unit Cut',
-                              category: '2-Bedroom',
-                              areaSqm: 30.6,
-                              bedrooms: 2,
-                              bathrooms: 1,
-                              balcony: true,
-                              priceMinPhp: 2900000,
-                              priceMaxPhp: 3200000,
-                              estMonthlyPagIbigPhp: 15500,
-                              status: 'Available',
-                              features: ['2 Bedrooms', 'Tiled Bathroom', 'Balcony'],
-                              description: 'Modern residential format designed for comfort.',
-                            },
-                          ],
-                        }))
-                      }
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ochre-500 hover:bg-ochre-600 text-charcoal-900 text-xs font-bold shadow-md"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Add Unit Type</span>
-                    </button>
-                  </div>
 
-                  <div className="space-y-4">
-                    {activeProject.unitTypes.map((unit, idx) => (
-                      <div
-                        key={unit.id || idx}
-                        className="p-5 bg-white/[0.02] border border-white/10 rounded-2xl space-y-4"
+                    {/* Action Buttons Group */}
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={handleAddNewUnit}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-ochre-500 hover:bg-ochre-400 text-charcoal-900 text-xs font-bold shadow-md shadow-ochre-500/20 transition-all whitespace-nowrap"
+                        title="Add new unit cut at the top of the list"
                       >
-                        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                          <div className="flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-md bg-ochre-500/20 text-ochre-300 flex items-center justify-center text-xs font-bold">
-                              {idx + 1}
-                            </span>
-                            <input
-                              type="text"
-                              value={unit.name}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], name: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="bg-transparent border-b border-white/20 px-1 py-0.5 text-sm font-bold text-white focus:outline-none focus:border-ochre-400"
-                            />
-                          </div>
-
-                          <div className="flex items-center gap-3">
-                            <select
-                              value={unit.status}
-                              onChange={(e) => {
-                                const val = e.target.value as any;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], status: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1 text-xs text-white"
-                            >
-                              <option value="Available">Available</option>
-                              <option value="Limited Availability">Limited Availability</option>
-                              <option value="Sold Out">Sold Out</option>
-                            </select>
-
-                            <button
-                              type="button"
-                              onClick={() => {
-                                updateActiveProject((p) => ({
-                                  ...p,
-                                  unitTypes: p.unitTypes.filter((_, i) => i !== idx),
-                                }));
-                              }}
-                              className="p-1.5 text-red-400 hover:text-red-300"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Category</label>
-                            <select
-                              value={unit.category}
-                              onChange={(e) => {
-                                const val = e.target.value as any;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], category: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                            >
-                              <option value="Studio">Studio</option>
-                              <option value="1-Bedroom">1-Bedroom</option>
-                              <option value="2-Bedroom">2-Bedroom</option>
-                              <option value="3-Bedroom">3-Bedroom</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Area (sqm)</label>
-                            <input
-                              type="number"
-                              step="0.01"
-                              value={unit.areaSqm}
-                              onChange={(e) => {
-                                const val = parseFloat(e.target.value) || 0;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], areaSqm: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-white font-mono"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Bedrooms</label>
-                            <input
-                              type="number"
-                              value={unit.bedrooms}
-                              onChange={(e) => {
-                                const val = parseInt(e.target.value) || 0;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], bedrooms: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Bathrooms</label>
-                            <input
-                              type="number"
-                              value={unit.bathrooms}
-                              onChange={(e) => {
-                                const val = parseInt(e.target.value) || 0;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], bathrooms: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Price Min (PHP)</label>
-                            <input
-                              type="number"
-                              value={unit.priceMinPhp}
-                              onChange={(e) => {
-                                const val = parseInt(e.target.value) || 0;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], priceMinPhp: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Price Max (PHP)</label>
-                            <input
-                              type="number"
-                              value={unit.priceMaxPhp}
-                              onChange={(e) => {
-                                const val = parseInt(e.target.value) || 0;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], priceMaxPhp: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-white"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-[11px] text-gray-400 mb-1">Est. Pag-IBIG Monthly (PHP)</label>
-                            <input
-                              type="number"
-                              value={unit.estMonthlyPagIbigPhp}
-                              onChange={(e) => {
-                                const val = parseInt(e.target.value) || 0;
-                                updateActiveProject((p) => {
-                                  const list = [...p.unitTypes];
-                                  list[idx] = { ...list[idx], estMonthlyPagIbigPhp: val };
-                                  return { ...p, unitTypes: list };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-ochre-200 font-bold"
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-[11px] text-gray-400 mb-1">Unit Description</label>
-                          <textarea
-                            rows={2}
-                            value={unit.description}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              updateActiveProject((p) => {
-                                const list = [...p.unitTypes];
-                                list[idx] = { ...list[idx], description: val };
-                                return { ...p, unitTypes: list };
-                              });
-                            }}
-                            className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white"
-                          />
-                        </div>
-                      </div>
-                    ))}
+                        <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>AddNew</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toggleAllSubsections(false)}
+                        className="inline-flex items-center px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-medium border border-white/10 transition-colors whitespace-nowrap"
+                        title="Collapse Pricing, Layout, and Photos for all units"
+                      >
+                        Collapse All
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => toggleAllSubsections(true)}
+                        className="inline-flex items-center px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-medium border border-white/10 transition-colors whitespace-nowrap"
+                        title="Expand Pricing, Layout, and Photos for all units"
+                      >
+                        Expand All
+                      </button>
+                    </div>
                   </div>
+
+                  {/* Filters & Sorting Toolbar */}
+                  <div className="bg-[#1A1D20] border border-white/10 rounded-2xl p-4 space-y-3.5 shadow-lg">
+                    <div className="flex flex-wrap items-center justify-between gap-3 pb-2.5 border-b border-white/5">
+                      <div className="flex items-center gap-2">
+                        <SlidersHorizontal className="w-4 h-4 text-ochre-400" />
+                        <span className="text-xs font-bold text-white uppercase tracking-wider">
+                          Filter &amp; Sort Units
+                        </span>
+                        <span className="text-[11px] font-mono text-gray-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">
+                          Showing {filteredAndSortedUnits.length} of {activeProject.unitTypes.length} units
+                        </span>
+                      </div>
+
+                      {(filterBuilding || filterBedrooms !== '' || filterZone || filterZoneType || unitSort !== 'default') && (
+                        <button
+                          type="button"
+                          onClick={resetFiltersAndSort}
+                          className="inline-flex items-center gap-1.5 text-xs text-ochre-400 hover:text-ochre-300 font-semibold transition-colors"
+                        >
+                          <RotateCcw className="w-3.5 h-3.5" />
+                          <span>Reset Filters &amp; Sort</span>
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
+                      {/* 1. Sorting */}
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1 flex items-center gap-1">
+                          <ArrowUpDown className="w-3 h-3 text-ochre-400" />
+                          Sort By
+                        </label>
+                        <select
+                          value={unitSort}
+                          onChange={(e) => setUnitSort(e.target.value as any)}
+                          className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                        >
+                          <option value="default">Default Order</option>
+                          <option value="id-asc">ID: Ascending (A → Z)</option>
+                          <option value="id-desc">ID: Descending (Z → A)</option>
+                          <option value="price-asc">Price: Lowest to Highest</option>
+                          <option value="price-desc">Price: Highest to Lowest</option>
+                        </select>
+                      </div>
+
+                      {/* 2. Filter: Building Name */}
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1 flex items-center gap-1">
+                          <Building2 className="w-3 h-3 text-ochre-400" />
+                          Building Name
+                        </label>
+                        <select
+                          value={filterBuilding}
+                          onChange={(e) => setFilterBuilding(e.target.value)}
+                          className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                        >
+                          <option value="">All Buildings</option>
+                          {uniqueBuildings.map((b) => (
+                            <option key={b} value={b}>
+                              {b}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* 3. Filter: Bedroom Count */}
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1 flex items-center gap-1">
+                          <Layers className="w-3 h-3 text-ochre-400" />
+                          Bedroom Count
+                        </label>
+                        <select
+                          value={filterBedrooms}
+                          onChange={(e) => setFilterBedrooms(e.target.value)}
+                          className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                        >
+                          <option value="">All Bedrooms</option>
+                          {uniqueBedrooms.map((beds) => (
+                            <option key={beds} value={String(beds)}>
+                              {beds === 0 ? 'Studio / 0 BR' : beds === 1 ? '1 Bedroom' : `${beds} Bedrooms`}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* 4. Filter: Zone */}
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1 flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-ochre-400" />
+                          Zone
+                        </label>
+                        <select
+                          value={filterZone}
+                          onChange={(e) => setFilterZone(e.target.value)}
+                          className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                        >
+                          <option value="">All Zones</option>
+                          {uniqueZones.map((z) => (
+                            <option key={z} value={z}>
+                              {z}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* 5. Filter: Zone Type */}
+                      <div>
+                        <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1 flex items-center gap-1">
+                          <Compass className="w-3 h-3 text-ochre-400" />
+                          Zone Type
+                        </label>
+                        <select
+                          value={filterZoneType}
+                          onChange={(e) => setFilterZoneType(e.target.value)}
+                          className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                        >
+                          <option value="">All Zone Types</option>
+                          {uniqueZoneTypes.map((zt) => (
+                            <option key={zt} value={zt}>
+                              {zt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Units List */}
+                  {filteredAndSortedUnits.length === 0 ? (
+                    <div className="p-10 text-center bg-white/[0.02] border border-dashed border-white/10 rounded-2xl space-y-3">
+                      <Filter className="w-8 h-8 text-gray-500 mx-auto" />
+                      <p className="text-sm font-medium text-gray-300">No units match the selected filters.</p>
+                      <p className="text-xs text-gray-500">Try adjusting or clearing your filters to see more units.</p>
+                      <button
+                        type="button"
+                        onClick={resetFiltersAndSort}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-semibold transition-colors mt-2"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5 text-ochre-400" />
+                        <span>Reset All Filters</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filteredAndSortedUnits.map((unit, idx) => {
+                        const unitKey = unit.id || `unit-${idx}`;
+                        const isPricingOpen = isSubsectionOpen(unitKey, 'pricing');
+                        const isLayoutOpen = isSubsectionOpen(unitKey, 'layout');
+                        const isPhotosOpen = isSubsectionOpen(unitKey, 'photos');
+
+                        const curPrice = Number(unit.pricePhp ?? unit.priceMinPhp ?? 0);
+                        const curResFee = Number(
+                          unit.reservationFeePhp !== undefined
+                            ? unit.reservationFeePhp
+                            : activeProject.reservationFeePhp || 10000
+                        );
+                        const curDiscount = Number(unit.discountPhp ?? 0);
+                        const curLoanable = Math.max(0, curPrice - curResFee - curDiscount);
+                        const curRate =
+                          unit.pagibigInterestRate !== undefined && !isNaN(Number(unit.pagibigInterestRate))
+                            ? Number(unit.pagibigInterestRate)
+                            : 4.5;
+
+                        return (
+                          <div
+                            key={unit.id || idx}
+                            className="p-5 bg-white/[0.02] border border-white/10 rounded-2xl space-y-4 hover:border-white/20 transition-all"
+                          >
+                            {/* Unit Top Bar with Index Badge, Unit Name input, Unit ID input, Status and Delete */}
+                            <div className="flex flex-wrap items-center justify-between border-b border-white/10 pb-3 gap-3">
+                              <div className="flex items-center gap-3 flex-1 min-w-[280px]">
+                                <span className="w-7 h-7 rounded-lg bg-ochre-500/20 text-ochre-300 flex items-center justify-center text-xs font-bold shrink-0">
+                                  #{idx + 1}
+                                </span>
+                                <div className="flex-1">
+                                  <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">
+                                    Unit Name <span className="text-ochre-400 font-semibold">(Editable)</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={unit.name}
+                                    onChange={(e) => {
+                                      const val = e.target.value;
+                                      updateUnit(unitKey, (u) => ({ ...u, name: val }));
+                                    }}
+                                    placeholder="e.g. 2-Bedroom Regular (Unit A)"
+                                    className="w-full bg-[#14171A] border border-white/20 hover:border-white/40 focus:border-ochre-400 rounded-lg px-2.5 py-1 text-sm font-bold text-white focus:outline-none transition-colors"
+                                  />
+                                </div>
+                                <div className="w-40 sm:w-48">
+                                  <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">
+                                    Unit ID <span className="text-gray-500 font-mono">(Unique)</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={unit.id || ''}
+                                    onChange={(e) => {
+                                      const val = e.target.value;
+                                      updateUnit(unitKey, (u) => ({ ...u, id: val }));
+                                    }}
+                                    placeholder="e.g. manila-2br-a"
+                                    className="w-full bg-[#14171A] border border-white/20 hover:border-white/40 focus:border-ochre-400 rounded-lg px-2.5 py-1 text-xs font-mono text-ochre-300/90 focus:outline-none transition-colors"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-3">
+                                <div>
+                                  <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">
+                                    Availability
+                                  </label>
+                                  <select
+                                    value={unit.status}
+                                    onChange={(e) => {
+                                      const val = e.target.value as any;
+                                      updateUnit(unitKey, (u) => ({ ...u, status: val }));
+                                    }}
+                                    className="bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1 text-xs text-white"
+                                  >
+                                    <option value="Available">Available</option>
+                                    <option value="Limited Availability">Limited Availability</option>
+                                    <option value="Sold Out">Sold Out</option>
+                                  </select>
+                                </div>
+
+                                <div className="pt-3.5">
+                                  <button
+                                    type="button"
+                                    onClick={() => deleteUnit(unitKey)}
+                                    className="p-1.5 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-500/10 transition-colors"
+                                    title="Delete Unit Type"
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Building, Zoning & Specifications */}
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 text-xs">
+                              {/* Left: Building & Zoning Attributes (6 cols) */}
+                              <div className="lg:col-span-6 p-3.5 bg-white/[0.02] border border-white/10 rounded-xl space-y-3">
+                                <div className="text-[10px] uppercase font-bold tracking-wider text-ochre-300 flex items-center gap-1.5">
+                                  <Building2 className="w-3.5 h-3.5 text-ochre-400" />
+                                  <span>Building &amp; Zone Classification</span>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                  {/* Col 1: Zone, and Zone Label below the zone field */}
+                                  <div className="space-y-2.5">
+                                    <div>
+                                      <label className="block text-[11px] text-gray-300 font-medium mb-1">
+                                        Zone
+                                      </label>
+                                      <input
+                                        type="text"
+                                        value={unit.zone || ''}
+                                        onChange={(e) => {
+                                          const val = e.target.value;
+                                          updateUnit(unitKey, (u) => ({ ...u, zone: val }));
+                                        }}
+                                        placeholder="e.g. Zone 1 / North Wing"
+                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                      />
+                                    </div>
+                                    {/* Zone Label field - below the "zone" field */}
+                                    <div>
+                                      <label className="block text-[11px] text-gray-300 font-medium mb-1">
+                                        Zone Label
+                                      </label>
+                                      <input
+                                        type="text"
+                                        value={unit.zoneLabel || ''}
+                                        onChange={(e) => {
+                                          const val = e.target.value;
+                                          updateUnit(unitKey, (u) => ({ ...u, zoneLabel: val }));
+                                        }}
+                                        placeholder="e.g. Waterfront View / Prime Cut"
+                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                      />
+                                    </div>
+                                  </div>
+
+                                  {/* Col 2: Building Name and Zone Type */}
+                                  <div className="space-y-2.5">
+                                    <div>
+                                      <label className="block text-[11px] text-gray-300 font-medium mb-1">
+                                        Building Name
+                                      </label>
+                                      <input
+                                        type="text"
+                                        value={unit.buildingName || ''}
+                                        onChange={(e) => {
+                                          const val = e.target.value;
+                                          updateUnit(unitKey, (u) => ({ ...u, buildingName: val }));
+                                        }}
+                                        placeholder="e.g. Tower 1 / Building A"
+                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label className="block text-[11px] text-gray-300 font-medium mb-1">
+                                        Zone Type
+                                      </label>
+                                      <input
+                                        type="text"
+                                        value={unit.zoneType || ''}
+                                        onChange={(e) => {
+                                          const val = e.target.value;
+                                          updateUnit(unitKey, (u) => ({ ...u, zoneType: val }));
+                                        }}
+                                        placeholder="e.g. Residential / High-Rise"
+                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Right: Unit Dimensions & Layout Specs (6 cols) */}
+                              <div className="lg:col-span-6 p-3.5 bg-white/[0.02] border border-white/10 rounded-xl space-y-3">
+                                <div className="text-[10px] uppercase font-bold tracking-wider text-ochre-300 flex items-center gap-1.5">
+                                  <Layers className="w-3.5 h-3.5 text-ochre-400" />
+                                  <span>Unit Dimensions &amp; Room Layout</span>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div>
+                                    <label className="block text-[11px] text-gray-300 font-medium mb-1">Category</label>
+                                    <select
+                                      value={unit.category}
+                                      onChange={(e) => {
+                                        const val = e.target.value as any;
+                                        updateUnit(unitKey, (u) => ({ ...u, category: val }));
+                                      }}
+                                      className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                    >
+                                      <option value="Studio">Studio</option>
+                                      <option value="1-Bedroom">1-Bedroom</option>
+                                      <option value="2-Bedroom">2-Bedroom</option>
+                                      <option value="3-Bedroom">3-Bedroom</option>
+                                    </select>
+                                  </div>
+
+                                  <div>
+                                    <label className="block text-[11px] text-gray-300 font-medium mb-1">Area (sqm)</label>
+                                    <input
+                                      type="number"
+                                      step="0.01"
+                                      value={unit.areaSqm}
+                                      onChange={(e) => {
+                                        const val = parseFloat(e.target.value) || 0;
+                                        updateUnit(unitKey, (u) => ({ ...u, areaSqm: val }));
+                                      }}
+                                      className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white font-mono"
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <label className="block text-[11px] text-gray-300 font-medium mb-1">Bedrooms</label>
+                                    <input
+                                      type="number"
+                                      value={unit.bedrooms}
+                                      onChange={(e) => {
+                                        const val = parseInt(e.target.value) || 0;
+                                        updateUnit(unitKey, (u) => ({ ...u, bedrooms: val }));
+                                      }}
+                                      className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <label className="block text-[11px] text-gray-300 font-medium mb-1">Bathrooms</label>
+                                    <input
+                                      type="number"
+                                      value={unit.bathrooms}
+                                      onChange={(e) => {
+                                        const val = parseInt(e.target.value) || 0;
+                                        updateUnit(unitKey, (u) => ({ ...u, bathrooms: val }));
+                                      }}
+                                      className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* FINANCIAL BREAKDOWN: Price, Reservation Fee, Discount, Loanable Balance, Pag-IBIG Rate */}
+                            <div className="rounded-2xl bg-charcoal-900/80 border border-white/10 overflow-hidden transition-all">
+                              {/* Toggle Header Bar */}
+                              <button
+                                type="button"
+                                onClick={() => toggleSubsection(unitKey, 'pricing')}
+                                className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-white/[0.02] transition-colors cursor-pointer select-none"
+                              >
+                                <div className="flex items-center gap-2.5">
+                                  <span className="w-2 h-2 rounded-full bg-ochre-400"></span>
+                                  <h4 className="text-xs font-bold uppercase tracking-wider text-ochre-300">
+                                    Pricing &amp; Financing Breakdown
+                                  </h4>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {!isPricingOpen && (
+                                    <span className="hidden sm:inline-block text-[11px] font-mono text-ochre-300/80 mr-1">
+                                      Price: ₱{curPrice.toLocaleString()} · Loanable: ₱{curLoanable.toLocaleString()}
+                                    </span>
+                                  )}
+                                  <span className="text-[10px] uppercase font-mono tracking-wider font-semibold text-gray-400 px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                                    {isPricingOpen ? 'Hide' : 'Show'}
+                                  </span>
+                                  {isPricingOpen ? (
+                                    <ChevronUp className="w-4 h-4 text-ochre-400" />
+                                  ) : (
+                                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                                  )}
+                                </div>
+                              </button>
+
+                              {/* Collapsible Content */}
+                              {isPricingOpen && (
+                                <div className="p-4 sm:p-5 pt-0 border-t border-white/5 space-y-4">
+                                  {/* ROW 1: Contract Deductions (3 Columns) */}
+                                  <div className="space-y-2 pt-4">
+                                    <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                      1. Contract Price &amp; Deductions
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
+                                      {/* Price */}
+                                      <div className="space-y-1.5">
+                                        <label className="block text-[11px] font-medium text-gray-300">
+                                          Price (PHP)
+                                        </label>
+                                        <div className="relative">
+                                          <input
+                                            type="number"
+                                            value={curPrice}
+                                            onChange={(e) => {
+                                              const val = Math.max(0, parseInt(e.target.value) || 0);
+                                              updateUnit(unitKey, (u) => {
+                                                const rf = Number(
+                                                  u.reservationFeePhp !== undefined
+                                                    ? u.reservationFeePhp
+                                                    : activeProject.reservationFeePhp || 10000
+                                                );
+                                                const dc = Number(u.discountPhp ?? 0);
+                                                return {
+                                                  ...u,
+                                                  pricePhp: val,
+                                                  priceMinPhp: val,
+                                                  loanableBalancePhp: Math.max(0, val - rf - dc),
+                                                };
+                                              });
+                                            }}
+                                            placeholder="0"
+                                            className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 focus:ring-1 focus:ring-ochre-400/30 rounded-lg px-3 py-2 text-white font-mono text-xs transition-colors"
+                                          />
+                                        </div>
+                                      </div>
+
+                                      {/* Reservation Fee */}
+                                      <div className="space-y-1.5">
+                                        <label className="block text-[11px] font-medium text-gray-300">
+                                          Reservation Fee (PHP)
+                                        </label>
+                                        <div className="relative">
+                                          <input
+                                            type="number"
+                                            value={curResFee}
+                                            onChange={(e) => {
+                                              const val = Math.max(0, parseInt(e.target.value) || 0);
+                                              updateUnit(unitKey, (u) => {
+                                                const pr = Number(u.pricePhp ?? u.priceMinPhp ?? 0);
+                                                const dc = Number(u.discountPhp ?? 0);
+                                                return {
+                                                  ...u,
+                                                  reservationFeePhp: val,
+                                                  loanableBalancePhp: Math.max(0, pr - val - dc),
+                                                };
+                                              });
+                                            }}
+                                            placeholder="0"
+                                            className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 focus:ring-1 focus:ring-ochre-400/30 rounded-lg px-3 py-2 text-white font-mono text-xs transition-colors"
+                                          />
+                                        </div>
+                                      </div>
+
+                                      {/* Discount */}
+                                      <div className="space-y-1.5">
+                                        <label className="block text-[11px] font-medium text-gray-300">
+                                          Discount (PHP)
+                                        </label>
+                                        <div className="relative">
+                                          <input
+                                            type="number"
+                                            value={curDiscount}
+                                            onChange={(e) => {
+                                              const val = Math.max(0, parseInt(e.target.value) || 0);
+                                              updateUnit(unitKey, (u) => {
+                                                const pr = Number(u.pricePhp ?? u.priceMinPhp ?? 0);
+                                                const rf = Number(
+                                                  u.reservationFeePhp !== undefined
+                                                    ? u.reservationFeePhp
+                                                    : activeProject.reservationFeePhp || 10000
+                                                );
+                                                return {
+                                                  ...u,
+                                                  discountPhp: val,
+                                                  loanableBalancePhp: Math.max(0, pr - rf - val),
+                                                };
+                                              });
+                                            }}
+                                            placeholder="0"
+                                            className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 focus:ring-1 focus:ring-ochre-400/30 rounded-lg px-3 py-2 text-white font-mono text-xs transition-colors"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {/* ROW 2: Loanable Balance & Financing Terms (2 Columns) */}
+                                  <div className="space-y-2 pt-3 border-t border-white/10">
+                                    <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                      2. Loanable Balance &amp; Pag-IBIG Terms
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
+                                      {/* Loanable Balance */}
+                                      <div className="space-y-1.5">
+                                        <div className="flex items-center gap-1.5">
+                                          <label className="text-[11px] font-bold text-ochre-300 whitespace-nowrap">
+                                            Loanable Balance (PHP)
+                                          </label>
+                                          <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-ochre-500/20 text-ochre-300 font-bold tracking-wider">
+                                            AUTO
+                                          </span>
+                                        </div>
+                                        <div className="w-full bg-[#14171A] border border-ochre-500/40 rounded-lg px-3 py-2 text-ochre-200 font-mono font-bold text-xs sm:text-sm shadow-inner">
+                                          ₱{curLoanable.toLocaleString()}
+                                        </div>
+                                      </div>
+
+                                      {/* Pag-IBIG Interest Rate */}
+                                      <div className="space-y-1.5">
+                                        <label className="block text-[11px] font-medium text-gray-300">
+                                          Pag-IBIG Interest Rate (%)
+                                        </label>
+                                        <div className="relative">
+                                          <input
+                                            type="number"
+                                            step="0.01"
+                                            value={curRate}
+                                            onChange={(e) => {
+                                              const val = parseFloat(e.target.value) || 0;
+                                              updateUnit(unitKey, (u) => ({ ...u, pagibigInterestRate: val }));
+                                            }}
+                                            placeholder="4.5"
+                                            className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 focus:ring-1 focus:ring-ochre-400/30 rounded-lg px-3 py-2 text-white font-mono text-xs pr-7 transition-colors"
+                                          />
+                                          <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono text-gray-400 pointer-events-none">
+                                            %
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* UNIT MEDIA: Unit Layout Image Upload, Floor Plan Image Upload & Video Upload */}
+                            <div className="rounded-2xl bg-charcoal-900/60 border border-white/10 overflow-hidden transition-all">
+                              {/* Toggle Header Bar */}
+                              <button
+                                type="button"
+                                onClick={() => toggleSubsection(unitKey, 'layout')}
+                                className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-white/[0.02] transition-colors cursor-pointer select-none"
+                              >
+                                <div className="flex items-center gap-2.5">
+                                  <span className="w-2 h-2 rounded-full bg-ochre-400"></span>
+                                  <h4 className="text-xs font-bold uppercase tracking-wider text-ochre-300">
+                                    Unit Layout, Floor Plan &amp; Walkthrough Video
+                                  </h4>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {!isLayoutOpen && (
+                                    <span className="hidden sm:inline-block text-[11px] font-mono text-gray-400 mr-1">
+                                      {unit.unitLayout ? 'Layout ✓' : 'No Layout'} · {unit.floorPlan ? 'Plan ✓' : 'No Plan'} · {unit.video ? 'Video ✓' : 'No Video'}
+                                    </span>
+                                  )}
+                                  <span className="text-[10px] uppercase font-mono tracking-wider font-semibold text-gray-400 px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                                    {isLayoutOpen ? 'Hide' : 'Show'}
+                                  </span>
+                                  {isLayoutOpen ? (
+                                    <ChevronUp className="w-4 h-4 text-ochre-400" />
+                                  ) : (
+                                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                                  )}
+                                </div>
+                              </button>
+
+                              {/* Collapsible Content */}
+                              {isLayoutOpen && (
+                                <div className="p-4 sm:p-5 pt-0 border-t border-white/5 space-y-3">
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-4">
+                                    {/* Left Column: Unit Layout + Floor Plan (below Unit Layout) */}
+                                    <div className="space-y-4">
+                                      {/* Unit Layout - Image upload field */}
+                                      <div className="p-3.5 rounded-xl bg-[#14171A] border border-white/10 space-y-3">
+                                        <div className="flex items-center justify-between">
+                                          <label className="text-[11px] font-semibold text-gray-200 flex items-center gap-1.5">
+                                            <ImageIcon className="w-3.5 h-3.5 text-ochre-400" />
+                                            <span>Unit Layout</span>
+                                          </label>
+                                          {unit.unitLayout && (
+                                            <button
+                                              type="button"
+                                              onClick={() => updateUnit(unitKey, (u) => ({ ...u, unitLayout: '' }))}
+                                              className="text-[10px] text-red-400 hover:text-red-300 transition-colors"
+                                            >
+                                              Clear Layout
+                                            </button>
+                                          )}
+                                        </div>
+
+                                        <div className="flex items-center gap-3">
+                                          {/* Layout Preview Frame */}
+                                          <div className="w-24 h-20 rounded-lg bg-black/40 border border-white/15 overflow-hidden shrink-0 flex items-center justify-center relative">
+                                            {unit.unitLayout ? (
+                                              <img
+                                                src={unit.unitLayout}
+                                                alt={`${unit.name} Layout`}
+                                                className="w-full h-full object-contain p-1"
+                                              />
+                                            ) : (
+                                              <div className="text-center p-1">
+                                                <ImageIcon className="w-5 h-5 text-gray-600 mx-auto mb-1" />
+                                                <span className="text-[9px] text-gray-500 block">No Layout</span>
+                                              </div>
+                                            )}
+                                          </div>
+
+                                          <div className="flex-1 space-y-2">
+                                            <input
+                                              type="text"
+                                              value={unit.unitLayout || ''}
+                                              onChange={(e) => {
+                                                const val = e.target.value;
+                                                updateUnit(unitKey, (u) => ({ ...u, unitLayout: val }));
+                                              }}
+                                              placeholder="Layout image path or URL"
+                                              className="w-full bg-[#1A1D20] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono"
+                                            />
+
+                                            <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-300 text-xs font-semibold border border-ochre-500/30 cursor-pointer transition-colors">
+                                              <Upload className="w-3.5 h-3.5" />
+                                              <span>Upload Layout Image</span>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={async (e) => {
+                                                  const file = e.target.files?.[0];
+                                                  if (!file) return;
+                                                  const url = await handleImageUpload(file);
+                                                  if (url) {
+                                                    updateUnit(unitKey, (u) => ({ ...u, unitLayout: url }));
+                                                  }
+                                                  e.target.value = '';
+                                                }}
+                                              />
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      {/* Floor Plan - (put below Unit Layout) Image upload field */}
+                                      <div className="p-3.5 rounded-xl bg-[#14171A] border border-white/10 space-y-3">
+                                        <div className="flex items-center justify-between">
+                                          <label className="text-[11px] font-semibold text-gray-200 flex items-center gap-1.5">
+                                            <ImageIcon className="w-3.5 h-3.5 text-ochre-400" />
+                                            <span>Floor Plan</span>
+                                          </label>
+                                          {unit.floorPlan && (
+                                            <button
+                                              type="button"
+                                              onClick={() => updateUnit(unitKey, (u) => ({ ...u, floorPlan: '' }))}
+                                              className="text-[10px] text-red-400 hover:text-red-300 transition-colors"
+                                            >
+                                              Clear Floor Plan
+                                            </button>
+                                          )}
+                                        </div>
+
+                                        <div className="flex items-center gap-3">
+                                          {/* Floor Plan Preview Frame */}
+                                          <div className="w-24 h-20 rounded-lg bg-black/40 border border-white/15 overflow-hidden shrink-0 flex items-center justify-center relative">
+                                            {unit.floorPlan ? (
+                                              <img
+                                                src={unit.floorPlan}
+                                                alt={`${unit.name} Floor Plan`}
+                                                className="w-full h-full object-contain p-1"
+                                              />
+                                            ) : (
+                                              <div className="text-center p-1">
+                                                <ImageIcon className="w-5 h-5 text-gray-600 mx-auto mb-1" />
+                                                <span className="text-[9px] text-gray-500 block">No Floor Plan</span>
+                                              </div>
+                                            )}
+                                          </div>
+
+                                          <div className="flex-1 space-y-2">
+                                            <input
+                                              type="text"
+                                              value={unit.floorPlan || ''}
+                                              onChange={(e) => {
+                                                const val = e.target.value;
+                                                updateUnit(unitKey, (u) => ({ ...u, floorPlan: val }));
+                                              }}
+                                              placeholder="Floor plan image path or URL"
+                                              className="w-full bg-[#1A1D20] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono"
+                                            />
+
+                                            <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-300 text-xs font-semibold border border-ochre-500/30 cursor-pointer transition-colors">
+                                              <Upload className="w-3.5 h-3.5" />
+                                              <span>Upload Floor Plan</span>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={async (e) => {
+                                                  const file = e.target.files?.[0];
+                                                  if (!file) return;
+                                                  const url = await handleImageUpload(file);
+                                                  if (url) {
+                                                    updateUnit(unitKey, (u) => ({ ...u, floorPlan: url }));
+                                                  }
+                                                  e.target.value = '';
+                                                }}
+                                              />
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    {/* Right Column: Walkthrough Video */}
+                                    <div className="p-3.5 rounded-xl bg-[#14171A] border border-white/10 space-y-3 flex flex-col justify-between">
+                                      <div className="space-y-3">
+                                        <div className="flex items-center justify-between">
+                                          <label className="text-[11px] font-semibold text-gray-200 flex items-center gap-1.5">
+                                            <Video className="w-3.5 h-3.5 text-ochre-400" />
+                                            <span>Walkthrough Video</span>
+                                          </label>
+                                          {unit.video && (
+                                            <button
+                                              type="button"
+                                              onClick={() => updateUnit(unitKey, (u) => ({ ...u, video: '' }))}
+                                              className="text-[10px] text-red-400 hover:text-red-300 transition-colors"
+                                            >
+                                              Clear Video
+                                            </button>
+                                          )}
+                                        </div>
+
+                                        <div className="w-full h-44 rounded-lg bg-black/40 border border-white/15 overflow-hidden flex items-center justify-center relative">
+                                          {unit.video ? (
+                                            <video
+                                              src={unit.video}
+                                              className="w-full h-full object-cover"
+                                              controls
+                                              muted
+                                              playsInline
+                                            />
+                                          ) : (
+                                            <div className="text-center p-2">
+                                              <Video className="w-7 h-7 text-gray-600 mx-auto mb-1.5" />
+                                              <span className="text-[10px] text-gray-500 block">No Video Loaded</span>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+
+                                      <div className="space-y-2 pt-2">
+                                        <input
+                                          type="text"
+                                          value={unit.video || ''}
+                                          onChange={(e) => {
+                                            const val = e.target.value;
+                                            updateUnit(unitKey, (u) => ({ ...u, video: val }));
+                                          }}
+                                          placeholder="Video URL or upload file"
+                                          className="w-full bg-[#1A1D20] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono"
+                                        />
+
+                                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-300 text-xs font-semibold border border-ochre-500/30 cursor-pointer transition-colors w-full justify-center">
+                                          <Upload className="w-3.5 h-3.5" />
+                                          <span>Upload Video (MP4/WebM)</span>
+                                          <input
+                                            type="file"
+                                            accept="video/*"
+                                            className="hidden"
+                                            onChange={async (e) => {
+                                              const file = e.target.files?.[0];
+                                              if (!file) return;
+                                              const url = await handleImageUpload(file);
+                                              if (url) {
+                                                updateUnit(unitKey, (u) => ({ ...u, video: url }));
+                                              }
+                                              e.target.value = '';
+                                            }}
+                                          />
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* UNIT PHOTO GALLERY: 5 Dedicated Image Upload Slots */}
+                            <div className="rounded-2xl bg-charcoal-900/60 border border-white/10 overflow-hidden transition-all">
+                              {/* Toggle Header Bar */}
+                              <button
+                                type="button"
+                                onClick={() => toggleSubsection(unitKey, 'photos')}
+                                className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-white/[0.02] transition-colors cursor-pointer select-none"
+                              >
+                                <div className="flex items-center gap-2.5">
+                                  <span className="w-2 h-2 rounded-full bg-ochre-400"></span>
+                                  <h4 className="text-xs font-bold uppercase tracking-wider text-ochre-300">
+                                    Unit Photo Gallery (5 Photos)
+                                  </h4>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {!isPhotosOpen && (
+                                    <span className="hidden sm:inline-block text-[11px] font-mono text-gray-400 mr-1">
+                                      {[unit.gallery1, unit.gallery2, unit.gallery3, unit.gallery4, unit.gallery5].filter(Boolean).length} of 5 Photos Set
+                                    </span>
+                                  )}
+                                  <span className="text-[10px] uppercase font-mono tracking-wider font-semibold text-gray-400 px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                                    {isPhotosOpen ? 'Hide' : 'Show'}
+                                  </span>
+                                  {isPhotosOpen ? (
+                                    <ChevronUp className="w-4 h-4 text-ochre-400" />
+                                  ) : (
+                                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                                  )}
+                                </div>
+                              </button>
+
+                              {/* Collapsible Content */}
+                              {isPhotosOpen && (
+                                <div className="p-4 sm:p-5 pt-0 border-t border-white/5 space-y-3">
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs pt-4">
+                                    {(
+                                      [
+                                        { key: 'gallery1' as const, label: 'Gallery 1', val: unit.gallery1 },
+                                        { key: 'gallery2' as const, label: 'Gallery 2', val: unit.gallery2 },
+                                        { key: 'gallery3' as const, label: 'Gallery 3', val: unit.gallery3 },
+                                        { key: 'gallery4' as const, label: 'Gallery 4', val: unit.gallery4 },
+                                        { key: 'gallery5' as const, label: 'Gallery 5', val: unit.gallery5 },
+                                      ] as const
+                                    ).map((g) => (
+                                      <div
+                                        key={g.key}
+                                        className="p-3 rounded-xl bg-[#14171A] border border-white/10 space-y-2 flex flex-col justify-between"
+                                      >
+                                        <div>
+                                          <div className="flex items-center justify-between mb-1.5">
+                                            <label className="text-[11px] font-semibold text-gray-200 flex items-center gap-1">
+                                              <ImageIcon className="w-3 h-3 text-ochre-400" />
+                                              <span>{g.label}</span>
+                                            </label>
+                                            {g.val && (
+                                              <button
+                                                type="button"
+                                                onClick={() => updateUnit(unitKey, (u) => ({ ...u, [g.key]: '' }))}
+                                                className="text-[9px] text-red-400 hover:text-red-300 transition-colors"
+                                              >
+                                                Clear
+                                              </button>
+                                            )}
+                                          </div>
+
+                                          {/* Thumbnail Preview */}
+                                          <div className="w-full h-24 rounded-lg bg-black/40 border border-white/15 overflow-hidden flex items-center justify-center relative mb-2">
+                                            {g.val ? (
+                                              <img
+                                                src={g.val}
+                                                alt={`${unit.name} ${g.label}`}
+                                                className="w-full h-full object-cover"
+                                              />
+                                            ) : (
+                                              <div className="text-center p-1">
+                                                <ImageIcon className="w-4 h-4 text-gray-600 mx-auto mb-1" />
+                                                <span className="text-[9px] text-gray-500 block">No Image</span>
+                                              </div>
+                                            )}
+                                          </div>
+
+                                          {/* URL/Path text input */}
+                                          <input
+                                            type="text"
+                                            value={g.val || ''}
+                                            onChange={(e) => {
+                                              const newVal = e.target.value;
+                                              updateUnit(unitKey, (u) => ({ ...u, [g.key]: newVal }));
+                                            }}
+                                            placeholder={`${g.label} URL / path`}
+                                            className="w-full bg-[#1A1D20] border border-white/15 focus:border-ochre-400 rounded-lg px-2 py-1 text-[11px] text-white font-mono"
+                                          />
+                                        </div>
+
+                                        {/* Upload Button */}
+                                        <label className="w-full inline-flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-300 text-[11px] font-semibold border border-ochre-500/30 cursor-pointer transition-colors mt-2">
+                                          <Upload className="w-3 h-3" />
+                                          <span>Upload Photo</span>
+                                          <input
+                                            type="file"
+                                            accept="image/*"
+                                            className="hidden"
+                                            onChange={async (e) => {
+                                              const file = e.target.files?.[0];
+                                              if (!file) return;
+                                              const url = await handleImageUpload(file);
+                                              if (url) {
+                                                updateUnit(unitKey, (u) => ({ ...u, [g.key]: url }));
+                                              }
+                                              e.target.value = '';
+                                            }}
+                                          />
+                                        </label>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Unit Description */}
+                            <div>
+                              <label className="block text-[11px] text-gray-400 mb-1">Unit Description</label>
+                              <textarea
+                                rows={2}
+                                value={unit.description}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  updateUnit(unitKey, (u) => ({ ...u, description: val }));
+                                }}
+                                className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-3 py-1.5 text-xs text-white"
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
 

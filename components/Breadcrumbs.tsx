@@ -22,15 +22,15 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
       <nav
         id="page-breadcrumbs"
         aria-label="Breadcrumb"
-        className="relative z-20 py-2.5 px-4 bg-charcoal-950/90 backdrop-blur-md border-b border-white/[0.08] transition-colors"
+        className="relative z-20 py-2 px-4 bg-[#F8F3E4]/95 backdrop-blur-md border-b border-[#E8DEC4] transition-colors"
       >
-        <div className="manila-section-container flex items-center space-x-2 text-xs md:text-sm text-stone-300 overflow-x-auto whitespace-nowrap scrollbar-none">
+        <div className="manila-section-container flex items-center space-x-2 text-xs md:text-sm text-[#544D40] overflow-x-auto whitespace-nowrap scrollbar-none">
           <Link
             href="/"
-            className="flex items-center text-stone-300 hover:text-gold-400 transition-colors group font-medium"
+            className="flex items-center text-[#544D40] hover:text-[#241E15] transition-colors group font-medium"
             title="Urban Deca Homes Homepage"
           >
-            <Home className="w-3.5 h-3.5 mr-1.5 text-gold-400 group-hover:scale-110 transition-transform" />
+            <Home className="w-3.5 h-3.5 mr-1.5 text-[#B88A22] group-hover:scale-110 transition-transform" />
             <span>Home</span>
           </Link>
 
@@ -38,10 +38,10 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
             const isLast = index === items.length - 1;
             return (
               <React.Fragment key={item.path}>
-                <ChevronRight className="w-3.5 h-3.5 text-stone-500 flex-shrink-0" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#A89E8C] flex-shrink-0" />
                 {isLast ? (
                   <span
-                    className="font-semibold text-white tracking-wide truncate bg-white/[0.08] px-2.5 py-0.5 rounded-md border border-white/10 shadow-2xs"
+                    className="font-semibold text-[#241E15] tracking-wide truncate bg-white/85 px-2.5 py-0.5 rounded-md border border-[#DFBD58]/50 shadow-xs"
                     aria-current="page"
                   >
                     {item.name}
@@ -49,7 +49,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 ) : (
                   <Link
                     href={item.path}
-                    className="text-stone-300 hover:text-gold-400 transition-colors truncate font-medium"
+                    className="text-[#544D40] hover:text-[#241E15] transition-colors truncate font-medium"
                   >
                     {item.name}
                   </Link>

@@ -169,8 +169,8 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
           {/* Animated 3D Floating Location Badge */}
           <div className="mb-2 px-3 py-1.5 rounded-xl bg-charcoal-950/95 backdrop-blur-md border border-gold-400/80 shadow-2xl text-center transform -translate-y-1 animate-bounce" style={{ animationDuration: '2.5s' }}>
             <div className="flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#eb6753] animate-ping" />
-              <span className="text-[11px] font-bold tracking-tight text-white font-sans">
+              <span className="w-2 h-2 rounded-full bg-[#CE2029] animate-ping" />
+              <span className="text-[11px] font-bold tracking-tight text-white font-logo">
                 Urban Deca Homes Manila
               </span>
             </div>
@@ -182,16 +182,16 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
           {/* Deca Marker Pin & Ripple */}
           <div className="relative flex items-center justify-center">
             {/* Ground Radar Pulse Ring */}
-            <div className="absolute w-12 h-12 rounded-full bg-[#eb6753]/30 animate-ping" style={{ animationDuration: '2s' }} />
+            <div className="absolute w-12 h-12 rounded-full bg-[#CE2029]/30 animate-ping" style={{ animationDuration: '2s' }} />
             <div className="absolute w-8 h-8 rounded-full bg-gold-400/40 animate-pulse" />
 
             {/* Solid Pin Icon */}
-            <div className="relative w-8 h-8 rounded-full bg-gradient-to-tr from-[#eb6753] to-[#d85542] shadow-xl border-2 border-white flex items-center justify-center text-white transform hover:scale-110 transition-transform">
+            <div className="relative w-8 h-8 rounded-full bg-gradient-to-tr from-[#CE2029] to-[#B51B23] shadow-xl border-2 border-white flex items-center justify-center text-white transform hover:scale-110 transition-transform">
               <Building2 className="w-4 h-4 text-white" />
             </div>
 
             {/* Pin pointer tip */}
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#d85542] rotate-45 border-r border-b border-white" />
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#B51B23] rotate-45 border-r border-b border-white" />
           </div>
         </div>
 
@@ -218,7 +218,7 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
             title="Get Navigation Directions"
             className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white text-charcoal-900 text-[11px] font-semibold border border-stone-200 shadow-lg backdrop-blur-sm transition-all hover:scale-105"
           >
-            <Navigation className="w-3.5 h-3.5 text-[#eb6753]" />
+            <Navigation className="w-3.5 h-3.5 text-[#CE2029]" />
             <span>Get Directions</span>
           </a>
         </div>
@@ -259,9 +259,9 @@ export default function ManilaGoogle3DMap({ apiKey }: ManilaGoogle3DMapProps) {
       </div>
 
       {/* 3D Location Highlights Strip below Map */}
-      <div className="p-4 bg-stone-50/80 border-t border-stone-200 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-stone-600">
+      <div className="p-4 bg-[#FAF8F2] border-t border-[#EADBBD] grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-[#5C3D36]">
         <div className="flex items-center space-x-2">
-          <MapPin className="w-4 h-4 text-[#eb6753] flex-shrink-0" />
+          <MapPin className="w-4 h-4 text-[#CE2029] flex-shrink-0" />
           <span>
             <strong>Vitas Street:</strong> Gated private access roadway
           </span>

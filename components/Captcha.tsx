@@ -191,13 +191,13 @@ export default function Captcha({
                     ? 'border-red-400 bg-red-50/50 focus:ring-2 focus:ring-red-400'
                     : isDark
                     ? 'bg-charcoal-950 border-charcoal-700 text-white placeholder-stone-400 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/30'
-                    : 'bg-white border-stone-300 text-charcoal-900 placeholder-stone-500 focus:border-[#eb6753] focus:ring-2 focus:ring-[#eb6753]/30'
+                    : 'bg-white border-stone-300 text-charcoal-900 placeholder-stone-500 focus:border-[#CE2029] focus:ring-2 focus:ring-[#CE2029]/25'
                 }`}
                 aria-label="Captcha security calculation answer"
               />
               {isChecking && (
                 <div className="absolute right-2.5 top-1/2 -translate-y-1/2">
-                  <div className="w-3.5 h-3.5 border-2 border-[#eb6753] border-t-transparent rounded-full animate-spin" />
+                  <div className="w-3.5 h-3.5 border-2 border-[#CE2029] border-t-transparent rounded-full animate-spin" />
                 </div>
               )}
             </div>
@@ -216,7 +216,7 @@ export default function Captcha({
             >
               <RotateCw
                 className={`w-4 h-4 transition-transform duration-500 ${
-                  isRotating ? 'rotate-180 text-[#eb6753]' : ''
+                  isRotating ? 'rotate-180 text-[#CE2029]' : ''
                 }`}
               />
             </button>

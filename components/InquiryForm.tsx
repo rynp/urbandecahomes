@@ -187,16 +187,16 @@ export default function InquiryForm({
         <div className="absolute inset-0 cyber-grid opacity-25 pointer-events-none" />
 
         {/* Ambient Glow Orbs */}
-        <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#eb6753]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 left-1/4 w-64 h-64 bg-gold-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#CE2029]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 left-1/4 w-64 h-64 bg-[#FAF0C8]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10">
-          <div className="inline-flex items-center space-x-2 text-xs font-bold text-gold-400 mb-3 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 backdrop-blur-md shadow-sm">
-            <ShieldCheck className="w-3.5 h-3.5 text-gold-400 animate-pulse" />
+          <div className="inline-flex items-center space-x-2 text-xs font-bold text-[#CE2029] mb-3 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 backdrop-blur-md shadow-sm font-logo">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#CE2029] animate-pulse" />
             <span>Official Developer Sales Desk • 0% Broker Fee</span>
           </div>
 
-          <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+          <h3 className="font-logo text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
             {title}
           </h3>
           <p className="text-xs sm:text-sm text-stone-300 mt-2 leading-relaxed max-w-2xl">
@@ -204,21 +204,21 @@ export default function InquiryForm({
           </p>
 
           {/* 3-Step Concierge Reassurance Pill Bar */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-6 border-t border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-6 border-t border-white/10 font-logo">
             <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-              <span className="w-5 h-5 rounded-full bg-gold-400/20 text-gold-300 font-bold text-[10px] flex items-center justify-center flex-shrink-0">
+              <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
                 1
               </span>
               <span className="font-medium text-stone-200">Select Unit &amp; Budget</span>
             </div>
             <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-              <span className="w-5 h-5 rounded-full bg-gold-400/20 text-gold-300 font-bold text-[10px] flex items-center justify-center flex-shrink-0">
+              <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
                 2
               </span>
               <span className="font-medium text-stone-200">Free Pag-IBIG Pre-Qual</span>
             </div>
             <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-              <span className="w-5 h-5 rounded-full bg-gold-400/20 text-gold-300 font-bold text-[10px] flex items-center justify-center flex-shrink-0">
+              <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
                 3
               </span>
               <span className="font-medium text-stone-200">Official Computation in 1 Hr</span>
@@ -242,16 +242,16 @@ export default function InquiryForm({
         </div>
 
         {/* Project & Unit Selectors */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 font-logo">
           <div>
-            <label htmlFor="inquiry-project" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-project" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Select Development *
             </label>
             <select
               id="inquiry-project"
               value={selectedProject}
               onChange={(e) => handleProjectChange(e.target.value)}
-              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb6753]/30 focus:border-[#eb6753] font-medium transition-all"
+              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#CE2029]/25 focus:border-[#CE2029] font-medium transition-all text-[#3E1C15]"
             >
               {projects.map((p) => (
                 <option key={p.id} value={p.slug}>
@@ -262,14 +262,14 @@ export default function InquiryForm({
           </div>
 
           <div>
-            <label htmlFor="inquiry-unit" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-unit" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Preferred Unit Type
             </label>
             <select
               id="inquiry-unit"
               value={selectedUnit}
               onChange={(e) => setSelectedUnit(e.target.value)}
-              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb6753]/30 focus:border-[#eb6753] font-medium transition-all"
+              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#CE2029]/25 focus:border-[#CE2029] font-medium transition-all text-[#3E1C15]"
             >
               <option value="">Any Available Unit / Undecided</option>
               {availableUnits.map((u) => (
@@ -282,9 +282,9 @@ export default function InquiryForm({
         </div>
 
         {/* Contact Info: Full Name & Mobile */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 font-logo">
           <div>
-            <label htmlFor="inquiry-name" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-name" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Full Name *
             </label>
             <input
@@ -293,10 +293,10 @@ export default function InquiryForm({
               placeholder="e.g. Maria Santos"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className={`w-full px-4 py-3 text-sm bg-stone-50/80 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+              className={`w-full px-4 py-3 text-sm bg-stone-50/80 border rounded-xl focus:outline-none focus:ring-2 transition-all text-[#3E1C15] ${
                 errors.fullName
                   ? 'border-red-400 focus:ring-red-400/30'
-                  : 'border-stone-300/90 focus:border-[#eb6753] focus:ring-[#eb6753]/30'
+                  : 'border-stone-300/90 focus:border-[#CE2029] focus:ring-[#CE2029]/25'
               }`}
             />
             {errors.fullName && (
@@ -305,7 +305,7 @@ export default function InquiryForm({
           </div>
 
           <div>
-            <label htmlFor="inquiry-mobile" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-mobile" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Mobile Contact Number *
             </label>
             <input
@@ -314,10 +314,10 @@ export default function InquiryForm({
               placeholder="e.g. 0917 123 4567"
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.target.value)}
-              className={`w-full px-4 py-3 text-sm bg-stone-50/80 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+              className={`w-full px-4 py-3 text-sm bg-stone-50/80 border rounded-xl focus:outline-none focus:ring-2 transition-all text-[#3E1C15] ${
                 errors.mobileNumber
                   ? 'border-red-400 focus:ring-red-400/30'
-                  : 'border-stone-300/90 focus:border-[#eb6753] focus:ring-[#eb6753]/30'
+                  : 'border-stone-300/90 focus:border-[#CE2029] focus:ring-[#CE2029]/25'
               }`}
             />
             {errors.mobileNumber && (
@@ -327,9 +327,9 @@ export default function InquiryForm({
         </div>
 
         {/* Email & Financing Preference */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 font-logo">
           <div>
-            <label htmlFor="inquiry-email" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-email" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Email Address *
             </label>
             <input
@@ -338,10 +338,10 @@ export default function InquiryForm({
               placeholder="maria@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full px-4 py-3 text-sm bg-stone-50/80 border rounded-xl focus:outline-none focus:ring-2 transition-all ${
+              className={`w-full px-4 py-3 text-sm bg-stone-50/80 border rounded-xl focus:outline-none focus:ring-2 transition-all text-[#3E1C15] ${
                 errors.email
                   ? 'border-red-400 focus:ring-red-400/30'
-                  : 'border-stone-300/90 focus:border-[#eb6753] focus:ring-[#eb6753]/30'
+                  : 'border-stone-300/90 focus:border-[#CE2029] focus:ring-[#CE2029]/25'
               }`}
             />
             {errors.email && (
@@ -350,14 +350,14 @@ export default function InquiryForm({
           </div>
 
           <div>
-            <label htmlFor="inquiry-financing" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-financing" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Financing Preference
             </label>
             <select
               id="inquiry-financing"
               value={financingScheme}
               onChange={(e) => setFinancingScheme(e.target.value)}
-              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb6753]/30 focus:border-[#eb6753] font-medium transition-all"
+              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#CE2029]/25 focus:border-[#CE2029] font-medium transition-all text-[#3E1C15]"
             >
               <option value="Pag-IBIG Fund">Pag-IBIG Housing Loan (Most Popular)</option>
               <option value="Bank Financing">Commercial Bank Financing</option>
@@ -369,16 +369,16 @@ export default function InquiryForm({
         </div>
 
         {/* Buyer Type & Preferred Communication */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 font-logo">
           <div>
-            <label htmlFor="inquiry-buyer-type" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label htmlFor="inquiry-buyer-type" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Employment / Buyer Category
             </label>
             <select
               id="inquiry-buyer-type"
               value={buyerType}
               onChange={(e) => setBuyerType(e.target.value)}
-              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb6753]/30 focus:border-[#eb6753] font-medium transition-all"
+              className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#CE2029]/25 focus:border-[#CE2029] font-medium transition-all text-[#3E1C15]"
             >
               <option value="Locally Employed">Locally Employed (Private / Government)</option>
               <option value="OFW / Seafarer">Overseas Filipino Worker (OFW / Seafarer)</option>
@@ -388,7 +388,7 @@ export default function InquiryForm({
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5">
               Preferred Contact Channel
             </label>
             <div className="grid grid-cols-4 gap-2">
@@ -401,8 +401,8 @@ export default function InquiryForm({
                     onClick={() => setPreferredContact(channel)}
                     className={`py-2.5 text-xs font-bold rounded-xl border transition-all duration-200 text-center ${
                       isSelected
-                        ? 'bg-charcoal-900 text-white border-charcoal-900 shadow-md shadow-black/15 ring-1 ring-black/20'
-                        : 'bg-stone-50/80 text-stone-700 border-stone-200 hover:bg-stone-100 hover:text-charcoal-900'
+                        ? 'bg-[#3E1C15] text-white border-[#3E1C15] shadow-md shadow-black/15 ring-1 ring-black/20'
+                        : 'bg-stone-50/80 text-stone-700 border-stone-200 hover:bg-stone-100 hover:text-[#3E1C15]'
                     }`}
                   >
                     {channel}
@@ -415,7 +415,7 @@ export default function InquiryForm({
 
         {/* Notes */}
         <div>
-          <label htmlFor="inquiry-notes" className="block text-xs font-bold uppercase tracking-wider text-charcoal-900 mb-1.5">
+          <label htmlFor="inquiry-notes" className="block text-xs font-bold uppercase tracking-wider text-[#3E1C15] mb-1.5 font-logo">
             Questions, Desired Move-in Date, or Special Requests (Optional)
           </label>
           <textarea
@@ -424,20 +424,20 @@ export default function InquiryForm({
             placeholder="e.g. Inquiring about low cash-out promos, scheduling Saturday 2 PM site tour, or checking Pag-IBIG loan eligibility..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb6753]/30 focus:border-[#eb6753] transition-all"
+            className="w-full px-4 py-3 text-sm bg-stone-50/80 border border-stone-300/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#CE2029]/25 focus:border-[#CE2029] transition-all text-[#3E1C15]"
           />
         </div>
 
         {/* Privacy Consent */}
-        <div className="p-4 rounded-xl bg-stone-50/80 border border-stone-200/80">
+        <div className="p-4 rounded-xl bg-[#FAF5E6]/60 border border-[#EADBBD]">
           <label className="flex items-start space-x-3 cursor-pointer">
             <input
               type="checkbox"
               checked={privacyAgreed}
               onChange={(e) => setPrivacyAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 text-[#eb6753] rounded border-stone-300 focus:ring-[#eb6753]"
+              className="mt-0.5 w-4 h-4 text-[#CE2029] rounded border-stone-300 focus:ring-[#CE2029]"
             />
-            <span className="text-xs text-stone-600 leading-relaxed">
+            <span className="text-xs text-[#5C3D36] leading-relaxed">
               I consent to the collection and processing of my contact information by Urban Deca Homes property specialists solely for scheduling site viewings and providing official price computations in compliance with the Philippine Data Privacy Act of 2012 (R.A. 10173).
             </span>
           </label>
@@ -468,7 +468,7 @@ export default function InquiryForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full inline-flex items-center justify-center px-6 py-4 text-sm font-bold uppercase tracking-wider text-charcoal-950 gold-gradient hover:opacity-95 rounded-xl shadow-lg shadow-gold-500/20 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 group"
+            className="w-full inline-flex items-center justify-center px-6 py-4 text-sm font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-lg shadow-[#CE2029]/25 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 group font-logo"
           >
             {isSubmitting ? (
               <span>Transmitting Inquiry...</span>
