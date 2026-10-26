@@ -70,78 +70,188 @@ body {
   background: #B5933C;
 }
 
-/* Premium Light Pastel Yellow Glassmorphism UI/UX Design System */
+/* ==========================================================================
+   PREMIUM FROSTED GLASS-NEUMORPHISM UI/UX DESIGN SYSTEM
+   Inspired by soft tactile milky glass with embossed depth, ambient shadows,
+   and crisp specular edge highlights.
+   ========================================================================== */
+
 .glass-header {
-  background: rgba(254, 252, 244, 0.94);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(226, 214, 180, 0.65);
-  box-shadow: 0 4px 25px -4px rgba(180, 140, 50, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(250, 247, 240, 0.72) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  backdrop-filter: blur(24px) saturate(190%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 12px 32px -10px rgba(90, 60, 30, 0.06),
+    0 2px 6px -1px rgba(0, 0, 0, 0.02),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px 0 rgba(215, 200, 175, 0.25);
 }
 
 .glass-header-scrolled {
-  background: rgba(253, 250, 240, 0.98);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  backdrop-filter: blur(24px) saturate(190%);
-  border-bottom: 1px solid rgba(215, 198, 155, 0.85);
-  box-shadow: 0 10px 30px -5px rgba(160, 120, 40, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 244, 234, 0.88) 100%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(28px) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 16px 40px -12px rgba(85, 55, 25, 0.09),
+    0 4px 10px -2px rgba(0, 0, 0, 0.03),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 2px 0 rgba(215, 198, 155, 0.35);
 }
 
 .glass-card {
-  background: rgba(255, 253, 247, 0.98);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(225, 212, 175, 0.7);
-  box-shadow: 0 20px 50px -10px rgba(140, 105, 30, 0.12), 0 0 0 1px rgba(245, 230, 185, 0.4);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(250, 246, 237, 0.84) 100%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 
+    0 28px 60px -15px rgba(85, 60, 35, 0.14),
+    0 8px 20px -4px rgba(85, 60, 35, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.95),
+    inset 0 2px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 3px 0 rgba(190, 170, 135, 0.16);
 }
 
+/* Glass-Neumorphic Tactile Pill Button (Heart / Toggle / Icon button) */
 .glass-pill {
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(225, 212, 175, 0.65);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 244, 236, 0.82) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   color: #4A1E17;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 2px 8px -2px rgba(74, 30, 23, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 6px 16px -2px rgba(80, 50, 25, 0.08),
+    0 2px 5px -1px rgba(0, 0, 0, 0.03),
+    0 0 0 1px rgba(235, 222, 195, 0.45),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 1.5px 0 rgba(180, 160, 130, 0.14);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-pill:hover {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(206, 32, 41, 0.35);
+  background: linear-gradient(145deg, #FFFFFF 0%, #F5EFE1 100%);
+  border-color: rgba(255, 255, 255, 1);
   color: #CE2029;
-  box-shadow: 0 4px 14px -3px rgba(206, 32, 41, 0.12), inset 0 1px 1px rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 10px 22px -3px rgba(80, 50, 25, 0.12),
+    0 3px 8px -1px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(206, 32, 41, 0.25),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 1.5px 0 rgba(180, 160, 130, 0.16);
+  transform: translateY(-1px);
+}
+
+.glass-pill:active {
+  box-shadow: 
+    0 2px 6px -1px rgba(80, 50, 25, 0.06),
+    inset 0 2px 4px 0 rgba(80, 50, 25, 0.1),
+    inset 0 -1px 2px 0 rgba(255, 255, 255, 0.85);
+  transform: translateY(1px);
 }
 
 .glass-pill-active {
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(225, 212, 175, 0.85);
+  background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   color: #CE2029;
   font-weight: 700;
-  box-shadow: 0 3px 12px -2px rgba(206, 32, 41, 0.14), inset 0 1px 1px rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 5px 14px -2px rgba(206, 32, 41, 0.16),
+    0 0 0 1px rgba(230, 215, 185, 0.5),
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 1px 0 rgba(190, 170, 135, 0.18);
 }
 
-/* High-End Unified Glassmorphic Navigation Dock */
-.glass-nav-dock {
-  background: rgba(255, 255, 255, 0.6);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(225, 212, 175, 0.7);
+/* Glass-Neumorphic Primary CTA (Inquire Button) */
+.glass-neumorph-primary {
+  background: linear-gradient(145deg, #CE2029 0%, #AF161E 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   box-shadow: 
-    0 10px 32px -8px rgba(74, 30, 23, 0.07),
-    0 2px 6px -1px rgba(0, 0, 0, 0.02),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-  border-radius: 9999px;
-  padding: 5px;
+    0 8px 20px -3px rgba(206, 32, 41, 0.38),
+    0 3px 8px -1px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(206, 32, 41, 0.25),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-neumorph-primary:hover {
+  background: linear-gradient(145deg, #DC242E 0%, #B81921 100%) !important;
+  box-shadow: 
+    0 12px 26px -3px rgba(206, 32, 41, 0.48),
+    0 4px 10px -1px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-1.5px);
+}
+
+.glass-neumorph-primary:active {
+  box-shadow: 
+    0 3px 8px -1px rgba(206, 32, 41, 0.25),
+    inset 0 2px 4px 0 rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(1px);
+}
+
+/* Glass-Neumorphic Floating Logo Badge */
+.glass-logo-badge {
+  background: linear-gradient(145deg, #FFFFFF 0%, #F7F3EA 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 8px 18px -3px rgba(80, 50, 25, 0.09),
+    0 2px 6px -1px rgba(0, 0, 0, 0.03),
+    0 0 0 1px rgba(230, 215, 185, 0.45),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 1.5px 0 rgba(180, 160, 130, 0.12);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-nav-dock:hover {
-  background: rgba(255, 255, 255, 0.75);
-  border-color: rgba(215, 198, 155, 0.9);
+.group:hover .glass-logo-badge {
   box-shadow: 
-    0 14px 38px -8px rgba(74, 30, 23, 0.1),
-    0 3px 8px -1px rgba(0, 0, 0, 0.03),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 1);
+    0 12px 24px -4px rgba(80, 50, 25, 0.14),
+    0 4px 10px -2px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(206, 32, 41, 0.3),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1);
+  transform: scale(1.05) translateY(-1px);
+}
+
+/* Glass-Neumorphic Inset / Recessed Row (Matches Inner Container of Reference) */
+.glass-inset-groove {
+  background: rgba(243, 238, 226, 0.55);
+  border: 1px solid rgba(215, 200, 175, 0.4);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(74, 30, 23, 0.04),
+    inset 0 1px 2px 0 rgba(0, 0, 0, 0.02),
+    0 1px 0 0 rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+}
+
+/* High-End Frosted Glass-Neumorphic Navigation Dock */
+.glass-nav-dock {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 244, 235, 0.68) 100%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 9999px;
+  padding: 5px 6px;
+  box-shadow: 
+    0 14px 32px -8px rgba(74, 30, 23, 0.08),
+    0 4px 10px -2px rgba(0, 0, 0, 0.02),
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 2px 0 rgba(190, 170, 135, 0.18);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-nav-dock:hover {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.90) 0%, rgba(250, 246, 238, 0.78) 100%);
+  box-shadow: 
+    0 18px 40px -10px rgba(74, 30, 23, 0.11),
+    0 6px 14px -3px rgba(0, 0, 0, 0.03),
+    0 0 0 1px rgba(255, 255, 255, 1),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 2px 0 rgba(190, 170, 135, 0.22);
 }
 
 /* Dimmer Yellow Theme Base for Homepage Heroshot */
@@ -178,41 +288,55 @@ body {
   transform: translateY(-6px);
 }
 
-/* Glass Dock Navigation Item */
+/* Glass-Neumorphic Navigation Items */
 .glass-nav-item {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 18px;
+  padding: 9px 20px;
   font-family: var(--font-logo), var(--font-poppins), sans-serif;
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: #4A1E17;
   border-radius: 9999px;
   border: 1px solid transparent;
+  outline: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   white-space: nowrap;
 }
 
-.glass-nav-item:hover {
-  color: #CE2029;
-  background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0 2px 8px -2px rgba(74, 30, 23, 0.05);
-  border-color: rgba(235, 222, 195, 0.65);
+.glass-nav-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(206, 32, 41, 0.4);
 }
 
-/* Active Segment in Glass Dock */
+.glass-nav-item:hover {
+  color: #CE2029;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 
+    0 4px 14px -2px rgba(80, 50, 25, 0.07),
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    inset 0 1px 1.5px rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Active Segment in Glass Dock (Embossed Tactile Pill) */
 .glass-nav-item-active {
-  background: rgba(255, 255, 255, 0.96) !important;
+  background: linear-gradient(145deg, #FFFFFF 0%, #FAF6EE 100%) !important;
   color: #CE2029 !important;
   font-weight: 700;
-  border: 1px solid rgba(225, 212, 175, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  outline: none !important;
   box-shadow: 
-    0 3px 12px -2px rgba(206, 32, 41, 0.14),
-    0 1px 3px 0 rgba(0, 0, 0, 0.03),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 1) !important;
+    0 6px 16px -2px rgba(206, 32, 41, 0.16),
+    0 2px 6px -1px rgba(74, 30, 23, 0.06),
+    0 0 0 1px rgba(230, 215, 185, 0.4),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 1px 0 rgba(190, 170, 135, 0.18) !important;
+  transform: translateY(0);
 }
 
 /* Kinetic Dual-Deck Text Rolling Animation */

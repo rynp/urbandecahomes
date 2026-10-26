@@ -26,13 +26,13 @@ export default function Footer() {
           {/* Brand & Developer Bio */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-12 h-12 rounded-full overflow-hidden bg-white p-0.5 shadow-sm border border-[#EADBBD] flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+              <div className="relative flex-shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                 <Image
-                  src="/logo.jpg"
+                  src="/logo.png"
                   alt="Urban Deca Homes Official Logo"
                   width={48}
                   height={48}
-                  className="w-full h-full object-cover rounded-full"
+                  className="w-12 h-12 object-contain"
                 />
               </div>
               <div>
@@ -48,7 +48,7 @@ export default function Footer() {
                   </span>
                 </div>
                 <span className="block text-xs text-[#68453D] font-medium mt-1">
-                  {businessInfo.legalDeveloper} • Pride, Quality, Service.
+                  {businessInfo.legalDeveloper} • Price. Quality. Service.
                 </span>
               </div>
             </Link>
