@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Download,
   Check,
@@ -10,7 +10,10 @@ import {
   Maximize2,
   Sparkles,
   Compass,
+  ChevronDown,
 } from 'lucide-react';
+import type { Project } from '@/data/projects';
+import { getProjectBySlug } from '@/data/projects';
 
 interface UnitPlanData {
   id: string;
@@ -85,11 +88,53 @@ const unitData: Record<string, UnitPlanData> = {
   },
 };
 
-export default function OrtigasUnitFloorplanSelector() {
+interface OrtigasUnitFloorplanSelectorProps {
+  project?: Project;
+}
+
+export default function OrtigasUnitFloorplanSelector({ project: propProject }: OrtigasUnitFloorplanSelectorProps = {}) {
+  const project = propProject || getProjectBySlug('ortigas')!;
+
+  const distinctBedTypes = useMemo(() => {
+    if (!project?.unitTypes || project.unitTypes.length === 0) {
+      return ['2-Bedroom', '3-Bedroom'];
+    }
+    const types = project.unitTypes
+      .map((u) => u.category || (u.bedrooms ? `${u.bedrooms}-Bedroom` : ''))
+      .filter(Boolean);
+    const unique = Array.from(new Set(types));
+    return unique.length > 0 ? unique : ['2-Bedroom', '3-Bedroom'];
+  }, [project]);
+
+  const [selectedBedType, setSelectedBedType] = useState<string>('');
+  const [selectedZone, setSelectedZone] = useState<string>('');
+  const [selectedZoneType, setSelectedZoneType] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'2br-inner' | '2br-corner' | '3br'>('2br-inner');
   const [downloadNotice, setDownloadNotice] = useState(false);
 
-  const activeUnit = unitData[activeTab];
+  const activeUnit = unitData[activeTab] || unitData['2br-inner'];
+
+  const handleBedTypeChange = (newBedType: string) => {
+    setSelectedBedType(newBedType);
+    if (newBedType.includes('3')) {
+      setActiveTab('3br');
+    } else if (newBedType.includes('2')) {
+      setActiveTab(selectedZoneType === 'Outer' ? '2br-corner' : '2br-inner');
+    }
+  };
+
+  const handleZoneTypeChange = (newType: string) => {
+    setSelectedZoneType(newType);
+    if (newType === 'Outer') {
+      if (!selectedBedType || selectedBedType.includes('2')) {
+        setActiveTab('2br-corner');
+      }
+    } else if (newType === 'Inner') {
+      if (!selectedBedType || selectedBedType.includes('2')) {
+        setActiveTab('2br-inner');
+      }
+    }
+  };
 
   const handleDownload = () => {
     setDownloadNotice(true);
@@ -99,54 +144,104 @@ export default function OrtigasUnitFloorplanSelector() {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="units">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-[#E8DEC4]">
-        <div>
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 pb-6 border-b border-[#E8DEC4]">
+        <div className="max-w-xl">
           <span className="text-[#CE2029] tracking-widest uppercase font-bold text-xs">
             Architectural Blueprint &amp; Specs
           </span>
-          <h2 className="font-logo text-4xl lg:text-5xl font-extrabold text-[#3E1C15] mt-1">
-            Explore Unit Layouts &amp; Floorplans
+          <h2 className="font-logo text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-[#3E1C15] mt-1 tracking-tight leading-tight">
+            Available Units
           </h2>
-          <p className="text-[#5C3D36] text-sm mt-2 max-w-2xl leading-relaxed">
-            Engineered for maximum livability, space efficiency, and natural cross-ventilation. Every home is handed over fully finished, eliminating messy renovation delays.
+          <p className="text-[#5C3D36] text-sm mt-1.5 leading-normal font-medium">
+            All unit viewings require prior coordination with an authorized representative; please ensure punctuality for the confirmed schedule.
           </p>
         </div>
 
-        {/* Unit Switcher Tabs */}
-        <div className="mt-6 md:mt-0 inline-flex p-1.5 bg-[#FAF3DE] rounded-xl border border-[#EADBBD] shadow-inner">
-          <button
-            type="button"
-            onClick={() => setActiveTab('2br-inner')}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
-              activeTab === '2br-inner'
-                ? 'bg-white text-[#241E15] shadow-sm border border-[#DFBD58]'
-                : 'text-[#6A6254] hover:text-[#241E15]'
-            }`}
-          >
-            2-Bedroom Inner • 30.60 sqm
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('2br-corner')}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
-              activeTab === '2br-corner'
-                ? 'bg-white text-[#241E15] shadow-sm border border-[#DFBD58]'
-                : 'text-[#6A6254] hover:text-[#241E15]'
-            }`}
-          >
-            2-Bedroom Corner • 35.57 sqm
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('3br')}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
-              activeTab === '3br'
-                ? 'bg-white text-[#241E15] shadow-sm border border-[#DFBD58]'
-                : 'text-[#6A6254] hover:text-[#241E15]'
-            }`}
-          >
-            3-Bedroom Exec • 42.00 sqm
-          </button>
+        {/* Filter Controls Bar: Bed Type Selection Box + Zone Dropdown + Zone Type Dropdown */}
+        <div className="flex flex-wrap items-center gap-2.5 lg:justify-end">
+          {/* Bed Type Selection Box */}
+          <div className="inline-flex items-center gap-1.5 p-1 bg-[#FAF3DE]/90 rounded-lg border border-[#EADBBD] shadow-xs">
+            <label
+              htmlFor="bed-type-filter"
+              className="text-[10px] font-mono uppercase font-bold text-[#7A5B52] pl-2 pr-0.5 whitespace-nowrap cursor-pointer"
+            >
+              Bed Type:
+            </label>
+            <div className="relative">
+              <select
+                id="bed-type-filter"
+                value={selectedBedType}
+                onChange={(e) => handleBedTypeChange(e.target.value)}
+                className="appearance-none bg-white text-[#3E1C15] font-semibold text-xs py-1.5 pl-3 pr-7 rounded-md border border-[#DFBD58]/70 shadow-xs focus:outline-none focus:ring-1 focus:ring-[#CE2029] cursor-pointer hover:border-[#DFBD58] transition-colors"
+              >
+                <option value="" className="text-[#7A5B52] font-medium py-1">
+                  Select Type
+                </option>
+                {distinctBedTypes.map((type) => (
+                  <option key={type} value={type} className="text-[#3E1C15] font-medium py-1">
+                    {type}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#7A5B52] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none stroke-[2.5]" />
+            </div>
+          </div>
+
+          {/* Zone Filter Dropdown */}
+          <div className="inline-flex items-center gap-1.5 p-1 bg-[#FAF3DE]/90 rounded-lg border border-[#EADBBD] shadow-xs">
+            <label
+              htmlFor="zone-filter"
+              className="text-[10px] font-mono uppercase font-bold text-[#7A5B52] pl-2 pr-0.5 whitespace-nowrap cursor-pointer"
+            >
+              Zone:
+            </label>
+            <div className="relative">
+              <select
+                id="zone-filter"
+                value={selectedZone}
+                onChange={(e) => setSelectedZone(e.target.value)}
+                className="appearance-none bg-white text-[#3E1C15] font-semibold text-xs py-1.5 pl-3 pr-7 rounded-md border border-[#DFBD58]/70 shadow-xs focus:outline-none focus:ring-1 focus:ring-[#CE2029] cursor-pointer hover:border-[#DFBD58] transition-colors"
+              >
+                <option value="" className="text-[#7A5B52] font-medium py-1">
+                  Select
+                </option>
+                {['Low Zone', 'Mid Zone', 'High Zone'].map((zone) => (
+                  <option key={zone} value={zone} className="text-[#3E1C15] font-medium py-1">
+                    {zone}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#7A5B52] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none stroke-[2.5]" />
+            </div>
+          </div>
+
+          {/* Zone Type Filter Dropdown */}
+          <div className="inline-flex items-center gap-1.5 p-1 bg-[#FAF3DE]/90 rounded-lg border border-[#EADBBD] shadow-xs">
+            <label
+              htmlFor="type-filter"
+              className="text-[10px] font-mono uppercase font-bold text-[#7A5B52] pl-2 pr-0.5 whitespace-nowrap cursor-pointer"
+            >
+              Type:
+            </label>
+            <div className="relative">
+              <select
+                id="type-filter"
+                value={selectedZoneType}
+                onChange={(e) => handleZoneTypeChange(e.target.value)}
+                className="appearance-none bg-white text-[#3E1C15] font-semibold text-xs py-1.5 pl-3 pr-7 rounded-md border border-[#DFBD58]/70 shadow-xs focus:outline-none focus:ring-1 focus:ring-[#CE2029] cursor-pointer hover:border-[#DFBD58] transition-colors"
+              >
+                <option value="" className="text-[#7A5B52] font-medium py-1">
+                  Select
+                </option>
+                {['Inner', 'Outer'].map((type) => (
+                  <option key={type} value={type} className="text-[#3E1C15] font-medium py-1">
+                    {type}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-[#7A5B52] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none stroke-[2.5]" />
+            </div>
+          </div>
         </div>
       </div>
 

@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import {
   MapPin,
   Building2,
-  CheckCircle2,
   ShoppingBag,
   ShieldCheck,
   Calendar,
@@ -36,6 +35,7 @@ import { getProjectApartmentComplexSchema } from '@/lib/schema';
 import OrtigasGoogleMap from '@/components/ortigas/OrtigasGoogleMap';
 import OrtigasInteractivePlans from '@/components/ortigas/OrtigasInteractivePlans';
 import OrtigasUnitFloorplanSelector from '@/components/ortigas/OrtigasUnitFloorplanSelector';
+import OrtigasHeroGallery from '@/components/ortigas/OrtigasHeroGallery';
 import ManilaSlideshow from '@/components/manila/ManilaSlideshow';
 import {
   ortigasNeighborhoodItems,
@@ -64,6 +64,11 @@ export const metadata: Metadata = constructMetadata({
 export default function OrtigasProjectPage() {
   if (!project) notFound();
 
+  const maxDiscountPhp = Math.max(
+    ...(project.unitTypes?.map((u) => Number(u.discountPhp) || 0) || [0]),
+    0
+  );
+
   return (
     <>
       <JsonLd data={getProjectApartmentComplexSchema(project)} />
@@ -85,148 +90,144 @@ export default function OrtigasProjectPage() {
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#CE2029]/10 border border-[#CE2029]/25 text-[#CE2029] text-xs font-bold tracking-wider uppercase">
                 <span className="w-2 h-2 rounded-full bg-[#CE2029] animate-pulse" />
-                13-Hectare Masterplanned Community • Pasig City
+                {project.badge}
               </div>
 
-              <h1 className="font-logo text-4xl sm:text-5xl xl:text-6xl text-[#3E1C15] font-extrabold tracking-tight leading-[1.08]">
-                Spacious Suburban Living by the <span className="text-[#CE2029]">Ortigas CBD Corridor</span>.
+              <h1 className="font-logo text-2xl sm:text-3xl lg:text-[34px] xl:text-4xl text-[#3E1C15] font-extrabold tracking-tight leading-[1.18] sm:leading-[1.15]">
+                {project.headline}
               </h1>
 
-              <p className="text-[#5C3D36] text-base leading-relaxed max-w-xl font-normal">
-                Urban Deca Homes Ortigas redefines eastern Metro Manila living. A sprawling 13-hectare integrated community featuring 22 mid-rise buildings, 4 high-speed elevators per tower, a 1.3-hectare central Lagoon Park, and an on-site Deca Community Mall right along Ortigas Avenue Extension in Pasig City.
+              <p className="text-[#6E4F47] text-sm sm:text-base leading-relaxed max-w-xl font-medium">
+                {project.tagline}
               </p>
 
-              {/* Architectural Spec Strip / Project Stats Bar */}
-              <div className="grid grid-cols-4 gap-3 py-4 border-y border-[#E8DAB7] bg-white/70 backdrop-blur-md rounded-xl px-4 shadow-sm">
-                <div>
-                  <span className="block text-[10px] uppercase tracking-widest text-[#7A5B52] font-semibold">Masterplan</span>
-                  <span className="text-lg font-bold text-[#3E1C15] tracking-tight">13.0 Ha</span>
-                  <span className="block text-[11px] text-[#7A5B52]">Total Land Area</span>
-                </div>
-                <div className="border-l border-[#EADBBD] pl-3">
-                  <span className="block text-[10px] uppercase tracking-widest text-[#7A5B52] font-semibold">Towers</span>
-                  <span className="text-lg font-bold text-[#3E1C15] tracking-tight">22 Buildings</span>
-                  <span className="block text-[11px] text-[#7A5B52]">4 Lifts Per Tower</span>
-                </div>
-                <div className="border-l border-[#EADBBD] pl-3">
-                  <span className="block text-[10px] uppercase tracking-widest text-[#7A5B52] font-semibold">Turnover</span>
-                  <span className="text-lg font-bold text-[#CE2029] tracking-tight">100% Turnkey</span>
-                  <span className="block text-[11px] text-[#7A5B52]">Fully Finished Ready</span>
-                </div>
-                <div className="border-l border-[#EADBBD] pl-3">
-                  <span className="block text-[10px] uppercase tracking-widest text-[#7A5B52] font-semibold">Status</span>
-                  <span className="text-lg font-bold text-[#89B533] tracking-tight">RFO</span>
-                  <span className="block text-[11px] text-[#7A5B52]">Ready for Occupancy</span>
-                </div>
-              </div>
-
-              {/* Quick Pag-IBIG Estimator Box */}
-              <div className="p-4 rounded-xl bg-white/90 border border-[#E8DAB7] shadow-md flex items-center justify-between gap-4">
-                <div className="space-y-0.5">
-                  <span className="text-[11px] uppercase tracking-wider text-[#CE2029] font-bold">
-                    Quick Pag-IBIG Estimator
-                  </span>
-                  <div className="text-lg font-bold text-[#3E1C15] flex items-baseline gap-2">
-                    <span>₱15,800</span>
-                    <span className="text-xs text-[#6E4F47] font-normal">/ mo. starting amortization</span>
+              {/* Pricing, Reservation & Financing Highlights Container (Glassmorphism-Neumorphism UI/UX) */}
+              <div className="rounded-2xl bg-gradient-to-br from-white/95 via-white/85 to-[#FAF5E6]/90 backdrop-blur-xl border border-white/90 shadow-[6px_6px_24px_rgba(74,30,23,0.06),-4px_-4px_16px_rgba(255,255,255,0.95),inset_0_1px_2px_rgba(255,255,255,1)] p-4 sm:p-5 space-y-4">
+                {/* Top Row: Minimum TCP Starts at & Reservation Fee */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                  {/* Left Column: Minimum TCP Starts at */}
+                  <div className="sm:border-r sm:border-[#E8DAB7]/70 sm:shadow-[1px_0_0_rgba(255,255,255,0.9)] sm:pr-4">
+                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FAF0C8] border border-[#DFBD58]/40 text-[#8C5D08] font-bold text-[10px] sm:text-[11px] tracking-wider uppercase font-mono shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_1px_2px_rgba(140,93,8,0.1)]">
+                      Minimum TCP Starts at
+                    </span>
+                    <div className="text-2xl sm:text-[28px] font-extrabold text-[#3E1C15] tracking-tight mt-1 font-logo leading-tight">
+                      <span className="text-sm font-semibold text-[#7A5B52] mr-1">From ~</span>
+                      ₱{project.priceMinPhp.toLocaleString()}
+                    </div>
                   </div>
-                  <p className="text-[11px] text-[#6E4F47]">
-                    Estimated based on 30-year Pag-IBIG Fund loan for 2-Bedroom unit
-                  </p>
+
+                  {/* Right Column: Reservation for only */}
+                  <div className="sm:pl-2">
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#7A5B52] font-bold font-mono block">
+                      Reservation for only
+                    </span>
+                    <div className="text-2xl sm:text-[28px] font-extrabold text-[#CE2029] tracking-tight mt-1 font-logo leading-tight">
+                      ₱{project.reservationFeePhp.toLocaleString()}
+                    </div>
+                  </div>
                 </div>
-                <a
-                  href="#units"
-                  className="shrink-0 px-4 py-2.5 rounded-lg bg-[#FAF0C8] hover:bg-[#F5E3A3] text-[#8C5D08] font-bold text-xs tracking-wider uppercase border border-[#DFBD58] transition-all shadow-sm"
-                >
-                  Compare Units →
-                </a>
+
+                {/* Bottom Row: Max Discount & Financing Accepted */}
+                <div className="pt-3.5 border-t border-[#E8DAB7]/70 shadow-[0_1px_0_rgba(255,255,255,0.9)] grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                  {/* Left Column: Discount as high as */}
+                  <div className="border-l-3 border-[#CE2029] pl-3 sm:border-r sm:border-[#E8DAB7]/70 sm:shadow-[1px_0_0_rgba(255,255,255,0.9)] sm:pr-4">
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#7A5B52] font-bold font-mono block">
+                      Discount as high as
+                    </span>
+                    <div className="text-xl sm:text-2xl font-extrabold text-[#3E1C15] tracking-tight mt-0.5 font-logo">
+                      ₱{maxDiscountPhp.toLocaleString()}
+                    </div>
+                  </div>
+
+                  {/* Right Column: Financing Accepted with Partner Logos */}
+                  <div className="sm:pl-2">
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#7A5B52] font-bold font-mono block mb-2">
+                      Financing Accepted
+                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <div className="w-[34px] h-[34px] rounded-xl bg-white p-1 flex items-center justify-center border border-[#EADBBD]/60 shadow-[2px_2px_6px_rgba(74,30,23,0.06),-2px_-2px_6px_rgba(255,255,255,0.95)] hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
+                        <img
+                          src="/images/partners/pag-ibig.svg"
+                          alt="Pag-IBIG Fund"
+                          title="Pag-IBIG Fund"
+                          className="w-full h-full object-contain"
+                          width={28}
+                          height={28}
+                        />
+                      </div>
+                      <div className="w-[34px] h-[34px] rounded-xl bg-white p-1 flex items-center justify-center border border-[#EADBBD]/60 shadow-[2px_2px_6px_rgba(74,30,23,0.06),-2px_-2px_6px_rgba(255,255,255,0.95)] hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
+                        <img
+                          src="/images/partners/security-bank.svg"
+                          alt="Security Bank"
+                          title="Security Bank"
+                          className="w-full h-full object-contain"
+                          width={28}
+                          height={28}
+                        />
+                      </div>
+                      <div className="w-[34px] h-[34px] rounded-xl bg-white p-1 flex items-center justify-center border border-[#EADBBD]/60 shadow-[2px_2px_6px_rgba(74,30,23,0.06),-2px_-2px_6px_rgba(255,255,255,0.95)] hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
+                        <img
+                          src="/images/partners/bpi.svg"
+                          alt="BPI"
+                          title="BPI"
+                          className="w-full h-full object-contain"
+                          width={28}
+                          height={28}
+                        />
+                      </div>
+                      <div className="w-[34px] h-[34px] rounded-xl bg-white p-1 flex items-center justify-center border border-[#EADBBD]/60 shadow-[2px_2px_6px_rgba(74,30,23,0.06),-2px_-2px_6px_rgba(255,255,255,0.95)] hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer">
+                        <img
+                          src="/images/partners/bdo.svg"
+                          alt="BDO"
+                          title="BDO"
+                          className="w-full h-full object-contain"
+                          width={28}
+                          height={28}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Trust badges row */}
-              <div className="flex flex-wrap items-center gap-6 pt-1 text-xs text-[#5C3D36]">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#CE2029]" />
-                  <span>Pag-IBIG / Bank / In-House</span>
+              {/* Project Specifications Checklist */}
+              <div className="bg-white/80 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-[#E8DAB7]/80 shadow-[0_4px_20px_-4px_rgba(74,30,23,0.06)] space-y-3">
+                <div className="pb-2 border-b border-[#E8DAB7]/60">
+                  <span className="text-[11px] uppercase tracking-wider text-[#7A5B52] font-bold">
+                    Project Specifications
+                  </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#CE2029]" />
-                  <span>Perpetual Ownership</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <TreePine className="w-4 h-4 text-[#89B533]" />
-                  <span>1.3-Ha Lagoon Park</span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 pt-0.5">
+                  {project.specifications.map((spec, index) => (
+                    <div
+                      key={spec.label}
+                      className={`flex items-start gap-2.5 text-xs ${
+                        index === project.specifications.length - 1 && project.specifications.length % 2 !== 0
+                          ? 'sm:col-span-2'
+                          : ''
+                      }`}
+                    >
+                      <div className="w-5 h-5 rounded-full bg-[#CE2029]/10 border border-[#CE2029]/25 flex items-center justify-center flex-shrink-0 mt-0.5 text-[#CE2029]">
+                        <Check className="w-3 h-3 stroke-[3]" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[11px] uppercase tracking-wider text-[#7A5B52] font-semibold block leading-tight">
+                          {spec.label}
+                        </span>
+                        <span className="text-xs sm:text-[13px] font-bold text-[#3E1C15] leading-snug">
+                          {spec.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
             {/* Right Column: Immersive Editorial Architectural Photo Gallery Grid (6 cols) */}
             <div className="lg:col-span-6">
-              <div className="grid grid-cols-12 gap-3.5 relative">
-                {/* Large Main Building Exterior Feature */}
-                <div className="col-span-12 relative rounded-2xl overflow-hidden group shadow-2xl border border-white/10 aspect-[16/9] bg-charcoal-900">
-                  <div
-                    className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url('/images/ortigas/hero.jpg')` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-
-                  {/* Floating Badges */}
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md text-white text-[11px] font-medium border border-white/20">
-                      Actual Masterplan Facade
-                    </span>
-                    <span className="px-2.5 py-1 rounded bg-ochre-500/90 text-charcoal-900 text-[11px] font-bold">
-                      13-Hectare Gated Perimeter
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                    <div>
-                      <p className="text-white text-sm font-semibold">22 Mid-Rise Residences in Pasig</p>
-                      <p className="text-gray-300 text-xs">Features 1.3-ha lagoon park, wide tree-lined walkways, and 4 lifts per tower</p>
-                    </div>
-                    <span className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-mono">
-                      Phase 1 &amp; 2 RFO
-                    </span>
-                  </div>
-                </div>
-
-                {/* Thumbnail 1: Living Area */}
-                <div className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900">
-                  <div
-                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                    style={{ backgroundImage: `url('/images/ortigas/model-unit-living.jpg')` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
-                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
-                    Tiled Living &amp; Dining
-                  </span>
-                </div>
-
-                {/* Thumbnail 2: Kitchen Area */}
-                <div className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900">
-                  <div
-                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                    style={{ backgroundImage: `url('/images/ortigas/model-unit-kitchen.jpg')` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
-                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
-                    Modular Kitchen Area
-                  </span>
-                </div>
-
-                {/* Thumbnail 3: Turnkey Bathroom */}
-                <div className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900">
-                  <div
-                    className="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                    style={{ backgroundImage: `url('/images/ortigas/turnover-bathroom.jpg')` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
-                  <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
-                    Finished T&amp;B Fixtures
-                  </span>
-                </div>
-              </div>
+              <OrtigasHeroGallery project={project} />
             </div>
           </div>
         </div>
@@ -235,7 +236,7 @@ export default function OrtigasProjectPage() {
       {/* ============================================================ */}
       {/* 2. INTERACTIVE UNIT LAYOUT & FLOORPLAN SELECTOR             */}
       {/* ============================================================ */}
-      <OrtigasUnitFloorplanSelector />
+      <OrtigasUnitFloorplanSelector project={project} />
 
       {/* ============================================================ */}
       {/* 3. CURATED AMENITIES & INTEGRATED LIFESTYLE GRID             */}

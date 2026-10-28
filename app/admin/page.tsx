@@ -37,7 +37,7 @@ import {
   Filter,
   RotateCcw,
 } from 'lucide-react';
-import type { Project, UnitType, Amenity } from '@/data/projects';
+import type { Project, UnitType, Amenity, Landmark } from '@/data/projects';
 
 export default function AdminPage() {
   // Authentication State
@@ -61,6 +61,8 @@ export default function AdminPage() {
   const [gitSyncConfigured, setGitSyncConfigured] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingGalleryIndex, setUploadingGalleryIndex] = useState<number | null>(null);
+  const [uploadingSitePlan, setUploadingSitePlan] = useState(false);
+  const [uploadingTypicalFloorPlan, setUploadingTypicalFloorPlan] = useState(false);
   const [collapsedSubsections, setCollapsedSubsections] = useState<Record<string, boolean>>({});
 
   // Unit Configurations Filter & Sort State
@@ -95,7 +97,7 @@ export default function AdminPage() {
     if (!activeProject) return;
     const nextState: Record<string, boolean> = {};
     activeProject.unitTypes.forEach((u, i) => {
-      const key = u.id || `unit-${i}`;
+      const key = u.id !== undefined && u.id !== '' ? String(u.id) : `unit-${i}`;
       nextState[`${key}-pricing`] = open;
       nextState[`${key}-layout`] = open;
       nextState[`${key}-photos`] = open;
@@ -105,6 +107,8 @@ export default function AdminPage() {
 
   const fileInputHeroRef = useRef<HTMLInputElement>(null);
   const fileInputGalleryRef = useRef<HTMLInputElement>(null);
+  const fileInputSitePlanRef = useRef<HTMLInputElement>(null);
+  const fileInputTypicalFloorPlanRef = useRef<HTMLInputElement>(null);
   const fileInputImportRef = useRef<HTMLInputElement>(null);
 
   // Check auth and load projects on mount
@@ -200,7 +204,7 @@ export default function AdminPage() {
     updateActiveProject((p) => ({
       ...p,
       unitTypes: p.unitTypes.map((u, i) => {
-        const key = u.id || `unit-${i}`;
+        const key = u.id !== undefined && u.id !== '' ? String(u.id) : `unit-${i}`;
         return key === unitKey ? updater(u) : u;
       }),
     }));
@@ -209,13 +213,20 @@ export default function AdminPage() {
   const deleteUnit = (unitKey: string) => {
     updateActiveProject((p) => ({
       ...p,
-      unitTypes: p.unitTypes.filter((u, i) => (u.id || `unit-${i}`) !== unitKey),
+      unitTypes: p.unitTypes.filter((u, i) => (u.id !== undefined && u.id !== '' ? String(u.id) : `unit-${i}`) !== unitKey),
     }));
   };
 
   const handleAddNewUnit = () => {
     if (!activeProject) return;
-    const newId = `${activeProject.slug}-unit-${Date.now()}`;
+
+    // Auto increment integer ID across all existing units
+    const allUnitIds = projects
+      .flatMap((p) => p.unitTypes || [])
+      .map((u) => (typeof u.id === 'number' ? u.id : parseInt(String(u.id), 10)))
+      .filter((n) => !isNaN(n) && Number.isInteger(n));
+    const newId = allUnitIds.length > 0 ? Math.max(...allUnitIds) + 1 : 1;
+
     const basePrice = 2900000;
     const resFee = activeProject.reservationFeePhp || 10000;
     const discount = 0;
@@ -321,6 +332,18 @@ export default function AdminPage() {
     return Array.from(set).sort();
   }, [activeProject?.unitTypes]);
 
+  const zoneOptions = useMemo(() => {
+    const defaults = ['Low Zone', 'Mid Zone', 'High Zone'];
+    const set = new Set([...defaults, ...uniqueZones]);
+    return Array.from(set);
+  }, [uniqueZones]);
+
+  const zoneTypeOptions = useMemo(() => {
+    const defaults = ['Inner', 'Outer', 'Semi-Corner', 'Corner'];
+    const set = new Set([...defaults, ...uniqueZoneTypes]);
+    return Array.from(set);
+  }, [uniqueZoneTypes]);
+
   // Filtered & Sorted Units
   const filteredAndSortedUnits = useMemo(() => {
     if (!activeProject?.unitTypes) return [];
@@ -355,13 +378,19 @@ export default function AdminPage() {
 
     // Sorting
     if (unitSort === 'id-asc') {
-      list.sort((a, b) =>
-        (a.id || '').localeCompare(b.id || '', undefined, { numeric: true, sensitivity: 'base' })
-      );
+      list.sort((a, b) => {
+        const na = Number(a.id);
+        const nb = Number(b.id);
+        if (!isNaN(na) && !isNaN(nb)) return na - nb;
+        return String(a.id || '').localeCompare(String(b.id || ''), undefined, { numeric: true, sensitivity: 'base' });
+      });
     } else if (unitSort === 'id-desc') {
-      list.sort((a, b) =>
-        (b.id || '').localeCompare(a.id || '', undefined, { numeric: true, sensitivity: 'base' })
-      );
+      list.sort((a, b) => {
+        const na = Number(a.id);
+        const nb = Number(b.id);
+        if (!isNaN(na) && !isNaN(nb)) return nb - na;
+        return String(b.id || '').localeCompare(String(a.id || ''), undefined, { numeric: true, sensitivity: 'base' });
+      });
     } else if (unitSort === 'price-asc') {
       list.sort((a, b) => {
         const pa = Number(a.pricePhp ?? a.priceMinPhp ?? 0);
@@ -562,6 +591,34 @@ export default function AdminPage() {
     e.target.value = '';
   }
 
+  // Upload Site Plan
+  async function onSitePlanFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingSitePlan(true);
+    const url = await handleImageUpload(file);
+    if (url) {
+      updateActiveProject((prev) => ({ ...prev, sitePlan: url }));
+    }
+    setUploadingSitePlan(false);
+    e.target.value = '';
+  }
+
+  // Upload Typical Floor Plan
+  async function onTypicalFloorPlanFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingTypicalFloorPlan(true);
+    const url = await handleImageUpload(file);
+    if (url) {
+      updateActiveProject((prev) => ({ ...prev, typicalFloorPlan: url }));
+    }
+    setUploadingTypicalFloorPlan(false);
+    e.target.value = '';
+  }
+
   // -------------------------------------------------------------
   // RENDER: Loading Screen
   // -------------------------------------------------------------
@@ -671,6 +728,20 @@ export default function AdminPage() {
         type="file"
         ref={fileInputGalleryRef}
         onChange={onGalleryFileChange}
+        accept="image/*"
+        className="hidden"
+      />
+      <input
+        type="file"
+        ref={fileInputSitePlanRef}
+        onChange={onSitePlanFileChange}
+        accept="image/*"
+        className="hidden"
+      />
+      <input
+        type="file"
+        ref={fileInputTypicalFloorPlanRef}
+        onChange={onTypicalFloorPlanFileChange}
         accept="image/*"
         className="hidden"
       />
@@ -961,6 +1032,199 @@ export default function AdminPage() {
                         className="w-full sm:w-1/3 bg-[#14171A] border border-white/15 rounded-xl px-3 py-2 text-xs text-white"
                       />
                     </div>
+                  </div>
+
+                  {/* Master Architectural Plans */}
+                  <div className="p-5 bg-white/[0.02] border border-white/10 rounded-2xl space-y-4">
+                    <div>
+                      <span className="text-xs uppercase tracking-wider text-ochre-300 font-bold">
+                        Master Architectural Plans
+                      </span>
+                      <p className="text-[11px] text-gray-400 mt-0.5">
+                        Site development plan and typical building floor plan image assets.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Site Plan */}
+                      <div className="space-y-3 p-4 bg-[#14171A]/60 border border-white/10 rounded-xl">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
+                            Site Development Plan
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => fileInputSitePlanRef.current?.click()}
+                            disabled={uploadingSitePlan}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-200 text-xs font-medium border border-ochre-500/30 transition-colors"
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>{uploadingSitePlan ? 'Uploading...' : 'Upload Plan'}</span>
+                          </button>
+                        </div>
+
+                        {activeProject.sitePlan && (
+                          <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden border border-white/15 bg-black/40">
+                            <img
+                              src={activeProject.sitePlan}
+                              alt="Site Development Plan"
+                              className="w-full h-full object-contain p-2"
+                            />
+                          </div>
+                        )}
+
+                        <div>
+                          <label className="block text-[11px] text-gray-400 mb-1">Image URL or Local Path</label>
+                          <input
+                            type="text"
+                            value={activeProject.sitePlan || ''}
+                            onChange={(e) => updateActiveProject((p) => ({ ...p, sitePlan: e.target.value }))}
+                            placeholder="/images/ortigas/site-development-plan.png"
+                            className="w-full bg-[#14171A] border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-ochre-500"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Typical Floor Plan */}
+                      <div className="space-y-3 p-4 bg-[#14171A]/60 border border-white/10 rounded-xl">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
+                            Typical Floor Plan
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => fileInputTypicalFloorPlanRef.current?.click()}
+                            disabled={uploadingTypicalFloorPlan}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-200 text-xs font-medium border border-ochre-500/30 transition-colors"
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>{uploadingTypicalFloorPlan ? 'Uploading...' : 'Upload Plan'}</span>
+                          </button>
+                        </div>
+
+                        {activeProject.typicalFloorPlan && (
+                          <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden border border-white/15 bg-black/40">
+                            <img
+                              src={activeProject.typicalFloorPlan}
+                              alt="Typical Floor Plan"
+                              className="w-full h-full object-contain p-2"
+                            />
+                          </div>
+                        )}
+
+                        <div>
+                          <label className="block text-[11px] text-gray-400 mb-1">Image URL or Local Path</label>
+                          <input
+                            type="text"
+                            value={activeProject.typicalFloorPlan || ''}
+                            onChange={(e) => updateActiveProject((p) => ({ ...p, typicalFloorPlan: e.target.value }))}
+                            placeholder="/images/ortigas/typical-floor-plan.png"
+                            className="w-full bg-[#14171A] border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-ochre-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Project Specifications Manager */}
+                  <div className="p-5 bg-white/[0.02] border border-white/10 rounded-2xl space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-xs uppercase tracking-wider text-ochre-300 font-bold">
+                          Project Specifications ({activeProject.specifications?.length || 0})
+                        </span>
+                        <p className="text-[11px] text-gray-400 mt-0.5">
+                          Architectural specs and construction details displayed in the hero section checklist.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateActiveProject((p) => ({
+                            ...p,
+                            specifications: [
+                              ...(p.specifications || []),
+                              { label: 'New Specification', value: 'Specification Detail' },
+                            ],
+                          }))
+                        }
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ochre-500/20 hover:bg-ochre-500/30 text-ochre-200 text-xs font-semibold border border-ochre-500/30 transition-colors"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Add Specification</span>
+                      </button>
+                    </div>
+
+                    {(!activeProject.specifications || activeProject.specifications.length === 0) ? (
+                      <div className="text-center py-6 border border-dashed border-white/10 rounded-xl text-xs text-gray-500">
+                        No specifications configured yet. Click &quot;Add Specification&quot; above to create one.
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5">
+                        {activeProject.specifications.map((spec, idx) => (
+                          <div
+                            key={idx}
+                            className="p-3 bg-white/[0.02] border border-white/10 rounded-xl grid grid-cols-1 sm:grid-cols-12 gap-3 items-center"
+                          >
+                            <div className="sm:col-span-4">
+                              <label className="block text-[10px] text-gray-400 uppercase font-mono mb-1">
+                                Label / Feature
+                              </label>
+                              <input
+                                type="text"
+                                value={spec.label}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  updateActiveProject((p) => {
+                                    const list = [...(p.specifications || [])];
+                                    list[idx] = { ...list[idx], label: val };
+                                    return { ...p, specifications: list };
+                                  });
+                                }}
+                                placeholder="e.g. Structural System, Floor Height..."
+                                className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-ochre-500"
+                              />
+                            </div>
+
+                            <div className="sm:col-span-7">
+                              <label className="block text-[10px] text-gray-400 uppercase font-mono mb-1">
+                                Specification Detail / Value
+                              </label>
+                              <input
+                                type="text"
+                                value={spec.value}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  updateActiveProject((p) => {
+                                    const list = [...(p.specifications || [])];
+                                    list[idx] = { ...list[idx], value: val };
+                                    return { ...p, specifications: list };
+                                  });
+                                }}
+                                placeholder="e.g. Cast-in-place Reinforced Concrete, 2.7m..."
+                                className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-ochre-500"
+                              />
+                            </div>
+
+                            <div className="sm:col-span-1 flex justify-end self-end sm:self-center pt-2 sm:pt-4">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  updateActiveProject((p) => ({
+                                    ...p,
+                                    specifications: (p.specifications || []).filter((_, i) => i !== idx),
+                                  }));
+                                }}
+                                className="p-1.5 text-red-400 hover:text-red-300 transition-colors"
+                                title="Delete specification"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -1269,7 +1533,17 @@ export default function AdminPage() {
                               ...p.location,
                               landmarks: [
                                 ...p.location.landmarks,
-                                { name: 'New Landmark Hub', distance: '10 mins', type: 'Mall' },
+                                {
+                                  name: 'New Landmark Hub',
+                                  distance: '10 mins',
+                                  type: 'Mall',
+                                  lat: p.location.coordinates.lat || 14.5869,
+                                  lng: p.location.coordinates.lng || 121.0968,
+                                  coordinates: {
+                                    lat: p.location.coordinates.lat || 14.5869,
+                                    lng: p.location.coordinates.lng || 121.0968,
+                                  },
+                                },
                               ],
                             },
                           }))
@@ -1281,86 +1555,172 @@ export default function AdminPage() {
                       </button>
                     </div>
 
-                    <div className="space-y-2.5">
-                      {activeProject.location.landmarks.map((lm, idx) => (
-                        <div
-                          key={idx}
-                          className="p-3 bg-white/[0.02] border border-white/10 rounded-xl grid grid-cols-1 sm:grid-cols-12 gap-3 items-center"
-                        >
-                          <div className="sm:col-span-5">
-                            <input
-                              type="text"
-                              value={lm.name}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                updateActiveProject((p) => {
-                                  const list = [...p.location.landmarks];
-                                  list[idx] = { ...list[idx], name: val };
-                                  return { ...p, location: { ...p.location, landmarks: list } };
-                                });
-                              }}
-                              placeholder="Landmark name..."
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white"
-                            />
-                          </div>
+                    <div className="space-y-3">
+                      {activeProject.location.landmarks.map((lm, idx) => {
+                        const lmLat = lm.lat ?? lm.coordinates?.lat ?? 0;
+                        const lmLng = lm.lng ?? lm.coordinates?.lng ?? 0;
+                        const hasCoords = lmLat !== 0 && lmLng !== 0;
 
-                          <div className="sm:col-span-3">
-                            <input
-                              type="text"
-                              value={lm.distance}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                updateActiveProject((p) => {
-                                  const list = [...p.location.landmarks];
-                                  list[idx] = { ...list[idx], distance: val };
-                                  return { ...p, location: { ...p.location, landmarks: list } };
-                                });
-                              }}
-                              placeholder="e.g. 5 mins (1.2 km)"
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white"
-                            />
-                          </div>
+                        return (
+                          <div
+                            key={idx}
+                            className="p-3.5 bg-white/[0.02] border border-white/10 rounded-xl space-y-3"
+                          >
+                            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                              <div className="sm:col-span-5">
+                                <label className="block text-[10px] text-gray-400 uppercase font-mono mb-1">
+                                  Landmark Name
+                                </label>
+                                <input
+                                  type="text"
+                                  value={lm.name}
+                                  onChange={(e) => {
+                                    const val = e.target.value;
+                                    updateActiveProject((p) => {
+                                      const list = [...p.location.landmarks];
+                                      list[idx] = { ...list[idx], name: val };
+                                      return { ...p, location: { ...p.location, landmarks: list } };
+                                    });
+                                  }}
+                                  placeholder="Landmark name..."
+                                  className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-ochre-500"
+                                />
+                              </div>
 
-                          <div className="sm:col-span-3">
-                            <select
-                              value={lm.type}
-                              onChange={(e) => {
-                                const val = e.target.value as any;
-                                updateActiveProject((p) => {
-                                  const list = [...p.location.landmarks];
-                                  list[idx] = { ...list[idx], type: val };
-                                  return { ...p, location: { ...p.location, landmarks: list } };
-                                });
-                              }}
-                              className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white"
-                            >
-                              <option value="Transit">Transit</option>
-                              <option value="Mall">Mall</option>
-                              <option value="CBD">CBD</option>
-                              <option value="School">School</option>
-                              <option value="Hospital">Hospital</option>
-                            </select>
-                          </div>
+                              <div className="sm:col-span-3">
+                                <label className="block text-[10px] text-gray-400 uppercase font-mono mb-1">
+                                  Distance / Time
+                                </label>
+                                <input
+                                  type="text"
+                                  value={lm.distance}
+                                  onChange={(e) => {
+                                    const val = e.target.value;
+                                    updateActiveProject((p) => {
+                                      const list = [...p.location.landmarks];
+                                      list[idx] = { ...list[idx], distance: val };
+                                      return { ...p, location: { ...p.location, landmarks: list } };
+                                    });
+                                  }}
+                                  placeholder="e.g. 5 mins (1.2 km)"
+                                  className="w-full bg-[#14171A] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-ochre-500"
+                                />
+                              </div>
 
-                          <div className="sm:col-span-1 flex justify-end">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                updateActiveProject((p) => ({
-                                  ...p,
-                                  location: {
-                                    ...p.location,
-                                    landmarks: p.location.landmarks.filter((_, i) => i !== idx),
-                                  },
-                                }));
-                              }}
-                              className="p-1.5 text-red-400 hover:text-red-300"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
+                              <div className="sm:col-span-3">
+                                <label className="block text-[10px] text-gray-400 uppercase font-mono mb-1">
+                                  Category Type
+                                </label>
+                                <select
+                                  value={lm.type}
+                                  onChange={(e) => {
+                                    const val = e.target.value as any;
+                                    updateActiveProject((p) => {
+                                      const list = [...p.location.landmarks];
+                                      list[idx] = { ...list[idx], type: val };
+                                      return { ...p, location: { ...p.location, landmarks: list } };
+                                    });
+                                  }}
+                                  className="w-full bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-ochre-500"
+                                >
+                                  <option value="Transit">Transit</option>
+                                  <option value="Mall">Mall</option>
+                                  <option value="CBD">CBD</option>
+                                  <option value="School">School</option>
+                                  <option value="Hospital">Hospital</option>
+                                </select>
+                              </div>
+
+                              <div className="sm:col-span-1 flex justify-end self-end sm:self-center pt-2 sm:pt-4">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    updateActiveProject((p) => ({
+                                      ...p,
+                                      location: {
+                                        ...p.location,
+                                        landmarks: p.location.landmarks.filter((_, i) => i !== idx),
+                                      },
+                                    }));
+                                  }}
+                                  className="p-1.5 text-red-400 hover:text-red-300 transition-colors"
+                                  title="Delete landmark"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Landmark Coordinates Sub-row */}
+                            <div className="pt-2 border-t border-white/5 flex flex-wrap items-center gap-4 text-xs">
+                              <span className="text-[10px] uppercase font-mono text-gray-400 flex items-center gap-1">
+                                <MapPin className="w-3 h-3 text-ochre-400" />
+                                Google Maps Coordinates:
+                              </span>
+
+                              <div className="flex items-center gap-2">
+                                <label className="text-[11px] text-gray-400 font-mono">Lat:</label>
+                                <input
+                                  type="number"
+                                  step="0.000001"
+                                  value={lmLat}
+                                  onChange={(e) => {
+                                    const newLat = parseFloat(e.target.value) || 0;
+                                    updateActiveProject((p) => {
+                                      const list = [...p.location.landmarks];
+                                      const currentLng = list[idx].lng ?? list[idx].coordinates?.lng ?? 0;
+                                      list[idx] = {
+                                        ...list[idx],
+                                        lat: newLat,
+                                        coordinates: { lat: newLat, lng: currentLng },
+                                      };
+                                      return { ...p, location: { ...p.location, landmarks: list } };
+                                    });
+                                  }}
+                                  placeholder="14.586900"
+                                  className="w-32 bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1 text-xs text-white font-mono focus:outline-none focus:border-ochre-500"
+                                />
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <label className="text-[11px] text-gray-400 font-mono">Lng:</label>
+                                <input
+                                  type="number"
+                                  step="0.000001"
+                                  value={lmLng}
+                                  onChange={(e) => {
+                                    const newLng = parseFloat(e.target.value) || 0;
+                                    updateActiveProject((p) => {
+                                      const list = [...p.location.landmarks];
+                                      const currentLat = list[idx].lat ?? list[idx].coordinates?.lat ?? 0;
+                                      list[idx] = {
+                                        ...list[idx],
+                                        lng: newLng,
+                                        coordinates: { lat: currentLat, lng: newLng },
+                                      };
+                                      return { ...p, location: { ...p.location, landmarks: list } };
+                                    });
+                                  }}
+                                  placeholder="121.096800"
+                                  className="w-32 bg-[#14171A] border border-white/15 rounded-lg px-2.5 py-1 text-xs text-white font-mono focus:outline-none focus:border-ochre-500"
+                                />
+                              </div>
+
+                              {hasCoords && (
+                                <a
+                                  href={`https://www.google.com/maps?q=${lmLat},${lmLng}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-[11px] text-ochre-300 hover:text-ochre-200 hover:underline transition-colors ml-auto"
+                                >
+                                  <span>View on Google Maps</span>
+                                  <ExternalLink className="w-3 h-3" />
+                                </a>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -1505,7 +1865,7 @@ export default function AdminPage() {
                           className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
                         >
                           <option value="">All Zones</option>
-                          {uniqueZones.map((z) => (
+                          {zoneOptions.map((z) => (
                             <option key={z} value={z}>
                               {z}
                             </option>
@@ -1525,7 +1885,7 @@ export default function AdminPage() {
                           className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-xs text-white"
                         >
                           <option value="">All Zone Types</option>
-                          {uniqueZoneTypes.map((zt) => (
+                          {zoneTypeOptions.map((zt) => (
                             <option key={zt} value={zt}>
                               {zt}
                             </option>
@@ -1553,7 +1913,7 @@ export default function AdminPage() {
                   ) : (
                     <div className="space-y-4">
                       {filteredAndSortedUnits.map((unit, idx) => {
-                        const unitKey = unit.id || `unit-${idx}`;
+                        const unitKey = unit.id !== undefined && unit.id !== '' ? String(unit.id) : `unit-${idx}`;
                         const isPricingOpen = isSubsectionOpen(unitKey, 'pricing');
                         const isLayoutOpen = isSubsectionOpen(unitKey, 'layout');
                         const isPhotosOpen = isSubsectionOpen(unitKey, 'photos');
@@ -1576,12 +1936,20 @@ export default function AdminPage() {
                             key={unit.id || idx}
                             className="p-5 bg-white/[0.02] border border-white/10 rounded-2xl space-y-4 hover:border-white/20 transition-all"
                           >
-                            {/* Unit Top Bar with Index Badge, Unit Name input, Unit ID input, Status and Delete */}
+                            {/* Unit Top Bar with Index Badge, ID Pill, Unit Name input, Status and Delete */}
                             <div className="flex flex-wrap items-center justify-between border-b border-white/10 pb-3 gap-3">
                               <div className="flex items-center gap-3 flex-1 min-w-[280px]">
-                                <span className="w-7 h-7 rounded-lg bg-ochre-500/20 text-ochre-300 flex items-center justify-center text-xs font-bold shrink-0">
-                                  #{idx + 1}
-                                </span>
+                                <div className="flex items-center gap-1.5 shrink-0">
+                                  <span className="w-7 h-7 rounded-lg bg-ochre-500/20 text-ochre-300 flex items-center justify-center text-xs font-bold">
+                                    #{idx + 1}
+                                  </span>
+                                  <span
+                                    className="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-gray-400"
+                                    title="Auto-increment Unit ID"
+                                  >
+                                    ID: {unit.id}
+                                  </span>
+                                </div>
                                 <div className="flex-1">
                                   <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">
                                     Unit Name <span className="text-ochre-400 font-semibold">(Editable)</span>
@@ -1595,21 +1963,6 @@ export default function AdminPage() {
                                     }}
                                     placeholder="e.g. 2-Bedroom Regular (Unit A)"
                                     className="w-full bg-[#14171A] border border-white/20 hover:border-white/40 focus:border-ochre-400 rounded-lg px-2.5 py-1 text-sm font-bold text-white focus:outline-none transition-colors"
-                                  />
-                                </div>
-                                <div className="w-40 sm:w-48">
-                                  <label className="block text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">
-                                    Unit ID <span className="text-gray-500 font-mono">(Unique)</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    value={unit.id || ''}
-                                    onChange={(e) => {
-                                      const val = e.target.value;
-                                      updateUnit(unitKey, (u) => ({ ...u, id: val }));
-                                    }}
-                                    placeholder="e.g. manila-2br-a"
-                                    className="w-full bg-[#14171A] border border-white/20 hover:border-white/40 focus:border-ochre-400 rounded-lg px-2.5 py-1 text-xs font-mono text-ochre-300/90 focus:outline-none transition-colors"
                                   />
                                 </div>
                               </div>
@@ -1661,16 +2014,22 @@ export default function AdminPage() {
                                       <label className="block text-[11px] text-gray-300 font-medium mb-1">
                                         Zone
                                       </label>
-                                      <input
-                                        type="text"
+                                      <select
                                         value={unit.zone || ''}
                                         onChange={(e) => {
                                           const val = e.target.value;
                                           updateUnit(unitKey, (u) => ({ ...u, zone: val }));
                                         }}
-                                        placeholder="e.g. Zone 1 / North Wing"
-                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
-                                      />
+                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white text-xs"
+                                      >
+                                        <option value="">Select Zone...</option>
+                                        <option value="Low Zone">Low Zone</option>
+                                        <option value="Mid Zone">Mid Zone</option>
+                                        <option value="High Zone">High Zone</option>
+                                        {unit.zone && !['Low Zone', 'Mid Zone', 'High Zone'].includes(unit.zone) && (
+                                          <option value={unit.zone}>{unit.zone}</option>
+                                        )}
+                                      </select>
                                     </div>
                                     {/* Zone Label field - below the "zone" field */}
                                     <div>
@@ -1711,16 +2070,23 @@ export default function AdminPage() {
                                       <label className="block text-[11px] text-gray-300 font-medium mb-1">
                                         Zone Type
                                       </label>
-                                      <input
-                                        type="text"
+                                      <select
                                         value={unit.zoneType || ''}
                                         onChange={(e) => {
                                           const val = e.target.value;
                                           updateUnit(unitKey, (u) => ({ ...u, zoneType: val }));
                                         }}
-                                        placeholder="e.g. Residential / High-Rise"
-                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white"
-                                      />
+                                        className="w-full bg-[#14171A] border border-white/15 focus:border-ochre-400 rounded-lg px-2.5 py-1.5 text-white text-xs"
+                                      >
+                                        <option value="">Select Zone Type...</option>
+                                        <option value="Inner">Inner</option>
+                                        <option value="Outer">Outer</option>
+                                        <option value="Semi-Corner">Semi-Corner</option>
+                                        <option value="Corner">Corner</option>
+                                        {unit.zoneType && !['Inner', 'Outer', 'Semi-Corner', 'Corner'].includes(unit.zoneType) && (
+                                          <option value={unit.zoneType}>{unit.zoneType}</option>
+                                        )}
+                                      </select>
                                     </div>
                                   </div>
                                 </div>

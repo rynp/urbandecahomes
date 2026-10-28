@@ -1,5 +1,5 @@
 export interface UnitType {
-  id: string;
+  id: number | string;
   name: string;
   category: 'Studio' | '1-Bedroom' | '2-Bedroom' | '3-Bedroom';
   areaSqm: number;
@@ -37,13 +37,25 @@ export interface Amenity {
   iconName: string;
 }
 
+export interface Landmark {
+  name: string;
+  distance: string;
+  type: 'Transit' | 'Mall' | 'School' | 'Hospital' | 'CBD';
+  lat?: number;
+  lng?: number;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+}
+
 export interface ProjectLocation {
   address: string;
   barangay: string;
   city: string;
   province: string;
   region: string;
-  landmarks: { name: string; distance: string; type: 'Transit' | 'Mall' | 'School' | 'Hospital' | 'CBD' }[];
+  landmarks: Landmark[];
   coordinates: {
     lat: number;
     lng: number;
@@ -65,6 +77,8 @@ export interface Project {
   reservationFeePhp: number;
   priceMinPhp: number;
   priceMaxPhp: number;
+  sitePlan?: string;
+  typicalFloorPlan?: string;
   location: ProjectLocation;
   heroImage: string;
   galleryImages: { url: string; alt: string; caption: string }[];
