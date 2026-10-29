@@ -5,6 +5,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingQuickContact from '@/components/FloatingQuickContact';
+import MobileFloatingNav from '@/components/MobileFloatingNav';
 import JsonLd from '@/components/JsonLd';
 import { getOrganizationSchema, getWebSiteSchema } from '@/lib/schema';
 import { constructMetadata } from '@/lib/seo';
@@ -53,6 +54,7 @@ export default function RootLayout({
         <main className="flex-grow">{children}</main>
         <Footer />
         <FloatingQuickContact />
+        <MobileFloatingNav />
       </body>
     </html>
   );

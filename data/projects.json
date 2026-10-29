@@ -452,10 +452,6 @@
       {
         "label": "Turnover Condition",
         "value": "Complete Finished Turnkey"
-      },
-      {
-        "label": "Financing Accepted",
-        "value": "Pag-IBIG, Bank, and In-House Loan"
       }
     ],
     "unitTypes": [

@@ -2,15 +2,23 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Phone, MessageCircle, Send, X, MessageSquare } from 'lucide-react';
 import { businessInfo } from '@/data/business';
 import { trackEvent } from '@/lib/analytics';
 
 export default function FloatingQuickContact() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Totally remove on admin page
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-2">
+    // Hidden on mobile view, visible on md (tablet/desktop) and above
+    <div className="hidden md:flex flex-col items-end space-y-2 fixed bottom-6 right-6 z-40">
       {/* Expanded Quick Contact Actions */}
       {isOpen && (
         <div className="bg-white rounded-2xl shadow-2xl border border-stone-200 p-4 w-72 mb-2 animate-fadeIn space-y-2.5">

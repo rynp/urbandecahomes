@@ -18,9 +18,6 @@ import {
 } from 'lucide-react';
 import HeroVideo from '@/components/HeroVideo';
 import ProjectCard from '@/components/ProjectCard';
-import UnitComparison from '@/components/UnitComparison';
-import FinancingCalculator from '@/components/FinancingCalculator';
-import InquiryForm from '@/components/InquiryForm';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import FaqAccordion from '@/components/FaqAccordion';
 import JsonLd from '@/components/JsonLd';
@@ -47,16 +44,15 @@ export default function HomePage() {
       {/* Hero Section */}
       <HeroVideo />
 
-
       {/* Featured Condominium Developments */}
-      <section className="pt-10 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section id="featured-projects" className="pt-10 sm:pt-14 pb-6 sm:pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
         <div className="text-left max-w-3xl mb-8 sm:mb-10">
           <div className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-[#CE2029] bg-[#CE2029]/10 border border-[#CE2029]/20 px-3.5 py-1.5 rounded-full mb-3 font-logo">
             <Building2 className="w-3.5 h-3.5 text-[#CE2029]" />
-            <span>Active Metro Manila Communities</span>
+            <span>Units Ready - For You!</span>
           </div>
           <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#3E1C15] tracking-tight">
-            Featured Projects in Metro Manila
+            Featured Projects
           </h2>
           <p className="text-[#5C3D36] text-xs sm:text-sm mt-2 sm:mt-3 whitespace-nowrap truncate sm:whitespace-normal">
             Fully finished, move-in ready condos across Metro Manila.
@@ -71,28 +67,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Unit Comparison Section */}
-      <section className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
-        <UnitComparison />
+      {/* 100,000+ Families Housed Social Proof Banner (Moved below Featured Projects) */}
+      <section className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#EADBBD] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#CE2029] to-[#B51B23] text-white flex items-center justify-center flex-shrink-0 shadow">
+              <Building2 className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h4 className="font-logo text-lg font-extrabold text-[#3E1C15]">
+                100,000+ Filipino Families Housed Nationwide
+              </h4>
+              <p className="text-xs text-[#5C3D36] mt-0.5">
+                Join our flourishing communities across Metro Manila. Low reservations, flexible Pag-IBIG terms, and doorstep retail centers.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto">
+            <Link
+              href="/inquire-now"
+              className="w-full md:w-auto btn-futuristic inline-flex items-center justify-center px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-md shadow-[#CE2029]/25 transition-all transform hover:-translate-y-0.5 font-logo"
+            >
+              <span>Share Inquiries</span>
+              <ChevronRight className="w-3.5 h-3.5 ml-1" />
+            </Link>
+          </div>
+        </div>
       </section>
-
-      {/* Interactive Financing Calculator Section */}
-      <section id="calculator" className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
-        <FinancingCalculator />
-      </section>
-
-      {/* Main Conversion Inquiry Form Section */}
-      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-96 bg-gradient-to-r from-[#CE2029]/10 via-[#FAF5E6] to-[#CE2029]/10 rounded-full blur-3xl pointer-events-none" />
-        <InquiryForm
-          title="Reserve Your Unit or Request Free Computations"
-          subtitle="Submit your details below to schedule a model unit viewing or receive an official Pag-IBIG computation sheet."
-        />
-      </section>
-
-
-      {/* Buyer Testimonials & Real Stories Component */}
-      <TestimonialsSection />
 
       {/* Why Choose Urban Deca Homes (Pillars) */}
       <section className="bg-gradient-to-b from-[#FAF5E6]/90 via-[#FAF8F2] to-[#FAF5E6]/90 py-16 sm:py-20 border-y border-[#EADBBD] relative overflow-hidden cyber-grid-light">
@@ -118,15 +120,12 @@ export default function HomePage() {
           {/* 3 Immersive Visual Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Card 1: Affordability */}
-            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-2xl hover:border-[#CE2029]/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
-              {/* Outer Ambient Hover Glow Backdrop */}
-              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-[#CE2029]/15 via-[#FAF0C8] to-[#CE2029]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
-
+            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-xl hover:border-[#D4B455] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">
               <div>
                 {/* Visual Image Stage */}
                 <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-charcoal-900">
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.05]"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 brightness-[1.05]"
                     style={{ backgroundImage: `url('/images/features/affordability-consultation.png')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-black/20 to-black/30" />
@@ -187,10 +186,10 @@ export default function HomePage() {
               {/* Card Footer Link */}
               <div className="px-6 pb-6 pt-3">
                 <Link
-                  href="/#calculator"
+                  href="/inquire-now"
                   className="w-full inline-flex items-center justify-between pt-3.5 border-t border-[#EADBBD] text-xs font-bold uppercase tracking-wider text-[#3E1C15] hover:text-[#CE2029] transition-colors font-logo"
                 >
-                  <span>Estimate Monthly Amort</span>
+                  <span>Request Official Computation</span>
                   <div className="w-7 h-7 rounded-full bg-[#FAF5E6] text-[#3E1C15] group-hover:bg-[#CE2029] group-hover:text-white flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1">
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
@@ -199,15 +198,12 @@ export default function HomePage() {
             </div>
 
             {/* Card 2: Commercial Centers */}
-            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-2xl hover:border-[#CE2029]/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
-              {/* Outer Ambient Hover Glow Backdrop */}
-              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-[#CE2029]/15 via-[#FAF0C8] to-[#CE2029]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
-
+            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-xl hover:border-[#D4B455] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">
               <div>
                 {/* Visual Image Stage */}
                 <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-charcoal-900">
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.05]"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 brightness-[1.05]"
                     style={{ backgroundImage: `url('/images/features/commercial-mall-lifestyle.png')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-black/20 to-black/30" />
@@ -280,15 +276,12 @@ export default function HomePage() {
             </div>
 
             {/* Card 3: Pag-IBIG Documentation */}
-            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-2xl hover:border-[#CE2029]/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between overflow-hidden">
-              {/* Outer Ambient Hover Glow Backdrop */}
-              <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-[#CE2029]/15 via-[#FAF0C8] to-[#CE2029]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-sm" />
-
+            <div className="group relative rounded-3xl bg-white border border-[#EADBBD] shadow-md hover:shadow-xl hover:border-[#D4B455] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">
               <div>
                 {/* Visual Image Stage */}
                 <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-charcoal-900">
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110 brightness-[1.05]"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 brightness-[1.05]"
                     style={{ backgroundImage: `url('/images/features/pagibig-documentation.png')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/80 via-black/20 to-black/30" />
@@ -363,34 +356,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 100,000+ Families Housed Social Proof Banner */}
-      <section className="py-4 sm:py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-6 sm:p-8 rounded-2xl bg-white border border-[#EADBBD] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#CE2029] to-[#B51B23] text-white flex items-center justify-center flex-shrink-0 shadow">
-              <Building2 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h4 className="font-logo text-lg font-extrabold text-[#3E1C15]">
-                100,000+ Filipino Families Housed Nationwide
-              </h4>
-              <p className="text-xs text-[#5C3D36] mt-0.5">
-                Join our flourishing communities across Metro Manila. Low reservations, flexible Pag-IBIG terms, and doorstep retail centers.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex-shrink-0 flex items-center space-x-3 w-full md:w-auto">
-            <Link
-              href="/inquire-now"
-              className="w-full md:w-auto btn-futuristic inline-flex items-center justify-center px-6 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-md shadow-[#CE2029]/25 transition-all transform hover:-translate-y-0.5 font-logo"
-            >
-              <span>Share Inquiries</span>
-              <ChevronRight className="w-3.5 h-3.5 ml-1" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Buyer Testimonials & Real Stories Component */}
+      <TestimonialsSection />
 
       {/* 4PH Housing Banner */}
       <section className="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -417,28 +384,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ Preview Section - Dark Theme with Animated Mesh Gradient */}
-      <section className="bg-[#0c0c10] py-20 sm:py-24 border-t border-white/10 relative overflow-hidden">
+      {/* FAQ Preview Section - Light Theme matching Brand Palette */}
+      <section className="bg-gradient-to-b from-[#FAF8F2] via-[#FAF5E6]/50 to-[#FAF8F2] py-20 sm:py-24 border-t border-[#EADBBD] relative overflow-hidden">
         {/* Subtle Cyber Grid */}
-        <div className="absolute inset-0 cyber-grid opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 cyber-grid-light opacity-25 pointer-events-none" />
 
-        {/* Dynamic Multi-Stop Animated Gradient Mesh */}
-        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#CE2029]/25 via-[#CE2029]/10 to-transparent rounded-full blur-[100px] animate-gradient-shift pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-[540px] h-[540px] bg-gradient-to-tl from-[#e8cf7b]/20 via-[#d4b455]/10 to-transparent rounded-full blur-[110px] animate-gradient-shift-slow pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-radial from-[#CE2029]/10 via-transparent to-transparent rounded-full blur-[120px] animate-pulse-glow pointer-events-none" />
+        {/* Ambient Warm Glows */}
+        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-gradient-to-br from-[#FAF0C8]/40 via-[#FAF5E6]/20 to-transparent rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-[540px] h-[540px] bg-gradient-to-tl from-[#e8cf7b]/20 via-[#d4b455]/10 to-transparent rounded-full blur-[110px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12 sm:mb-14">
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md shadow-sm mb-4">
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/90 border border-[#EADBBD] shadow-xs mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-[#CE2029] animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-widest text-[#EBA226] font-logo">
-                Frequently Asked Questions
+              <span className="text-xs font-bold uppercase tracking-widest text-[#CE2029] font-logo">
+                Knowledge Base &amp; Buyer Guide
               </span>
             </div>
-            <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-              Common Questions from Prospective Buyers
+            <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#3E1C15] tracking-tight leading-tight">
+              Frequently Ask Questions (FAQ)
             </h2>
-            <p className="text-stone-300 text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[#5C3D36] text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
               Clear guidance on unit reservations, Pag-IBIG loan approvals, turnover timelines, and monthly amortizations.
             </p>
           </div>
@@ -448,12 +414,10 @@ export default function HomePage() {
           <div className="text-center mt-12 sm:mt-14">
             <Link
               href="/inquire-now"
-              className="group relative inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-[#181820] hover:bg-[#CE2029] border border-white/15 hover:border-[#CE2029] text-xs font-bold uppercase tracking-wider text-white shadow-xl shadow-black/40 hover:shadow-[0_0_35px_rgba(206,32,41,0.65),0_0_15px_rgba(206,32,41,0.45)] transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-md overflow-hidden font-logo"
+              className="group relative inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-[#CE2029] hover:bg-[#B51B23] border border-[#CE2029] text-xs font-bold uppercase tracking-wider text-white shadow-xl shadow-[#CE2029]/25 hover:shadow-2xl hover:shadow-[#CE2029]/35 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-[0.98] font-logo"
             >
-              {/* Subtle light shimmer sweep on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
               <span className="relative z-10">Explore All FAQs &amp; Financing Guidelines</span>
-              <ArrowRight className="relative z-10 w-4 h-4 text-[#FAF0C8] group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1.5" />
+              <ArrowRight className="relative z-10 w-4 h-4 text-white transition-all duration-300 transform group-hover:translate-x-1.5" />
             </Link>
           </div>
         </div>

@@ -18,7 +18,7 @@ export default function Footer() {
   const currentYear = 2026;
 
   return (
-    <footer className="bg-[#F8F4E8] text-[#544D40] border-t border-[#E8DEC4] pt-16 pb-12 relative overflow-hidden">
+    <footer className="bg-[#F8F4E8] text-[#544D40] border-t border-[#E8DEC4] pt-16 pb-20 md:pb-12 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#DFBD58] via-[#E59E38] to-[#DFBD58]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top Grid */}
