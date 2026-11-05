@@ -106,8 +106,34 @@ export default function InquiryForm({
     setIsSubmitting(true);
 
     try {
-      // Simulate secure server-side transmission or CRM endpoint
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'Property Inquiry',
+          fullName,
+          mobileNumber,
+          email,
+          project: currentProjectObj?.name || selectedProject,
+          unitOrDetails: selectedUnit || 'Any Available Unit / Inquire for Options',
+          financingScheme,
+          buyerType,
+          preferredContact,
+          notes,
+          privacyAgreed,
+          honeypot,
+          source: isModal ? 'Mobile Navigation Popup' : 'Website Form',
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.success) {
+        setErrors({ submit: data.message || 'Failed to submit inquiry. Please call our hotline directly.' });
+        return;
+      }
 
       trackEvent({
         name: 'inquiry_submit_success',
@@ -504,6 +530,14 @@ export default function InquiryForm({
             error={errors.captcha}
           />
         </div>
+
+        {/* Error message alert */}
+        {errors.submit && (
+          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{errors.submit}</span>
+          </div>
+        )}
 
         {/* Submit Button & Reassurance */}
         <div className="pt-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Calendar, Clock, MapPin, CheckCircle2, User, Phone, Mail, Users } from 'lucide-react';
 import Captcha from '@/components/Captcha';
 import { projects } from '@/data/projects';
@@ -22,6 +22,13 @@ export default function ViewingScheduler() {
 
   const currentProject = projects.find((p) => p.slug === selectedProject);
 
+  const handleCaptchaVerify = useCallback((verified: boolean) => {
+    setIsCaptchaVerified(verified);
+    if (verified) {
+      setErrorMessage((prev) => (prev.includes('human verification') ? '' : prev));
+    }
+  }, []);
+
   const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone || !selectedDate) {
@@ -38,7 +45,33 @@ export default function ViewingScheduler() {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 600));
+      const response = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'Site Tour Booking',
+          fullName: name,
+          mobileNumber: phone,
+          email,
+          project: currentProject?.name || selectedProject,
+          unitOrDetails: `Site Tour on ${selectedDate} at ${selectedTime} (${visitorCount})`,
+          financingScheme: 'N/A - Site Tour Reservation',
+          buyerType: 'Prospective Buyer / Visitor',
+          preferredContact: 'Phone',
+          notes: `Complimentary model unit tour for ${visitorCount}. Scheduled date: ${selectedDate}, time slot: ${selectedTime}.`,
+          privacyAgreed: true,
+          source: 'Contact Us - Site Tour Scheduler',
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.success) {
+        setErrorMessage(data.message || 'Unable to book viewing. Please contact our sales hotline directly.');
+        return;
+      }
 
       trackEvent({
         name: 'viewing_request_success',
@@ -47,7 +80,7 @@ export default function ViewingScheduler() {
 
       setIsBooked(true);
     } catch (err) {
-      setErrorMessage('Unable to book viewing. Please contact our hotline directly.');
+      setErrorMessage('Unable to connect to booking service. Please call our hotline directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -228,12 +261,7 @@ export default function ViewingScheduler() {
         <div className="pt-1">
           <Captcha
             compact
-            onVerify={(verified) => {
-              setIsCaptchaVerified(verified);
-              if (verified && errorMessage.includes('human verification')) {
-                setErrorMessage('');
-              }
-            }}
+            onVerify={handleCaptchaVerify}
             error={errorMessage.includes('human verification') ? errorMessage : undefined}
           />
         </div>

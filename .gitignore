@@ -51,3 +51,7 @@ next-env.d.ts
 # scraper temporary files
 scripts/*.html
 
+# customer leads data backup (PII privacy)
+data/leads-backup.json
+
+
