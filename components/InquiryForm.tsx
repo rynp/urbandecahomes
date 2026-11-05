@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Send, CheckCircle2, AlertCircle, Phone, MessageCircle, Clock, ShieldCheck, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Send, CheckCircle2, AlertCircle, Phone, MessageCircle, Clock, ShieldCheck, Sparkles, X } from 'lucide-react';
 import Captcha from '@/components/Captcha';
 import { projects } from '@/data/projects';
 import { businessInfo } from '@/data/business';
@@ -12,6 +12,8 @@ interface InquiryFormProps {
   initialUnit?: string;
   title?: string;
   subtitle?: string;
+  isModal?: boolean;
+  onClose?: () => void;
 }
 
 export default function InquiryForm({
@@ -19,6 +21,8 @@ export default function InquiryForm({
   initialUnit,
   title = 'Schedule a Site Viewing & Inquire',
   subtitle = 'Speak with an accredited Urban Deca Homes property specialist. Get official computation sheets and check real-time unit availability.',
+  isModal = false,
+  onClose,
 }: InquiryFormProps) {
   const [selectedProject, setSelectedProject] = useState<string>(initialProject || 'manila');
   const [selectedUnit, setSelectedUnit] = useState<string>(initialUnit || '');
@@ -75,6 +79,18 @@ export default function InquiryForm({
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  const handleCaptchaVerify = useCallback((verified: boolean) => {
+    setIsCaptchaVerified(verified);
+    if (verified) {
+      setErrors((prev) => {
+        if (!prev.captcha) return prev;
+        const copy = { ...prev };
+        delete copy.captcha;
+        return copy;
+      });
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -160,6 +176,16 @@ export default function InquiryForm({
           </a>
         </div>
 
+        {isModal && onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="mt-4 w-full inline-flex items-center justify-center px-5 py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#CE2029] hover:bg-[#B51B23] rounded-xl shadow-md transition-all font-logo"
+          >
+            Done / Close Window
+          </button>
+        )}
+
         <button
           type="button"
           onClick={() => {
@@ -180,55 +206,80 @@ export default function InquiryForm({
   }
 
   return (
-    <div className="relative bg-white rounded-3xl shadow-2xl border border-stone-200/90 overflow-hidden">
-      {/* Form Header with Dark Luxury Theme */}
-      <div className="relative bg-[#111111] bg-gradient-to-br from-charcoal-950 via-[#18181c] to-charcoal-950 text-white p-6 sm:p-8 lg:p-10 overflow-hidden border-b border-charcoal-800">
-        {/* Subtle Cyber Grid Overlay */}
-        <div className="absolute inset-0 cyber-grid opacity-25 pointer-events-none" />
-
-        {/* Ambient Glow Orbs */}
-        <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#CE2029]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 left-1/4 w-64 h-64 bg-[#FAF0C8]/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10">
-          <div className="inline-flex items-center space-x-2 text-xs font-bold text-[#CE2029] mb-3 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 backdrop-blur-md shadow-sm font-logo">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#CE2029] animate-pulse" />
-            <span>Official Developer Sales Desk • 0% Broker Fee</span>
+    <div className={`relative bg-white overflow-hidden ${isModal ? '' : 'rounded-3xl shadow-2xl border border-stone-200/90'}`}>
+      {/* Form Header */}
+      {isModal ? (
+        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-5 py-3.5 border-b border-[#E7DFD3] flex items-center justify-between">
+          <div>
+            <div className="inline-flex items-center space-x-1.5 text-[10px] font-bold text-[#CE2029] uppercase tracking-wider mb-0.5 font-logo">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#1F5938]" />
+              <span>Direct Developer Sales Desk</span>
+            </div>
+            <h3 className="font-logo text-base sm:text-lg font-black tracking-tight text-[#1C1917]">
+              Inquire &amp; Schedule Tour
+            </h3>
           </div>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 hover:text-[#1C1917] flex items-center justify-center transition-colors focus:outline-none"
+              aria-label="Close Inquiry Form"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      ) : (
+        /* Standard Form Header with Dark Luxury Theme */
+        <div className="relative bg-[#111111] bg-gradient-to-br from-charcoal-950 via-[#18181c] to-charcoal-950 text-white p-6 sm:p-8 lg:p-10 overflow-hidden border-b border-charcoal-800">
+          {/* Subtle Cyber Grid Overlay */}
+          <div className="absolute inset-0 cyber-grid opacity-25 pointer-events-none" />
 
-          <h3 className="font-logo text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
-            {title}
-          </h3>
-          <p className="text-xs sm:text-sm text-stone-300 mt-2 leading-relaxed max-w-2xl">
-            {subtitle}
-          </p>
+          {/* Ambient Glow Orbs */}
+          <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#CE2029]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-10 left-1/4 w-64 h-64 bg-[#FAF0C8]/10 rounded-full blur-3xl pointer-events-none" />
 
-          {/* 3-Step Concierge Reassurance Pill Bar */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-6 border-t border-white/10 font-logo">
-            <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-              <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
-                1
-              </span>
-              <span className="font-medium text-stone-200">Select Unit &amp; Budget</span>
+          <div className="relative z-10">
+            <div className="inline-flex items-center space-x-2 text-xs font-bold text-[#CE2029] mb-3 uppercase tracking-widest bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 backdrop-blur-md shadow-sm font-logo">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#CE2029] animate-pulse" />
+              <span>Official Developer Sales Desk • 0% Broker Fee</span>
             </div>
-            <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-              <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
-                2
-              </span>
-              <span className="font-medium text-stone-200">Free Pag-IBIG Pre-Qual</span>
-            </div>
-            <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-              <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
-                3
-              </span>
-              <span className="font-medium text-stone-200">Official Computation in 1 Hr</span>
+
+            <h3 className="font-logo text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+              {title}
+            </h3>
+            <p className="text-xs sm:text-sm text-stone-300 mt-2 leading-relaxed max-w-2xl">
+              {subtitle}
+            </p>
+
+            {/* 3-Step Concierge Reassurance Pill Bar */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-6 border-t border-white/10 font-logo">
+              <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
+                <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
+                  1
+                </span>
+                <span className="font-medium text-stone-200">Select Unit &amp; Budget</span>
+              </div>
+              <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
+                <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
+                  2
+                </span>
+                <span className="font-medium text-stone-200">Free Pag-IBIG Pre-Qual</span>
+              </div>
+              <div className="flex items-center space-x-2.5 text-xs text-stone-300 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
+                <span className="w-5 h-5 rounded-full bg-[#CE2029]/25 text-[#FAF0C8] font-bold text-[10px] flex items-center justify-center flex-shrink-0">
+                  3
+                </span>
+                <span className="font-medium text-stone-200">Official Computation in 1 Hr</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Form Fields */}
-      <form onSubmit={handleSubmit} className="p-6 sm:p-8 lg:p-10 space-y-6" noValidate>
+      <form onSubmit={handleSubmit} className={`${isModal ? 'p-4 sm:p-6 space-y-4 sm:space-y-5' : 'p-6 sm:p-8 lg:p-10 space-y-6'}`} noValidate>
         {/* Anti-spam Honeypot */}
         <div className="hidden" aria-hidden="true">
           <input
@@ -449,16 +500,7 @@ export default function InquiryForm({
         {/* Human Verification Captcha */}
         <div>
           <Captcha
-            onVerify={(verified) => {
-              setIsCaptchaVerified(verified);
-              if (verified) {
-                setErrors((prev) => {
-                  const copy = { ...prev };
-                  delete copy.captcha;
-                  return copy;
-                });
-              }
-            }}
+            onVerify={handleCaptchaVerify}
             error={errors.captcha}
           />
         </div>

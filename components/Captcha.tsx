@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ShieldCheck, RotateCw, CheckCircle2, AlertCircle, Lock } from 'lucide-react';
 
 export interface CaptchaProps {
@@ -31,12 +31,34 @@ export default function Captcha({
   const [localError, setLocalError] = useState<string | null>(null);
   const [isRotating, setIsRotating] = useState(false);
 
-  // Generate randomized challenge
+  // Keep a ref to the latest onVerify callback so generateChallenge
+  // never re-triggers or re-generates puzzles when parent state updates.
+  const onVerifyRef = useRef(onVerify);
+  useEffect(() => {
+    onVerifyRef.current = onVerify;
+  }, [onVerify]);
+
+  // Ref to hold debounce / checking timers
+  const checkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  useEffect(() => {
+    return () => {
+      if (checkTimeoutRef.current) {
+        clearTimeout(checkTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Generate randomized challenge (stable reference - no onVerify dependency)
   const generateChallenge = useCallback(() => {
+    if (checkTimeoutRef.current) {
+      clearTimeout(checkTimeoutRef.current);
+      checkTimeoutRef.current = null;
+    }
+    setIsChecking(false);
     setIsVerified(false);
     setUserInput('');
     setLocalError(null);
-    onVerify(false);
+    onVerifyRef.current?.(false);
 
     const isAddition = Math.random() > 0.3;
     let n1: number;
@@ -56,14 +78,15 @@ export default function Captcha({
 
     const token = Math.random().toString(36).substring(2, 9);
     setChallenge({ num1: n1, num2: n2, operator: op, answer: ans, token });
-  }, [onVerify]);
+  }, []);
 
+  // Generate challenge ONLY once on initial mount
   useEffect(() => {
     generateChallenge();
   }, [generateChallenge]);
 
-  const handleRefresh = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleRefresh = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     setIsRotating(true);
     generateChallenge();
     setTimeout(() => setIsRotating(false), 500);
@@ -74,19 +97,24 @@ export default function Captcha({
     setUserInput(val);
     setLocalError(null);
 
+    if (checkTimeoutRef.current) {
+      clearTimeout(checkTimeoutRef.current);
+      checkTimeoutRef.current = null;
+    }
+
     if (!challenge) return;
 
     const parsed = parseInt(val.trim(), 10);
     if (!isNaN(parsed) && parsed === challenge.answer) {
       setIsChecking(true);
-      setTimeout(() => {
+      checkTimeoutRef.current = setTimeout(() => {
         setIsChecking(false);
         setIsVerified(true);
-        onVerify(true);
-      }, 350);
+        onVerifyRef.current?.(true);
+      }, 250);
     } else {
       setIsVerified(false);
-      onVerify(false);
+      onVerifyRef.current?.(false);
       if (val.trim().length >= challenge.answer.toString().length) {
         setLocalError('Incorrect answer. Please try again.');
       }
@@ -183,8 +211,14 @@ export default function Captcha({
                 inputMode="numeric"
                 pattern="[0-9]*"
                 maxLength={4}
+                autoComplete="off"
                 value={userInput}
                 onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                  }
+                }}
                 placeholder="Enter answer"
                 className={`w-full px-3 py-2 text-xs font-semibold rounded-lg border transition-all ${
                   error || localError
