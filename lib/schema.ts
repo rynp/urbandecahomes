@@ -12,8 +12,8 @@ export function getOrganizationSchema() {
     name: businessInfo.name,
     legalName: businessInfo.legalDeveloper,
     url: SITE_URL,
-    logo: `${SITE_URL}/images/logo.png`,
-    image: `${SITE_URL}/images/hero-building.jpg`,
+    logo: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/images/home-hero-bg.jpg`,
     description: businessInfo.description,
     telephone: businessInfo.phones[0].value,
     email: businessInfo.emails[0],
@@ -144,7 +144,7 @@ export function getArticleSchema(article: NewsArticle) {
       name: businessInfo.name,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/images/logo.png`,
+        url: `${SITE_URL}/logo.png`,
       },
     },
     mainEntityOfPage: {

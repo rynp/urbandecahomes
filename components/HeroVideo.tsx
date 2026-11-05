@@ -49,19 +49,19 @@ export default function HeroVideo() {
             </div>
           </div>
 
-          {/* Main H1 Title - Centered on mobile with "— Starts Here —" on second line, cleanly broken on desktop */}
+          {/* Main H1 Title - Centered on mobile, clean branding with primary SEO keywords */}
           <h1 className="font-logo text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-[#3E1C15] leading-[1.18] mb-3 sm:mb-4 text-center lg:text-left drop-shadow-[0_2px_10px_rgba(255,255,255,0.95)]">
-            <span className="block">Your Future Home</span>
+            <span className="block">Urban Deca Homes</span>
             <span className="block text-[#CE2029]">
-              <span className="lg:hidden">— Starts Here —</span>
-              <span className="hidden lg:inline whitespace-nowrap">— Starts Here</span>
+              <span className="lg:hidden">— Move-In Ready Condos —</span>
+              <span className="hidden lg:inline whitespace-nowrap">— Move-In Ready Condos</span>
             </span>
           </h1>
 
           {/* Subtitle Section - Centered on mobile view */}
           <div className="space-y-2.5 mb-6 sm:mb-8 text-center lg:text-left">
             <p className="text-xs sm:text-sm md:text-base text-[#3E1C15] font-bold leading-relaxed drop-shadow-[0_1px_4px_rgba(255,255,255,0.95)]">
-              Move-in-ready Metro Manila condos and beyond
+              Your future home in Metro Manila: Manila, Ortigas & Cubao
             </p>
 
             <div className="flex justify-center lg:justify-start">

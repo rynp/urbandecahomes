@@ -25,7 +25,7 @@ import GroupOfCompanies from '@/components/GroupOfCompanies';
 import JsonLd from '@/components/JsonLd';
 import { companyOverview } from '@/data/company';
 import { businessInfo } from '@/data/business';
-import { constructMetadata } from '@/lib/seo';
+import { constructMetadata, SITE_URL } from '@/lib/seo';
 import { getOrganizationSchema } from '@/lib/schema';
 
 export const metadata: Metadata = constructMetadata({
@@ -53,7 +53,7 @@ export default function AboutUsPage() {
     name: 'About Urban Deca Homes & 8990 Holdings, Inc.',
     description:
       'Corporate history, leadership, and multi-brand real estate portfolio of 8990 Holdings, Inc. and Urban Deca Homes.',
-    url: 'https://urbandecahomes.properties/about-us',
+    url: `${SITE_URL}/about-us`,
     mainEntity: orgSchema,
   };
 

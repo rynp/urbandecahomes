@@ -16,7 +16,7 @@ export function constructMetadata({
   title,
   description,
   path = '',
-  image = '/images/og-default.jpg',
+  image = '/images/home-hero-bg.jpg',
   keywords = [],
   noIndex = false,
 }: SeoProps): Metadata {
