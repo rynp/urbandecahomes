@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { projects } from '@/data/projects';
 import {
   checkRateLimit,
   sanitizeText,
@@ -87,7 +88,26 @@ export async function POST(req: NextRequest) {
     // 6. Project & Preference Sanitization with Formula Injection Shield
     const cleanProject = escapeFormulaInjection(sanitizeText(body.project || 'Manila', 60));
     const cleanType = escapeFormulaInjection(sanitizeText(body.type || 'Property Inquiry', 40));
-    const cleanUnitOrDetails = escapeFormulaInjection(sanitizeText(body.unitOrDetails || 'Any Available Unit', 120));
+
+    // Resolve Unit ID to readable Unit Name if an ID was passed (fallback safety)
+    let rawUnit = body.unitOrDetails || 'Any Available Unit';
+    if (rawUnit && rawUnit !== 'Any Available Unit') {
+      const proj = projects.find(
+        (p) =>
+          p.slug.toLowerCase() === (body.project || '').toLowerCase() ||
+          p.name.toLowerCase() === (body.project || '').toLowerCase()
+      );
+      if (proj) {
+        const matchedUnit = proj.unitTypes.find(
+          (u) => String(u.id) === String(rawUnit) || u.name.toLowerCase() === rawUnit.toLowerCase()
+        );
+        if (matchedUnit) {
+          rawUnit = `${matchedUnit.name} (${matchedUnit.areaSqm} sqm)`;
+        }
+      }
+    }
+    const cleanUnitOrDetails = escapeFormulaInjection(sanitizeText(rawUnit, 120));
+
     const cleanFinancing = escapeFormulaInjection(sanitizeText(body.financingScheme || 'Pag-IBIG Fund', 60));
     const cleanBuyerType = escapeFormulaInjection(sanitizeText(body.buyerType || 'Locally Employed', 60));
     const cleanPreferredContact = escapeFormulaInjection(sanitizeText(body.preferredContact || 'Viber', 30));

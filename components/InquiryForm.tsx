@@ -106,6 +106,16 @@ export default function InquiryForm({
     setIsSubmitting(true);
 
     try {
+      // Resolve full unit name with sqm area
+      const selectedUnitObj = availableUnits.find(
+        (u) => String(u.id) === String(selectedUnit) || u.name === selectedUnit
+      );
+      const unitDisplayName = selectedUnitObj
+        ? `${selectedUnitObj.name} (${selectedUnitObj.areaSqm} sqm)`
+        : selectedUnit && selectedUnit.trim() !== ''
+        ? selectedUnit
+        : 'Any Available Unit / Undecided';
+
       const response = await fetch('/api/inquiries', {
         method: 'POST',
         headers: {
@@ -117,7 +127,7 @@ export default function InquiryForm({
           mobileNumber,
           email,
           project: currentProjectObj?.name || selectedProject,
-          unitOrDetails: selectedUnit || 'Any Available Unit / Inquire for Options',
+          unitOrDetails: unitDisplayName,
           financingScheme,
           buyerType,
           preferredContact,
@@ -350,7 +360,7 @@ export default function InquiryForm({
             >
               <option value="">Any Available Unit / Undecided</option>
               {availableUnits.map((u) => (
-                <option key={u.id} value={u.id}>
+                <option key={u.id} value={u.name}>
                   {u.name} ({u.areaSqm} sqm)
                 </option>
               ))}
