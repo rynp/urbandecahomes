@@ -191,7 +191,7 @@ export default function MobileFloatingNav() {
                 : 'bg-gradient-to-tr from-[#CE2029] to-[#E5383B] text-white border-white shadow-md shadow-[#CE2029]/30 group-hover:scale-105'
             }`}
           >
-            <Send className="w-5 h-5 -rotate-12 translate-x-0.5 -translate-y-0.5" />
+            <Send className="w-5 h-5 -translate-x-[1px] translate-y-[1px]" />
           </div>
 
           {/* Label below the circle, styled matching reference image */}
