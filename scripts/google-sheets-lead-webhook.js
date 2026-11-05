@@ -20,6 +20,17 @@
 // Shared secret key matching GOOGLE_SHEET_SECRET_TOKEN in .env.local
 const SECRET_TOKEN = "decahomes-secure-leads-2026";
 const SHEET_NAME = "Inquiries & Site Tours";
+const SPREADSHEET_ID = "153fJoO96C1jlFwU6-IGo1U2DFTlfzvB8JNL6CdV5ODM";
+
+function getSpreadsheet() {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (ss && ss.getId()) return ss;
+  } catch (err) {
+    // If running as standalone script, fallback to openById
+  }
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
+}
 
 function doPost(e) {
   return handleRequest(e);
@@ -66,7 +77,7 @@ function handleRequest(e) {
       return jsonResponse({ status: "error", message: "Missing required contact details" }, 400);
     }
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getSpreadsheet();
     var sheet = ss.getSheetByName(SHEET_NAME);
 
     // If the tab doesn't exist, create it with styled headers
@@ -178,3 +189,4 @@ function jsonResponse(obj, statusCode) {
   return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
