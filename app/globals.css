@@ -3,12 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --primary-gold: #e8cf7b;
+  --primary-gold: #d4b062;
   --dark-gold: #857542;
-  --charcoal: #1b1b1b;
+  --charcoal: #1C1917;
   --brand-red: #CE2029;
+  --brand-red-dark: #B51B23;
   --brand-mahogany: #4A1E17;
   --brand-espresso: #3E1C15;
+  --canvas-bg: #FAF8F3;
+  --limestone-border: #E7DFD3;
+  --forest-green: #1F5938;
 }
 
 .font-editorial {
@@ -389,19 +393,19 @@ body {
   font-weight: 700;
 }
 
-/* Futuristic Cyber Grid & Architectural Blueprint Pattern */
+/* Architectural Blueprint Grid Pattern */
 .cyber-grid {
   background-size: 36px 36px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 .cyber-grid-light {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(28, 25, 23, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(28, 25, 23, 0.02) 1px, transparent 1px);
 }
 
 /* Futuristic Keyframes */
@@ -586,44 +590,111 @@ body {
   color: #ffffff !important;
 }
 
-/* Futuristic Hover Cards & Glows */
+/* Architectural Tactile Cards */
 .futuristic-card {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
-}
-
-.futuristic-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 60%, rgba(206, 32, 41, 0.3));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.6;
-  transition: opacity 0.35s ease;
-}
-
-.futuristic-card:hover::before {
-  opacity: 1;
+  border: 1px solid #E7DFD3;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
 .futuristic-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.18), 0 0 20px -5px rgba(206, 32, 41, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -12px rgba(28, 25, 23, 0.1), 0 2px 6px -1px rgba(28, 25, 23, 0.04);
+  border-color: rgba(206, 32, 41, 0.35);
 }
 
-/* Futuristic Neon Range Slider for Financing */
+/* Civic Design System Utilities */
+.badge-deca {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-logo), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #CE2029;
+  background-color: rgba(206, 32, 41, 0.08);
+  border: 1px solid rgba(206, 32, 41, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.badge-pagibig {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-logo), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1F5938;
+  background-color: rgba(31, 89, 56, 0.09);
+  border: 1px solid rgba(31, 89, 56, 0.25);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.badge-neutral {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #44403C;
+  background-color: #F5F2EB;
+  border: 1px solid #E7DFD3;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.card-civic {
+  background-color: #FFFFFF;
+  border: 1px solid #E7DFD3;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px -4px rgba(28, 25, 23, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-civic:hover {
+  border-color: #D4CBC0;
+  box-shadow: 0 12px 28px -8px rgba(28, 25, 23, 0.08), 0 2px 4px rgba(0, 0, 0, 0.03);
+  transform: translateY(-2px);
+}
+
+.btn-deca {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #CE2029;
+  color: #FFFFFF;
+  font-family: var(--font-logo), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px -2px rgba(206, 32, 41, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-deca:hover {
+  background-color: #B51B23;
+  box-shadow: 0 8px 20px -3px rgba(206, 32, 41, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-deca:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(206, 32, 41, 0.3);
+}
+
+/* Tactile Range Slider for Financing */
 input[type='range'] {
   -webkit-appearance: none;
   width: 100%;
   height: 6px;
   border-radius: 9999px;
-  background: #e5e5e5;
+  background: #E7DFD3;
   outline: none;
 }
 
@@ -635,17 +706,17 @@ input[type='range']::-webkit-slider-thumb {
   border-radius: 50%;
   background: #CE2029;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(206, 32, 41, 0.6), 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(206, 32, 41, 0.4), 0 1px 3px rgba(0, 0, 0, 0.15);
+  border: 2.5px solid #FFFFFF;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 input[type='range']::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 16px rgba(206, 32, 41, 0.8), 0 2px 6px rgba(0, 0, 0, 0.3);
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(206, 32, 41, 0.55), 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Futuristic HUD and Cyber Accents */
+/* Subtle Architectural Corner Accents */
 .cyber-corner {
   position: relative;
 }
@@ -655,10 +726,11 @@ input[type='range']::-webkit-slider-thumb:hover {
   position: absolute;
   top: 0;
   right: 0;
-  width: 14px;
-  height: 14px;
-  border-top: 2px solid #CE2029;
-  border-right: 2px solid #CE2029;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid rgba(206, 32, 41, 0.7);
+  border-right: 2px solid rgba(206, 32, 41, 0.7);
+  border-top-right-radius: 3px;
   pointer-events: none;
 }
 
@@ -667,10 +739,11 @@ input[type='range']::-webkit-slider-thumb:hover {
   position: absolute;
   top: 0;
   right: 0;
-  width: 14px;
-  height: 14px;
-  border-top: 2px solid #e8cf7b;
-  border-right: 2px solid #e8cf7b;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid rgba(212, 176, 98, 0.7);
+  border-right: 2px solid rgba(212, 176, 98, 0.7);
+  border-top-right-radius: 3px;
   pointer-events: none;
 }
 

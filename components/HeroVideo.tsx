@@ -4,18 +4,18 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  KeyRound,
-  ArrowDown,
+  ArrowRight,
   ShieldCheck,
   Check,
   Building2,
   Calendar,
+  Sparkles,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 
 export default function HeroVideo() {
   return (
-    <section className="relative min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] flex items-center text-[#3E1C15] overflow-hidden">
+    <section className="relative min-h-[540px] sm:min-h-[600px] lg:min-h-[660px] flex items-center text-[#1C1917] overflow-hidden">
       {/* Background Hero Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -28,53 +28,60 @@ export default function HeroVideo() {
         />
 
         {/* Minimal Desktop Scrim: Feather-light left fade so the full city towers and family remain vividly clear */}
-        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-white/45 via-white/20 to-transparent w-1/2 pointer-events-none" />
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-[#FAF8F3]/95 via-[#FAF8F3]/70 to-transparent w-3/5 pointer-events-none" />
 
-        {/* Minimal Mobile Scrim: Very soft, transparent wash so the image details stay crisp */}
-        <div className="block lg:hidden absolute inset-0 bg-gradient-to-t from-white/50 via-white/25 to-transparent pointer-events-none" />
+        {/* Minimal Mobile Scrim: Soft bottom-up wash */}
+        <div className="block lg:hidden absolute inset-0 bg-gradient-to-t from-[#FAF8F3] via-[#FAF8F3]/80 to-[#FAF8F3]/30 pointer-events-none" />
       </div>
 
       {/* Hero Content Overlay */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 w-full">
         <div className="max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
-          {/* Top Emblem / Icon Header Badge - Centered on mobile view */}
-          <div className="flex justify-center lg:justify-start mb-3.5 sm:mb-4">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#EADBBD] shadow-xs">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#FAF0C8] flex items-center justify-center text-[#CE2029] flex-shrink-0">
-                <KeyRound className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#CE2029]" />
-              </div>
-              <span className="font-logo text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#CE2029]">
-                Urban Deca Homes Metro Manila
+          {/* Top Emblem / Accreditation Pill */}
+          <div className="flex justify-center lg:justify-start mb-4">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#E7DFD3] shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#1F5938] animate-pulse" />
+              <span className="font-logo text-[11px] font-bold uppercase tracking-wider text-[#1F5938]">
+                Pag-IBIG Accredited • Ready For Occupancy
               </span>
             </div>
           </div>
 
           {/* Main H1 Title - Centered on mobile, clean branding with primary SEO keywords */}
-          <h1 className="font-logo text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-[#3E1C15] leading-[1.18] mb-3 sm:mb-4 text-center lg:text-left drop-shadow-[0_2px_10px_rgba(255,255,255,0.95)]">
+          <h1 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#1C1917] leading-[1.14] mb-4 text-center lg:text-left drop-shadow-[0_2px_12px_rgba(255,255,255,0.95)]">
             <span className="block">Urban Deca Homes</span>
             <span className="block text-[#CE2029]">
-              <span className="lg:hidden">— Move-In Ready Condos —</span>
-              <span className="hidden lg:inline whitespace-nowrap">— Move-In Ready Condos</span>
+              Move-In Ready Condos
             </span>
           </h1>
 
-          {/* Subtitle Section - Centered on mobile view */}
-          <div className="space-y-2.5 mb-6 sm:mb-8 text-center lg:text-left">
-            <p className="text-xs sm:text-sm md:text-base text-[#3E1C15] font-bold leading-relaxed drop-shadow-[0_1px_4px_rgba(255,255,255,0.95)]">
-              Your future home in Metro Manila: Manila, Ortigas & Cubao
+          {/* Subtitle / Value Proposition with Monthly Affordability Anchor */}
+          <div className="space-y-3 mb-6 sm:mb-8 text-center lg:text-left">
+            <p className="text-sm sm:text-base text-[#292524] font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 drop-shadow-[0_1px_4px_rgba(255,255,255,0.95)]">
+              Own a titled Metro Manila condo starting at <strong className="text-[#CE2029] font-bold">~₱12,500/month</strong> with 30-year Pag-IBIG financing and low ₱10,000 reservation fees. Built for Filipino families, minimum-wage earners, and OFWs.
             </p>
 
-            <div className="flex justify-center lg:justify-start">
-              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 text-[10.5px] sm:text-xs font-bold text-[#CE2029] bg-white/95 backdrop-blur-md border border-[#EADBBD] px-3.5 py-1 rounded-full font-logo shadow-xs">
-                <span>18+ Years</span>
-                <span className="text-[#3E1C15]/30">•</span>
-                <span>85,000+ Homes Delivered</span>
-              </div>
+            {/* Quick Property Transit Links */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+              <Link
+                href="/manila"
+                className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white border border-[#E7DFD3] text-[#1C1917] hover:text-[#CE2029] shadow-xs transition-colors"
+              >
+                <span className="font-bold text-[#CE2029] mr-1">Manila</span> Tondo • DECA Mall
+              </Link>
+              <Link
+                href="/ortigas"
+                className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white border border-[#E7DFD3] text-[#1C1917] hover:text-[#CE2029] shadow-xs transition-colors"
+              >
+                <span className="font-bold text-[#CE2029] mr-1">Ortigas</span> Pasig • Lagoon Park
+              </Link>
+              <Link
+                href="/cubao"
+                className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white border border-[#E7DFD3] text-[#1C1917] hover:text-[#CE2029] shadow-xs transition-colors"
+              >
+                <span className="font-bold text-[#CE2029] mr-1">Cubao</span> EDSA • Transit-Oriented
+              </Link>
             </div>
-
-            <p className="text-[11px] sm:text-xs md:text-sm text-[#4A261F] font-semibold leading-relaxed max-w-xl mx-auto lg:mx-0 drop-shadow-[0_1px_4px_rgba(255,255,255,0.95)]">
-              Quality • Affordable • Rent-to-Own Solutions for Filipino Families
-            </p>
           </div>
 
           {/* Action Button Group */}
@@ -87,10 +94,10 @@ export default function HeroVideo() {
                   params: { location_source: 'hero_explore_projects', project_preference: 'general' },
                 });
               }}
-              className="inline-flex items-center justify-center px-6 py-3 sm:py-3.5 rounded-xl bg-[#CE2029] hover:bg-[#B51B23] text-white text-xs sm:text-sm font-bold uppercase tracking-wider font-logo shadow-lg shadow-[#CE2029]/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
+              className="btn-deca group inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-[#CE2029] hover:bg-[#B51B23] text-white text-xs sm:text-sm font-bold uppercase tracking-wider font-logo shadow-lg shadow-[#CE2029]/25 hover:shadow-xl transition-all duration-200"
             >
-              <span>Explore Communities</span>
-              <ArrowDown className="w-4 h-4 ml-2 animate-bounce" />
+              <span>Explore 3 Developments</span>
+              <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
 
             <Link
@@ -101,26 +108,26 @@ export default function HeroVideo() {
                   params: { location_source: 'hero_inquire_button', project_preference: 'general' },
                 });
               }}
-              className="inline-flex items-center justify-center px-6 py-3 sm:py-3.5 rounded-xl bg-white/90 hover:bg-white text-[#3E1C15] hover:text-[#CE2029] border border-[#EADBBD] text-xs sm:text-sm font-bold uppercase tracking-wider font-logo shadow-xs hover:shadow-sm transition-all duration-200"
+              className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white hover:bg-[#FAF8F3] text-[#1C1917] hover:text-[#CE2029] border border-[#E7DFD3] text-xs sm:text-sm font-bold uppercase tracking-wider font-logo shadow-xs hover:shadow-sm transition-all duration-200"
             >
               <Calendar className="w-4 h-4 mr-2 text-[#CE2029]" />
-              <span>Schedule Site Viewing</span>
+              <span>Schedule Free Site Tour</span>
             </Link>
           </div>
 
-          {/* Trust Chips Strip - Centered on mobile view */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 text-[11px] sm:text-xs font-semibold text-[#5C3D36]">
-            <div className="flex items-center px-2.5 py-1 rounded-lg bg-white/80 border border-[#EADBBD]/70 backdrop-blur-xs shadow-xs">
+          {/* Trust Chips Strip */}
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 text-xs font-semibold text-[#57534E]">
+            <div className="flex items-center px-3 py-1 rounded-lg bg-white/90 border border-[#E7DFD3] shadow-xs">
               <Check className="w-3.5 h-3.5 mr-1.5 text-[#CE2029]" />
               <span>₱10,000 Reservation</span>
             </div>
-            <div className="flex items-center px-2.5 py-1 rounded-lg bg-white/80 border border-[#EADBBD]/70 backdrop-blur-xs shadow-xs">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#CE2029]" />
-              <span>Pag-IBIG Terms (upto 30yrs)</span>
+            <div className="flex items-center px-3 py-1 rounded-lg bg-white/90 border border-[#E7DFD3] shadow-xs">
+              <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#1F5938]" />
+              <span>Pag-IBIG Loan up to 30 Yrs</span>
             </div>
-            <div className="flex items-center px-2.5 py-1 rounded-lg bg-white/80 border border-[#EADBBD]/70 backdrop-blur-xs shadow-xs">
+            <div className="flex items-center px-3 py-1 rounded-lg bg-white/90 border border-[#E7DFD3] shadow-xs">
               <Building2 className="w-3.5 h-3.5 mr-1.5 text-[#CE2029]" />
-              <span>Move-In Ready Units</span>
+              <span>Turnover-Ready Units</span>
             </div>
           </div>
         </div>
