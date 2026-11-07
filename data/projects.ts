@@ -99,6 +99,39 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
+export function getProjectPriceRange(project: Project): {
+  minPricePhp: number;
+  maxPricePhp: number;
+  minReservationFeePhp: number;
+  maxDiscountPhp: number;
+} {
+  const prices = (project.unitTypes || [])
+    .map((u) => Number(u.pricePhp ?? u.priceMinPhp))
+    .filter((p) => !isNaN(p) && p > 0);
+
+  const reservationFees = (project.unitTypes || [])
+    .map((u) => Number(u.reservationFeePhp))
+    .filter((fee) => !isNaN(fee) && fee > 0);
+
+  const discounts = (project.unitTypes || [])
+    .map((u) => Number(u.discountPhp))
+    .filter((d) => !isNaN(d) && d > 0);
+
+  const minReservationFeePhp =
+    reservationFees.length > 0
+      ? Math.min(...reservationFees)
+      : (project.reservationFeePhp || 10000);
+
+  const maxDiscountPhp = discounts.length > 0 ? Math.max(...discounts) : 0;
+
+  return {
+    minPricePhp: prices.length > 0 ? Math.min(...prices) : project.priceMinPhp,
+    maxPricePhp: prices.length > 0 ? Math.max(...prices) : project.priceMaxPhp,
+    minReservationFeePhp,
+    maxDiscountPhp,
+  };
+}
+
 export function getAllProjectSlugs(): string[] {
   return projects.map((p) => p.slug);
 }

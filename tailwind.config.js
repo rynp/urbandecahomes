@@ -86,6 +86,7 @@ module.exports = {
         editorial: ['Georgia', 'Cambria', 'var(--font-poppins)', 'serif'],
         serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
         sans: ['var(--font-poppins)', 'var(--font-logo)', 'system-ui', 'sans-serif'],
+        'dm-sans': ["'DM Sans'", 'system-ui', 'sans-serif'],
       },
     },
   },

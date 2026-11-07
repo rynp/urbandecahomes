@@ -162,12 +162,12 @@ export default function OrtigasHeroGallery({ project }: OrtigasHeroGalleryProps)
 
   return (
     <>
-      <div className="grid grid-cols-12 gap-3.5 relative">
+      <div className="relative -mx-4 sm:-mx-6 lg:mx-0 rounded-none lg:rounded-[2rem] p-0 lg:p-2 bg-transparent lg:bg-[#EFE8D8]/80 border-0 lg:border border-[#DFD3BE] shadow-none lg:shadow-[0_16px_36px_-12px_rgba(50,25,18,0.08)] backdrop-blur-none lg:backdrop-blur-md flex flex-col h-full">
         {/* ============================================================ */}
         {/* 1. Large Main Building Feature with 10s Delay Slideshow      */}
         {/* ============================================================ */}
         <div
-          className="col-span-12 relative rounded-2xl overflow-hidden group shadow-2xl border border-white/10 aspect-[16/9] bg-charcoal-900 cursor-pointer select-none"
+          className="relative rounded-none lg:rounded-[calc(2rem-6px)] xl:rounded-[calc(2rem-8px)] overflow-hidden group shadow-xl border-y lg:border border-white/10 aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-full lg:min-h-[480px] bg-charcoal-900 cursor-pointer select-none"
           onMouseEnter={() => setIsHoveringMain(true)}
           onMouseLeave={() => setIsHoveringMain(false)}
           onClick={() =>
@@ -204,10 +204,10 @@ export default function OrtigasHeroGallery({ project }: OrtigasHeroGalleryProps)
 
           {/* Floating Badges */}
           <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
-            <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-md text-white text-[11px] font-medium border border-white/20 shadow-sm">
+            <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-medium border border-white/20 shadow-sm">
               {slides[currentSlide]?.badge || 'Actual Masterplan Facade'}
             </span>
-            <span className="px-2.5 py-1 rounded bg-ochre-500/90 text-charcoal-900 text-[11px] font-bold shadow-sm">
+            <span className="px-2.5 py-1 rounded-full bg-ochre-500/95 text-charcoal-900 text-[11px] font-bold shadow-sm">
               13-Hectare Gated Perimeter
             </span>
           </div>
@@ -274,144 +274,6 @@ export default function OrtigasHeroGallery({ project }: OrtigasHeroGalleryProps)
                 </div>
               )}
             </div>
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* 2. Thumbnail 1: Site Plan (Replaced Tiled Living)             */}
-        {/* ============================================================ */}
-        <div
-          onClick={() =>
-            openZoomModal(
-              'Site Development Plan',
-              'Urban Deca Homes Ortigas • 13-Hectare Masterplan Layout',
-              sitePlanUrl,
-              'Urban Deca Homes Ortigas Site Development Plan'
-            )
-          }
-          className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900 cursor-pointer shadow-lg"
-          title="Click to view and zoom Site Plan"
-        >
-          {/* Architectural Plan Background */}
-          <div
-            className="w-full h-full bg-contain bg-no-repeat bg-center p-2 group-hover:scale-108 transition-transform duration-500 bg-[#16191C]"
-            style={{ backgroundImage: `url('${sitePlanUrl}')` }}
-          />
-
-          {/* Contrast Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent group-hover:from-black/90 transition-colors pointer-events-none" />
-
-          {/* Hover Zoom Badge */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/75 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-xl">
-              <ZoomIn className="w-3.5 h-3.5 text-ochre-300" />
-              <span>Zoom Plan</span>
-            </span>
-          </div>
-
-          {/* Bottom Label */}
-          <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
-            <span className="text-[10px] sm:text-[11px] font-semibold text-white tracking-wide truncate">
-              Site Development Plan
-            </span>
-            <span className="text-[9px] font-mono text-ochre-300 bg-ochre-500/20 px-1.5 py-0.5 rounded border border-ochre-500/30">
-              Masterplan
-            </span>
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* 3. Thumbnail 2: Typical Floor Plan (Replaced Kitchen)        */}
-        {/* ============================================================ */}
-        <div
-          onClick={() =>
-            openZoomModal(
-              'Typical Building Floor Plan',
-              'Urban Deca Homes Ortigas • Mid-Rise Floor Layout',
-              typicalFloorPlanUrl,
-              'Urban Deca Homes Ortigas Typical Building Floor Plan'
-            )
-          }
-          className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900 cursor-pointer shadow-lg"
-          title="Click to view and zoom Floor Plan"
-        >
-          {/* Floor Plan Image */}
-          <div
-            className="w-full h-full bg-contain bg-no-repeat bg-center p-2 group-hover:scale-108 transition-transform duration-500 bg-[#16191C]"
-            style={{ backgroundImage: `url('${typicalFloorPlanUrl}')` }}
-          />
-
-          {/* Contrast Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent group-hover:from-black/90 transition-colors pointer-events-none" />
-
-          {/* Hover Zoom Badge */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/75 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-xl">
-              <ZoomIn className="w-3.5 h-3.5 text-ochre-300" />
-              <span>Zoom Plan</span>
-            </span>
-          </div>
-
-          {/* Bottom Label */}
-          <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none">
-            <span className="text-[10px] sm:text-[11px] font-semibold text-white tracking-wide truncate">
-              Typical Floor Plan
-            </span>
-            <span className="text-[9px] font-mono text-ochre-300 bg-ochre-500/20 px-1.5 py-0.5 rounded border border-ochre-500/30">
-              Architectural
-            </span>
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* 4. Thumbnail 3: Map with Center Marker (Replaced T&B)        */}
-        {/* ============================================================ */}
-        <div
-          onClick={() => setIsMapModalOpen(true)}
-          className="col-span-4 relative rounded-xl overflow-hidden group border border-white/10 aspect-[4/3] bg-charcoal-900 cursor-pointer shadow-lg"
-          title="Click to open full interactive map"
-        >
-          {/* Clean Google Map View: Scaled up to hide all native controls/labels */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <iframe
-              title="Ortigas Location Map Preview"
-              src={`https://maps.google.com/maps?q=${mapCenterLat},${mapCenterLng}&z=15&output=embed`}
-              className="w-[140%] h-[140%] -ml-[20%] -mt-[20%] border-0 filter contrast-[1.08] saturate-[1.1] brightness-[0.92] group-hover:scale-105 transition-transform duration-500"
-              tabIndex={-1}
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Center Marker Pin with Subtle Radar Pulses */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-            <div className="relative flex items-center justify-center">
-              <span className="absolute w-9 h-9 rounded-full bg-[#CE2029]/30 animate-ping" />
-              <span className="absolute w-5 h-5 rounded-full bg-[#CE2029]/60 animate-pulse" />
-              <div className="w-7 h-7 rounded-full bg-[#CE2029] text-white shadow-xl flex items-center justify-center border-2 border-white relative z-10 group-hover:scale-110 transition-transform">
-                <MapPin className="w-3.5 h-3.5 fill-white" />
-              </div>
-            </div>
-          </div>
-
-          {/* Dark Bottom Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 group-hover:from-black/90 transition-colors pointer-events-none z-10" />
-
-          {/* Hover Expand Badge */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/80 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-xl mt-8">
-              <Maximize2 className="w-3.5 h-3.5 text-ochre-300" />
-              <span>Expand Map</span>
-            </span>
-          </div>
-
-          {/* Bottom Label */}
-          <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between pointer-events-none z-20">
-            <span className="text-[10px] sm:text-[11px] font-semibold text-white tracking-wide truncate">
-              Location &amp; Vicinity
-            </span>
-            <span className="text-[9px] font-mono text-ochre-300 bg-ochre-500/20 px-1.5 py-0.5 rounded border border-ochre-500/30">
-              Pasig City
-            </span>
           </div>
         </div>
       </div>
