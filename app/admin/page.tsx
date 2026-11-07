@@ -703,7 +703,7 @@ export default function AdminPage() {
               Default passcode: <code className="text-ochre-300 font-mono">deca2026</code>
             </p>
             <p className="text-[10px] text-gray-400 mt-1">
-              Customizable via <code className="text-gray-300 font-mono">ADMIN_PASSCODE</code> in Netlify env.
+              Customizable via <code className="text-gray-300 font-mono">ADMIN_PASSCODE</code> in Cloudflare Pages environment variables.
             </p>
           </div>
         </div>
@@ -887,7 +887,7 @@ export default function AdminPage() {
                   { id: 'amenities', label: '5. Amenities', icon: Sparkles },
                   { id: 'faqs', label: '6. Overview & FAQs', icon: HelpCircle },
                   { id: 'seo', label: '7. SEO & Meta Tags', icon: FileCode },
-                  { id: 'guide', label: '8. Netlify Deployment Guide', icon: Compass },
+                  { id: 'guide', label: '8. Cloudflare Deployment Guide', icon: Compass },
                 ].map((sec) => {
                   const Icon = sec.icon;
                   return (
@@ -3026,13 +3026,13 @@ export default function AdminPage() {
                 </div>
               )}
 
-              {/* SECTION 8: NETLIFY DEPLOYMENT GUIDE */}
+              {/* SECTION 8: CLOUDFLARE PAGES DEPLOYMENT GUIDE */}
               {activeSection === 'guide' && (
                 <div className="space-y-6">
                   <div>
-                    <h2 className="font-editorial text-2xl font-semibold text-white">Netlify Deployment &amp; Git-Sync Setup</h2>
+                    <h2 className="font-editorial text-2xl font-semibold text-white">Cloudflare Pages Deployment &amp; Git-Sync Setup</h2>
                     <p className="text-xs text-gray-400 mt-1">
-                      How your database-free admin panel works seamlessly on Netlify with zero hosting fees.
+                      How your database-free admin panel works seamlessly on Cloudflare Pages with sub-millisecond edge latency and zero hosting fees.
                     </p>
                   </div>
 
@@ -3042,11 +3042,11 @@ export default function AdminPage() {
                       Two Operating Modes
                     </h3>
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      Because Netlify functions run in read-only containers, changes made in this admin panel can be saved in two ways:
+                      Because Cloudflare Pages functions run on global edge workers with read-only filesystems, changes made in this admin panel can be saved in two ways:
                     </p>
                     <ul className="text-xs space-y-2 text-gray-300 pl-4 list-disc">
                       <li>
-                        <strong>Mode 1: Automated Git-Backed CMS (Recommended)</strong> — Add a free GitHub Personal Access Token to Netlify environment variables. Whenever you click <em>Save All Changes</em>, the system commits directly to your GitHub repo, triggering an automatic Netlify redeployment within seconds!
+                        <strong>Mode 1: Automated Git-Backed CMS (Recommended)</strong> — Add a free GitHub Personal Access Token to Cloudflare Pages environment variables. Whenever you click <em>Save All Changes</em>, the system commits directly to your GitHub repository, triggering an automatic Cloudflare Pages redeployment within seconds!
                       </li>
                       <li>
                         <strong>Mode 2: Local File Mode &amp; Export</strong> — When developing locally on your computer, changes write directly to <code className="text-ochre-200">data/projects.json</code> and <code className="text-ochre-200">public/images/uploads/</code>. You can also click <em>Export JSON</em> anytime to download a backup.
@@ -3056,7 +3056,7 @@ export default function AdminPage() {
 
                   <div className="space-y-4">
                     <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                      Netlify Environment Variables Checklist
+                      Cloudflare Pages Environment Variables Checklist
                     </h3>
                     <div className="space-y-3 text-xs">
                       <div className="p-3 bg-[#14171A] border border-white/10 rounded-xl">
@@ -3071,21 +3071,41 @@ export default function AdminPage() {
 
                       <div className="p-3 bg-[#14171A] border border-white/10 rounded-xl">
                         <div className="flex justify-between items-center mb-1">
-                          <code className="text-ochre-300 font-bold">GITHUB_TOKEN</code>
-                          <span className="text-[10px] text-gray-400">Optional for Netlify Auto-Deploy</span>
+                          <code className="text-ochre-300 font-bold">GOOGLE_SHEET_WEBHOOK_URL</code>
+                          <span className="text-[10px] text-gray-400">Required for Leads</span>
                         </div>
                         <p className="text-gray-400">
-                          A free GitHub Personal Access Token (classic with <code className="text-white">repo</code> scope or fine-grained token with Contents read/write) to enable live commits on Netlify.
+                          Your deployed Google Apps Script Web App URL for receiving property inquiries and site tour bookings.
                         </p>
                       </div>
 
                       <div className="p-3 bg-[#14171A] border border-white/10 rounded-xl">
                         <div className="flex justify-between items-center mb-1">
-                          <code className="text-ochre-300 font-bold">GITHUB_REPO</code>
-                          <span className="text-[10px] text-gray-400">Optional (Defaults to rynp/urbandecahomes)</span>
+                          <code className="text-ochre-300 font-bold">GOOGLE_SHEET_SECRET_TOKEN</code>
+                          <span className="text-[10px] text-gray-400">Required</span>
                         </div>
                         <p className="text-gray-400">
-                          Your repository path e.g. <code className="text-white">rynp/urbandecahomes</code>.
+                          Shared security token matching your Apps Script (<code className="text-white">decahomes-secure-leads-2026</code>).
+                        </p>
+                      </div>
+
+                      <div className="p-3 bg-[#14171A] border border-white/10 rounded-xl">
+                        <div className="flex justify-between items-center mb-1">
+                          <code className="text-ochre-300 font-bold">GITHUB_TOKEN</code>
+                          <span className="text-[10px] text-gray-400">Optional for Cloudflare Auto-Deploy</span>
+                        </div>
+                        <p className="text-gray-400">
+                          A free GitHub Personal Access Token (classic with <code className="text-white">repo</code> scope or fine-grained token with Contents read/write) to enable live commits on Cloudflare Pages.
+                        </p>
+                      </div>
+
+                      <div className="p-3 bg-[#14171A] border border-white/10 rounded-xl">
+                        <div className="flex justify-between items-center mb-1">
+                          <code className="text-ochre-300 font-bold">NODE_VERSION</code>
+                          <span className="text-[10px] text-gray-400">Recommended</span>
+                        </div>
+                        <p className="text-gray-400">
+                          Set to <code className="text-white">20</code> in Cloudflare Pages to ensure the modern Node.js build runtime.
                         </p>
                       </div>
                     </div>

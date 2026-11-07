@@ -158,7 +158,7 @@ export async function POST(req: NextRequest) {
       console.warn('Could not write to local disk (expected on read-only serverless hosts):', diskErr);
     }
 
-    // 2. If GitHub token is configured, commit directly to GitHub repository (for Netlify auto-deploy)
+    // 2. If GitHub token is configured, commit directly to GitHub repository (for Cloudflare auto-deploy)
     let gitSynced = false;
     if (process.env.GITHUB_TOKEN) {
       const gitResult = await commitToGitHub(
@@ -172,10 +172,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message: gitSynced
-        ? 'Changes committed to GitHub! Netlify will automatically build and deploy the update.'
+        ? 'Changes committed to GitHub! Cloudflare Pages will automatically build and deploy the update.'
         : diskSaved
         ? 'Changes saved to data/projects.json successfully.'
-        : 'Changes staged in memory (configure GITHUB_TOKEN for persistent Netlify deploys).',
+        : 'Changes staged in memory (configure GITHUB_TOKEN for persistent Cloudflare Pages deploys).',
       gitSynced,
       diskSaved,
     });

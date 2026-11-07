@@ -54,4 +54,9 @@ scripts/*.html
 # customer leads data backup (PII privacy)
 data/leads-backup.json
 
+# cloudflare / opennext outputs
+.open-next/
+.wrangler/
+
+
 
